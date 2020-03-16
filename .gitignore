@@ -71,3 +71,4 @@ magento/vendor/*
 magento/generated/*
 !magento/generated/.htaccess
 magento/.DS_Store
+magento/app/etc/config.php
