@@ -31,11 +31,8 @@ magento/lib/internal/flex/varien/.project
 magento/lib/internal/flex/varien/.settings
 magento/node_modules
 magento/.grunt
-magento/Gruntfile.js
-magento/package.json
 magento/.php_cs
 magento/.php_cs.cache
-magento/grunt-config.json
 magento/pub/media/*.*
 !magento/pub/media/.htaccess
 magento/pub/media/attribute/*
