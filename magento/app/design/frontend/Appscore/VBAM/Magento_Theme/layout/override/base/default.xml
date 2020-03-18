@@ -65,8 +65,8 @@
             <container name="header-wrapper" label="Page Header" as="header-wrapper" htmlTag="div" htmlClass="header content">
                 <block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
                     <arguments>
-                        <argument name="logo_img_width" xsi:type="number">189</argument>
-                        <argument name="logo_img_height" xsi:type="number">64</argument>
+                        <argument name="logo_img_width" xsi:type="number">137</argument>
+                        <argument name="logo_img_height" xsi:type="number">54</argument>
                     </arguments>
                 </block>
             </container>
@@ -130,14 +130,51 @@
         </referenceContainer>
         <referenceContainer name="footer-container">
             <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="footer content">
+                <referenceBlock name="form.subscribe" remove="true"/>
+                <referenceBlock name="store_switcher" remove="true"/>
                 <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="Magento_Store::switch/stores.phtml"/>
-                <block class="Magento\Framework\View\Element\Html\Links" name="footer_links">
+
+                <container name="footer-wrapper" label="Footer Wrapper" htmlTag="div" htmlClass="displayFlex">
+                    <container name="footer-logo-container" as="footer-logo-container" label="Logo Footer" htmlTag="div" htmlClass="col-md-3 col-12">
+                        <block class="Magento\Cms\Block\Block" name="Footer Logo">
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">footer_logo</argument>
+                            </arguments>
+                        </block>
+                    </container>
+
+                    <container name="footer-about-container" as="footer-about-container" label="About Footer" htmlTag="div" htmlClass="col-md-3 col-12">
+                        <block class="Magento\Cms\Block\Block" name="Footer About">
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">about_links</argument>
+                            </arguments>
+                        </block>
+                    </container>
+
+                    <container name="footer-shopping-container" as="footer-shopping-container" label="Shopping Footer" htmlTag="div" htmlClass="col-md-3 col-12">
+                        <block class="Magento\Cms\Block\Block" name="Footer Shopping">
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">shopping_online</argument>
+                            </arguments>
+                        </block>
+                    </container>
+                    
+                    <container name="footer-info-container" as="footer-info-container" label="Info Footer" htmlTag="div" htmlClass="col-md-3 col-12 fontSize10 colorGray">
+                        <block class="Magento\Cms\Block\Block" name="Footer Info">
+                            <arguments>
+                                <argument name="block_id" xsi:type="string">footer_info</argument>
+                            </arguments>
+                        </block>
+                    </container>
+                </container>
+
+                <!--<block class="Magento\Framework\View\Element\Html\Links" name="footer_links">
                     <arguments>
                         <argument name="css_class" xsi:type="string">footer links</argument>
                     </arguments>
-                </block>
+                </block>-->
                 <block class="Magento\Theme\Block\Html\Footer" name="copyright" template="Magento_Theme::html/copyright.phtml"/>
-                <block class="Magento\Framework\View\Element\Template" name="report.bugs" template="Magento_Theme::html/bugreport.phtml" ifconfig="design/footer/report_bugs"/>
+                <!--<block class="Magento\Framework\View\Element\Template" name="report.bugs" template="Magento_Theme::html/bugreport.phtml" ifconfig="design/footer/report_bugs"/>-->
             </container>
         </referenceContainer>
         <referenceContainer name="before.body.end">
