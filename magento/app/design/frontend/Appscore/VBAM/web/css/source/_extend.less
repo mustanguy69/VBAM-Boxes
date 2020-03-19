@@ -168,7 +168,6 @@ button {
 }
 
 .wishlist-wrapper {
-    margin-top: 8px;
     margin-right: 15px;
 }
 
@@ -319,6 +318,10 @@ button {
             text-transform: uppercase;
         }
     }
+
+    .wishlist-wrapper {
+        margin-top: 8px;
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
@@ -427,5 +430,13 @@ button {
         .copyright {
             padding: 0 30px 30px 30px;
         }
+    }
+
+    .wishlist-wrapper {
+        margin-top: 14px;
+    }
+
+    .my-account {
+        display: none;
     }
 }
