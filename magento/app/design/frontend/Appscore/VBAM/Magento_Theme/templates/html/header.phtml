@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Theme\Block\Html\Header $block
+ */
+$welcomeMessage = $block->getWelcome();
+?>
+<div class="wishlist-wrapper floatRight">
+    <a href="<?= $block->getWishlistUrl() ?>">
+        <img src="<?php echo $this->getViewFileUrl('images/wishlist.svg'); ?>" width="20px" alt="wishlist"/>
+    </a>
+</div>
+<div class="my-account floatRight">
+    <div class="account-icon-wrapper floatLeft">
+        <div class="account-icon">
+            <img src="<?php echo $this->getViewFileUrl('images/user.svg'); ?>" width="20px"/>
+        </div>
+    </div>
+    <div class="floatLeft">
+        <div class="greet welcome main" data-bind="scope: 'customer'">
+            <!-- ko if: customer().fullname  -->
+            <span class="logged-in"
+                data-bind="text: new String('<?= $block->escapeHtml(__('Hello! %1', '%1')) ?>').replace('%1', customer().firstname)">
+            </span>
+            <!-- /ko -->
+            <!-- ko ifnot: customer().fullname  -->
+            <span class="not-logged-in">Hello! </span>
+            <?= $block->getBlockHtml('header.additional') ?>
+            <!-- /ko -->
+        </div>
+        <div class="account-link">
+            <a href="<?php echo $block->getCustomerUrl() ?>">
+                <?php echo __('My Account') ?>
+            </a>
+        </div>
+    </div>
+
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "customer": {
+                        "component": "Magento_Customer/js/view/customer"
+                    }
+                }
+            }
+        }
+    }
+    </script>
+</div>

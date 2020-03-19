@@ -1,16 +1,32 @@
-h1, h2, h3, h4, h5, h6, strong {
+@screen__xxs: 320px;
+@screen__xs: 480px;
+@screen__s: 640px;
+@screen__m: 769px;
+@screen__l: 1024px;
+@screen__xl: 1440px;
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #F7F5F5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'BrauerNeue';
+    font-weight: 900;
+    margin-top: 0;
+}
+
+strong {
     font-family: 'BrauerNeue';
     font-weight: bold;
-    margin-top: 0;
 }
 
 body, p {
     font-family: 'MuseoSans';
     font-weight: normal;
-}
-
-body {
-    background: #F7F5F5;
 }
 
 input[type="text"], input[type="password"], input[type="url"], input[type="tel"], input[type="search"], input[type="number"], input[type="datetime"], input[type="email"] {
@@ -54,7 +70,6 @@ button {
 
 .page-main {
     padding-left: 30px;
-    padding-top: 30px;
     padding-right: 30px;
 }
 
@@ -97,6 +112,7 @@ button {
 
     .footer.content {
         padding: 0 30px;
+        border: none;
 
         div > h3 {
             font-size: 16px;
@@ -125,6 +141,37 @@ button {
     margin-right: -15px !important;
 }
 
+.marginBottom27px {
+    margin-bottom: 27px;
+}
+
+.copyright-wrapper {
+    background: #fff;
+
+    .copyright {
+        background: none;
+        text-align: initial;
+        color: #9AA5AF;
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        font-size: 11px;
+    }
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.wishlist-wrapper {
+    margin-top: 8px;
+    margin-right: 15px;
+}
+
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
     .page-header {
         .header.content {
@@ -136,7 +183,7 @@ button {
     
     .page-footer {
         padding-top: 40px;
-        padding-bottom: 40px;
+        padding-bottom: 30px;
     }
 
     .minicart-wrapper {
@@ -193,9 +240,124 @@ button {
         padding-right: 15px;
         flex-grow: 1;
     }
+
+    .nav-sections {
+        float: left;
+        max-width: 700px;
+        margin-left: 30px;
+        margin-top: 10px;
+
+        .navigation {
+            background: #fff;
+
+            .menu-item {
+                display: inline-block;
+                font-size: 16px;
+                font-family: 'BrauerNeue';
+                font-weight: 900;
+                text-transform: uppercase;
+                margin-left: 50px;
+                margin-bottom: 0;
+
+                a {
+                    color: #0C2340;
+                }
+
+                a:hover {
+                    color: #001489;
+                    text-decoration: initial;
+                }
+            }
+
+            .menu-item:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .page-main {
+        padding-top: 30px;
+    }
+
+    .copyright-wrapper {
+        .copyright {
+            padding: 0 30px;
+
+            .copyright-container {
+                padding: 30px 0;
+                border-top: 1px solid #DBDBDB;
+            }
+        }
+    }
+
+    .my-account {
+        margin-right: 22px;
+
+        .account-icon-wrapper {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #9AA5AF;
+            margin-right: 10px;
+    
+            .account-icon {
+                text-align: center;
+                padding-top: 8px;
+            }
+        }
+
+        .greet {
+            font-size: 13px;
+            color: #000000;
+        }
+
+        .account-link {
+            font-size: 16px;
+            color: #001489;
+            font-family: "BrauerNeue";
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .displayFlex {
+        flex-direction: column;
+    }
+
+    .mobile-marginBottom36px {
+        margin-bottom: 36px;
+    }
+
+    .mobile-marginBottom20px {
+        margin-bottom: 20px;
+    }
+
+    .mobile-marginBottom30px {
+        margin-bottom: 30px;
+    }
+
+    .mobile-paddingTop30px {
+        padding-top: 30px;
+    }
+
+    .mobile-p-paddingTop30px {
+        p {
+            padding-top: 30px;
+        }
+    }
+
+    .mobile-borderTop1px {
+        border-top: 1px solid #DBDBDB;
+    }
+
+    .mobile-p-borderTop1px {
+        p {
+            border-top: 1px solid #DBDBDB;
+        }
+    }
+
     .page-header {
         .panel.wrapper {
             .panel.header {
@@ -215,7 +377,7 @@ button {
 
     .page-footer {
         padding-top: 30px;
-        padding-bottom: 30px;
+        padding-bottom: 20px;
     }
 
     .nav-toggle {
@@ -237,6 +399,7 @@ button {
     .page-main {
         padding-left: 30px;
         padding-right: 30px;
+        padding-top: 30px;
     }
 
     .minicart-wrapper {
@@ -258,5 +421,11 @@ button {
         width: 100%;
         padding-left: 15px;
         padding-right: 15px;
+    }
+
+    .copyright-wrapper {
+        .copyright {
+            padding: 0 30px 30px 30px;
+        }
     }
 }

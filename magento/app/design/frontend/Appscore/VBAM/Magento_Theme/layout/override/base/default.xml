@@ -8,21 +8,29 @@
 <page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="default_head_blocks"/>
     <body>
+        <referenceBlock name="store.menu">
+            <block name="main.menu" class="Snowdog\Menu\Block\Menu">
+                <arguments>
+                    <argument name="menu" xsi:type="string">main_menu</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
         <block name="require.js" class="Magento\Framework\View\Element\Template" template="Magento_Theme::page/js/require_js.phtml" />
-        <referenceBlock name="header.links">
-            <referenceBlock name="my-account-link" remove="true"/>
+        <referenceBlock name="header.links" remove="true"/>
+        <!--<referenceBlock name="header.links">
             <referenceBlock name="register-link" remove="true"/>
             <referenceBlock name="authorization-link" remove="true"/>
             <referenceBlock name="authorization-link-login" remove="true"/>
+            <referenceBlock name="my-account-link" remove="true"/>
             <referenceBlock name="customer" remove="true"/>
-        </referenceBlock>
+        </referenceBlock>-->
         <referenceContainer name="after.body.start">
             <block class="Magento\RequireJs\Block\Html\Head\Config" name="requirejs-config"/>
             <block class="Magento\Framework\View\Element\Js\Cookie" name="js_cookies" template="Magento_Theme::js/cookie.phtml"/>
             <block class="Magento\Theme\Block\Html\Notices" name="global_notices" template="Magento_Theme::html/notices.phtml"/>
         </referenceContainer>
         <referenceBlock name="top.links">
-            <!--<block class="Magento\Theme\Block\Html\Header" name="header" as="header" before="-">
+            <!--<block class="Magento\Theme\Block\Html\Header" name="header" as="header">
                 <arguments>
                     <argument name="show_part" xsi:type="string">welcome</argument>
                 </arguments>
@@ -69,8 +77,16 @@
                         <argument name="logo_img_height" xsi:type="number">54</argument>
                     </arguments>
                 </block>
+                <block class="Magento\Theme\Block\Html\Header" name="my.header" as="my.header">
+                    <arguments>
+                        <argument name="show_part" xsi:type="string">welcome</argument>
+                    </arguments>
+                </block>
             </container>
         </referenceContainer>
+        <move element="navigation.sections" destination="header-wrapper" after="logo"/>
+        <!--<move element="header.links" destination="header-wrapper" before="top.search"/>-->
+
         <referenceContainer name="page.top">
             <block class="Magento\Framework\View\Element\Template" name="navigation.sections" before="-" template="Magento_Theme::html/sections.phtml">
                 <arguments>
@@ -135,7 +151,7 @@
                 <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="Magento_Store::switch/stores.phtml"/>
 
                 <container name="footer-wrapper" label="Footer Wrapper" htmlTag="div" htmlClass="displayFlex">
-                    <container name="footer-logo-container" as="footer-logo-container" label="Logo Footer" htmlTag="div" htmlClass="col-md-3 col-12">
+                    <container name="footer-logo-container" as="footer-logo-container" label="Logo Footer" htmlTag="div" htmlClass="col-md-3 col-12 marginBottom27px">
                         <block class="Magento\Cms\Block\Block" name="Footer Logo">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">footer_logo</argument>
@@ -143,7 +159,7 @@
                         </block>
                     </container>
 
-                    <container name="footer-about-container" as="footer-about-container" label="About Footer" htmlTag="div" htmlClass="col-md-3 col-12">
+                    <container name="footer-about-container" as="footer-about-container" label="About Footer" htmlTag="div" htmlClass="col-md-3 col-12 mobile-marginBottom36px">
                         <block class="Magento\Cms\Block\Block" name="Footer About">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">about_links</argument>
@@ -151,7 +167,7 @@
                         </block>
                     </container>
 
-                    <container name="footer-shopping-container" as="footer-shopping-container" label="Shopping Footer" htmlTag="div" htmlClass="col-md-3 col-12">
+                    <container name="footer-shopping-container" as="footer-shopping-container" label="Shopping Footer" htmlTag="div" htmlClass="col-md-3 col-12 mobile-marginBottom20px">
                         <block class="Magento\Cms\Block\Block" name="Footer Shopping">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">shopping_online</argument>
@@ -159,7 +175,7 @@
                         </block>
                     </container>
                     
-                    <container name="footer-info-container" as="footer-info-container" label="Info Footer" htmlTag="div" htmlClass="col-md-3 col-12 fontSize10 colorGray">
+                    <container name="footer-info-container" as="footer-info-container" label="Info Footer" htmlTag="div" htmlClass="col-md-3 col-12 fontSize10 colorGray mobile-p-paddingTop30px mobile-p-borderTop1px">
                         <block class="Magento\Cms\Block\Block" name="Footer Info">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">footer_info</argument>
@@ -183,5 +199,6 @@
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\FormKey" name="formkey"/>
         </referenceContainer>
+        
     </body>
 </page>
