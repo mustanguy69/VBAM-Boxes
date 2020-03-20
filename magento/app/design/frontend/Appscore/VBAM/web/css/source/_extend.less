@@ -5,6 +5,38 @@
 @screen__l: 1024px;
 @screen__xl: 1440px;
 
+.lib-font-face(
+    @family-name:'BrauerNeue',
+    @font-path: '@{baseDir}fonts/BrauerNeue-Regular',
+    @font-weight: normal,
+    @font-style: normal,
+    @font-display: auto
+);
+
+.lib-font-face(
+    @family-name:'BrauerNeue',
+    @font-path: '@{baseDir}fonts/BrauerNeue-Bold',
+    @font-weight: bold,
+    @font-style: normal,
+    @font-display: auto
+);
+
+.lib-font-face(
+    @family-name:'BrauerNeue',
+    @font-path: '@{baseDir}fonts/BrauerNeue-Black',
+    @font-weight: 900,
+    @font-style: normal,
+    @font-display: auto
+);
+
+.lib-font-face(
+    @family-name:'MuseoSans',
+    @font-path: '@{baseDir}fonts/MuseoSans-500',
+    @font-weight: normal,
+    @font-style: normal,
+    @font-display: auto
+);
+
 * {
     box-sizing: border-box;
 }
@@ -174,9 +206,14 @@ button {
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
     .page-header {
         .header.content {
-            padding-top: 35px;
+            padding-top: 0;
             padding-left: 30px;
             padding-right: 30px;
+
+            .logo {
+                margin: 0;
+                padding-top: 30px;
+            }
         }
     }
     
@@ -189,9 +226,12 @@ button {
         margin-top: 9px;
     }
 
+    
+
     .block-search {
         max-width: 180px;
         margin-right: 40px;
+        top: 35px;
         position: relative;
     
         .action.search {
@@ -244,12 +284,21 @@ button {
         float: left;
         max-width: 700px;
         margin-left: 30px;
-        margin-top: 10px;
 
         .navigation {
             background: #fff;
 
-            .menu-item {
+            .display-shopby {
+                .submenu:before  {
+                    content: 'Shop By';
+                    display: block;
+                    position: relative;
+                    color: #000;
+                    margin-bottom: 10px;
+                }
+            }
+
+            .navigation__item {
                 display: inline-block;
                 font-size: 16px;
                 font-family: 'BrauerNeue';
@@ -257,18 +306,75 @@ button {
                 text-transform: uppercase;
                 margin-left: 50px;
                 margin-bottom: 0;
+                position: relative;
+                padding-top: 46px;
+                padding-bottom: 46px;
 
                 a {
                     color: #0C2340;
+                    padding-top: 46px;
+                    padding-bottom: 46px;
                 }
 
                 a:hover {
                     color: #001489;
                     text-decoration: initial;
                 }
+
+                .submenu:after {
+                    width: 0; 
+                    height: 0; 
+                    border-left: 7px solid transparent;
+                    border-right: 7px solid transparent;
+                    border-bottom: 10px solid #00A261;
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: -15px;
+                }
+
+                .submenu {
+                    position: absolute;
+                    z-index: 1;
+                    display: none;
+                    top: 114px;
+                    padding: 25px 20px;
+                    background: #fff;
+                    border-top: 5px solid #00A261;
+
+                    .submenu-inner {
+                        width: 390px;
+                        height: auto;
+
+                        .navigation__inner-list {
+                            padding: 0;
+                            columns: 2;
+                            -webkit-columns: 2;
+                            -moz-columns: 2;
+
+                            a {
+                                font-family: 'MuseoSans';
+                                font-weight: normal;
+                                font-size: 13px;
+                                padding: 0;
+                                color: #0C2340;
+                            }
+
+                            a:hover {
+                                color: #001489;
+                            }
+                        }
+                    }
+                }
+
+                .submenu.show  {
+                    display: block;
+                }
+
+                
             }
 
-            .menu-item:first-child {
+            .navigation__item:first-child {
                 margin-left: 0;
             }
         }
@@ -291,6 +397,8 @@ button {
 
     .my-account {
         margin-right: 22px;
+        top: 35px;
+        position: relative;
 
         .account-icon-wrapper {
             width: 40px;
@@ -320,13 +428,34 @@ button {
     }
 
     .wishlist-wrapper {
+        position: relative;
+        top: 35px;
         margin-top: 8px;
+    }
+
+    .minicart-wrapper {
+        top: 35px;
+        position: relative;
+    }
+
+    .mobile {
+        display: none;
     }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .displayFlex {
         flex-direction: column;
+    }
+
+    .mobile {
+        display: block;
+    }
+
+    .close-menu {
+        padding-left: 30px;
+        padding-right: 30px;
+        cursor: pointer;
     }
 
     .mobile-marginBottom36px {
@@ -402,7 +531,7 @@ button {
     .page-main {
         padding-left: 30px;
         padding-right: 30px;
-        padding-top: 30px;
+        padding-top: 30px !important;
     }
 
     .minicart-wrapper {
@@ -438,5 +567,131 @@ button {
 
     .my-account {
         display: none;
+    }
+
+    .nav-sections {
+        background-color: #001489;
+        padding-top: 30px;
+        padding-bottom: 30px;
+
+        .nav-sections-item-title.active,
+        .nav-sections-item-title {
+            background-color: #001489;
+            border: none;
+            width: auto;
+            height: auto;
+            padding-top: 0;
+            padding-bottom: 20px;
+            font-family: "BrauerNeue";
+            font-weight: 900;
+            font-size: 14px;
+            z-index: 1;
+
+            a {
+                color: #FFFFFF;
+                opacity: 0.25;
+                text-transform: uppercase;
+            }
+        }
+
+        .nav-sections-item-title {
+            margin-left: 30px;
+        }
+
+        .nav-sections-item-title.active {
+            a {
+                opacity: 1;
+            }
+        }
+
+        .nav-sections-item-title:hover {
+            a {
+                opacity: 1;
+            }
+        }
+
+        .nav-sections-item-content {
+            margin-top: 65px;
+            padding-top: 0;
+            padding-bottom: 20px;
+
+            .authorization-link {
+                font-family: 'BrauerNeue';
+                font-weight: bold;
+                font-size: 14px;
+                padding: 0 30px;
+                list-style-type: none;
+                
+                a {
+                    color: #fff;
+                }
+            }
+
+            .navigation__mobile {
+                display: none;
+            }
+
+            .navigation {
+                background: none;
+                font-size: 16px;
+                font-family: "BrauerNeue";
+                font-weight: 900;
+
+                .navigation__item {
+                    text-transform: uppercase;
+                    border-top: 1px solid rgba(255, 255, 255, 0.2);
+                    position: relative;
+
+                    a {
+                        padding: 30px;
+                    }
+                }
+
+                .navigation__item--parent:before {
+                    content: '';
+                    background: url('@{baseDir}images/chev-down.svg');
+                    width: 13px;
+                    height: 8px;
+                    display: block;
+                    position: absolute;
+                    right: 30px;
+                    top: 35px;
+                    background-size: inherit;
+                    background-repeat: no-repeat;
+                }
+
+                .navigation__item:first-child {
+                    border-top: none;
+                    margin-top: 20px;
+                }
+
+                .navigation__item--parent {
+
+                    .submenu {
+                        display: none;
+                        padding-bottom: 30px;
+                        margin-top: -15px;
+
+                        .navigation__inner-list {
+                            padding-left: 0;
+
+                            a {
+                                color: #FFFFFF;
+                                font-family: 'MuseoSans';
+                                font-size: 13px;
+                                text-transform: initial;
+                                margin-top: 15px;
+                                padding: 0 30px;
+                            }
+                        }
+                    }
+                }
+                
+                a {
+                    color: #fff;
+                    padding: 0;
+                }
+            }
+        }
     }
 }
