@@ -1,3 +1,5 @@
+@import "slick.less";
+
 @screen__xxs: 320px;
 @screen__xs: 480px;
 @screen__s: 640px;
@@ -69,6 +71,44 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
 button {
     font-family: 'BrauerNeue';
     font-weight: 900;
+}
+
+.slick-slide {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.industry-slide {
+    background: red;
+    height: 300px;
+    color: #fff;
+    
+    h3 {
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .industry-info {
+        text-align: center;
+        margin-top: 40px;
+
+        p {
+            font-size: 13px;
+            font-family: 'BrauerNeue';
+            font-weight: normal;
+        }
+
+        .industry-link {
+            margin-top: 30px;
+            font-family: 'BrauerNeue';
+            font-weight: 900;
+            font-size: 13px;
+            
+            a {
+                color: #fff;
+            }
+        }
+    }
 }
 
 .page-header {

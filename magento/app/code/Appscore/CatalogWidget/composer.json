@@ -1,0 +1,22 @@
+{
+    "name": "appscore/module-catalogwidget",
+    "description": "Catalog widget to display best seller product and category slider",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Appscore\\CatalogWidget\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

@@ -1,0 +1,46 @@
+<?php 
+	$categoryId = $block->getData('category_id');
+	$cateList = $block->getSubCateList($categoryId);
+?>
+
+<?php if($categoryId): ?>
+	<?php 
+		$html = '';
+		foreach ($cateList as $cate) {
+			$html .= '<div class="industry-slide">';
+				$html .= '<div class="industry-info">';
+					$html .= '<h3>'.$cate->name.'</h3>';
+					$html .= '<p>'.$cate->product_count.' Products</p>';
+					$html .= '<div class="industry-link"><a href="'.$cate->url.'">'.__('VIEW ALL PRODUCTS ->').'</a></div>';
+				$html .= '</div>';
+				
+			$html .= '</div>';
+			
+			//print_r($cate->first_product);
+		}
+	?>	
+	<div class="industry-slider">
+		<?php echo $html ?>
+	</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+	require([
+		'jquery',
+		'js/slick.min'
+	], function ($) {
+		"use strict";
+
+		$(document).ready(function(){
+			$('.industry-slider').slick({
+				slidesToShow: 2,
+  				slidesToScroll: 1,
+				dots: false,
+				arrows: true,
+  				centerMode: true,
+				focusOnSelect: false
+			});
+		});
+
+	});
+</script>
