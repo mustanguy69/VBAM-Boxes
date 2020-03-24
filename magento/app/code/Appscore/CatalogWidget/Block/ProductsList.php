@@ -71,8 +71,6 @@ class ProductsList extends \Magento\CatalogWidget\Block\Product\ProductsList
     }
 
     public function isInWishlist($id) {
-        //$wishlist = $this->_wishlistHelper->getWishlistItemCollection()->addFieldToFilter('main_table.product_id', $id);
-        //$test = $this->_wishlistHelper->getWishlist();
         $customerSession = $this->_customerSession->create();
         $flag = false;
 
