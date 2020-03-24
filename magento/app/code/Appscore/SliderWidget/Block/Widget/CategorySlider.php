@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Appscore\CatalogWidget\Block\Widget;
+namespace Appscore\SliderWidget\Block\Widget;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Widget\Block\BlockInterface;
@@ -9,7 +9,7 @@ use Magento\Widget\Block\BlockInterface;
 /**
  * Class CategorySlider
  *
- * @package Appscore\CatalogWidget\Block\Widget
+ * @package Appscore\SliderWidget\Block\Widget
  */
 class CategorySlider extends Template implements BlockInterface
 {
@@ -44,7 +44,7 @@ class CategorySlider extends Template implements BlockInterface
             $firstProductInStock = $subCate->getProductCollection()->addAttributeToSelect('*')->setPageSize(1)->getFirstItem();
 
             if($firstProductInStock) {
-                $image_url = $this->imageHelper->init($firstProductInStock, 'product_base_image')->getUrl();
+                $image_url = $this->imageHelper->init($firstProductInStock, 'custom_product_base_image')->getUrl();
             }
 
             $cateObj = (object) [
@@ -56,7 +56,7 @@ class CategorySlider extends Template implements BlockInterface
                     'name' => $firstProductInStock->getName(),
                     'image' => $image_url ? $image_url : '',
                     'url' => $firstProductInStock->getProductUrl(),
-                    'price' => $firstProductInStock->getPrice() // TODO: setup logic to display price based on customer group or guest user location
+                    'price' => number_format($firstProductInStock->getPrice(), 2, '.', ','), // TODO: setup logic to display price based on customer group or guest user location
                 ]
             ];
 

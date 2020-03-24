@@ -1,0 +1,66 @@
+<?php 
+	$categoryId = $block->getData('category_id');
+	$cateList = $block->getSubCateList($categoryId);
+?>
+
+<?php if($categoryId): ?>
+	<?php 
+		$html = '';
+		foreach ($cateList as $cate) {
+			$html .= '<div class="industry-slide">';
+				$html .= '<div class="industry-info">';
+					$html .= '<h3>'.$cate->name.'</h3>';
+					$html .= '<p>'.$cate->product_count.' Products</p>';
+					$html .= '<div class="industry-link"><a href="'.$cate->url.'">'.__('VIEW ALL PRODUCTS').'<img class="link-icon" src="'. $this->getViewFileUrl('images/arrow-thick-left.svg').'" width="12px" alt="arrow-right"/></a></div>';
+				$html .= '</div>';
+				$html .= '<div class="industry-first-product">';
+					$html .= '<div class="industry-image-wrapper">';
+						$html .= '<img src="'.$cate->first_product->image.'" alt="'.$cate->first_product->name.'"/>';
+					$html .= '</div>';
+					$html .= '<div class="industry-first-product-info">';
+						$html .= '<h3>'.$cate->first_product->name.'</h3>';
+						$html .= '<p>$'.$cate->first_product->price.'</p>';
+					$html .= '</div>';
+				$html .= '</div>';
+				
+			$html .= '</div>';
+		}
+	?>	
+	<div class="industry-slider fullWidth">
+		<?php echo $html ?>
+	</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+	require([
+		'jquery',
+		'js/slick.min'
+	], function ($) {
+		"use strict";
+
+		$(document).ready(function(){
+			$('.industry-slider').slick({
+				slidesToShow: 2,
+  				slidesToScroll: 1,
+				dots: false,
+				arrows: true,
+  				centerMode: true,
+				focusOnSelect: false,
+				centerPadding: '100px',
+				prevArrow: '<button type="button" class="slick-prev"><img src="" alt="slide-back"/></button>',
+				nextArrow: '<button type="button" class="slick-next"><img src="" alt="slide-next"/></button>',
+				responsive: [
+					{
+						breakpoint: 769,
+						settings: {
+							slidesToShow: 1,
+							slidesToScroll: 1,
+							centerMode: false
+						}
+					}
+				]
+			});
+		});
+
+	});
+</script>

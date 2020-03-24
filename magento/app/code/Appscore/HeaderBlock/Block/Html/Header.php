@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Appscore\CustomBlock\Block\Html;
+namespace Appscore\HeaderBlock\Block\Html;
 
 /**
  * Html page header block

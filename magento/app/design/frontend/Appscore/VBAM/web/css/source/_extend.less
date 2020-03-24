@@ -39,6 +39,15 @@
     @font-display: auto
 );
 
+.fullWidth {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -78,34 +87,72 @@ button {
     margin-right: 10px;
 }
 
-.industry-slide {
-    background: red;
-    height: 300px;
-    color: #fff;
-    
-    h3 {
-        font-size: 18px;
-        text-transform: uppercase;
+.industry-slider {
+    .slick-arrow {
+        position: absolute;
+        appearance: none;
+        -webkit-appearance: none;
+        box-shadow: none;
+        border: none;
+        background: none;
     }
 
-    .industry-info {
-        text-align: center;
-        margin-top: 40px;
-
-        p {
-            font-size: 13px;
-            font-family: 'BrauerNeue';
-            font-weight: normal;
+    .industry-slide {
+        background: red;
+        height: 300px;
+        color: #fff;
+        
+        h3 {
+            font-size: 18px;
+            text-transform: uppercase;
         }
-
-        .industry-link {
-            margin-top: 30px;
-            font-family: 'BrauerNeue';
-            font-weight: 900;
-            font-size: 13px;
-            
-            a {
-                color: #fff;
+    
+        .industry-info {
+            text-align: center;
+            margin-top: 40px;
+    
+            p {
+                font-size: 12px;
+                font-family: 'BrauerNeue';
+                font-weight: normal;
+            }
+    
+            .industry-link {
+                margin-top: 30px;
+                font-family: 'BrauerNeue';
+                font-weight: 900;
+                font-size: 12px;
+                
+                a {
+                    color: #fff;
+    
+                    .link-icon {
+                        display: inline-block;
+                        margin-left: 6px;
+                        margin-bottom: 2px;
+                    }
+                }
+            }
+        }
+    
+        .industry-first-product {
+            text-align: center;
+            color: #000;
+    
+            .industry-image-wrapper {
+                img {
+                    margin: 0 auto;
+                }
+            }
+    
+            .industry-first-product-info {
+                margin-top: -40px;
+    
+                p {
+                    font-size: 16px;
+                    font-family: 'BrauerNeue';
+                    font-weight: normal;
+                }
             }
         }
     }
@@ -137,6 +184,10 @@ button {
     .header.content {
         height: 114px;
         box-sizing: border-box;
+
+        .compare.wrapper {
+            display: none;
+        }
     }
 }
 
@@ -213,6 +264,120 @@ button {
     margin-right: -15px !important;
 }
 
+.items-catalog {
+    .item-catalog {
+        .product-item-info {
+            background: #fff;
+            width: 100%;
+            padding: 30px;
+
+            .product-item-name {
+                font-family: "BrauerNeue";
+                font-weight: 900;
+                font-size: 16px;
+                margin: 0;
+                
+                a {
+                    color: #001489;
+                    text-transform: uppercase;
+                }
+            }
+
+            .product-item-details {
+                display: flex;
+
+                .product-item-info-general {
+                    width: 60%;
+                }
+    
+                .product-item-info-inner {
+                    width: 40%;
+                    margin-left: 10px;
+
+                    .product-item-actions {
+                        margin: 0;
+                        text-align: right;
+
+                        .action {
+                            clip: unset;
+
+                            span {
+                                clip: unset;
+                                width: auto;
+                                height: auto;
+                            }
+                        }
+
+                        .towishlist {
+                            width: 30px;
+                            height: 30px;
+                            border: 1px solid #DBDBDB;
+                            border-radius: 50%;
+                        }
+
+                        .action-tocompare {
+                            clear: both;
+                            margin-top: 10px;
+
+                            .tocompare {
+                                color: #0C2340;
+                                font-size: 12px;
+                                font-family: "BrauerNeue";
+                                font-weight: normal;
+                                text-align: right;
+                                text-transform: initial;
+                                display: block;    
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .product-item-sku {
+                color: #9AA5AF;
+                font-family: "BrauerNeue";
+                font-weight: normal;
+                font-size: 12px; 
+                text-transform: uppercase;
+                margin-bottom: 0;
+            }
+
+            .product-image-container {
+                width: 100% !important;
+            }
+
+            .product-item-inner {
+                display: block;
+                background: none;
+                border: none;
+                box-shadow: none;
+            }
+
+            .price-box {
+                color: #000;
+                font-family: "BrauerNeue";
+                font-weight: 900;
+                margin-top: 6px;
+                
+                .price-container {
+                    .price {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+        .product-item-info:hover {
+            box-shadow: none;
+            border: none;
+            margin: auto;
+            padding: auto;
+            position: relative;
+            z-index: initial;
+
+        }
+    }
+}
+
 .marginBottom27px {
     margin-bottom: 27px;
 }
@@ -265,8 +430,6 @@ button {
     .minicart-wrapper {
         margin-top: 9px;
     }
-
-    
 
     .block-search {
         max-width: 180px;
@@ -488,6 +651,11 @@ button {
         flex-direction: column;
     }
 
+    .industry-slider {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
     .mobile {
         display: block;
     }
@@ -593,6 +761,12 @@ button {
         width: 100%;
         padding-left: 15px;
         padding-right: 15px;
+    }
+
+    .product-items {
+        .product-item.col-12 {
+            width: 100% !important;
+        }
     }
 
     .copyright-wrapper {
