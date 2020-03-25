@@ -10,7 +10,8 @@
 		foreach ($cateList as $cate) {
 			$backgroundColor = $cate->colour;
 
-			$html .= '<div class="industry-slide" style="background: '.$backgroundColor.'">';
+			$html .= '<div class="industry-slide">';
+				$html .= '<div class="industry-slide-background" style="background: '.$backgroundColor.'"></div>';
 				$html .= '<div class="industry-info">';
 					$html .= '<h3>'.$cate->name.'</h3>';
 					$html .= '<p>'.$cate->product_count.' Products</p>';
@@ -25,7 +26,6 @@
 						$html .= '<p>$'.$cate->first_product->price.'</p>';
 					$html .= '</div>';
 				$html .= '</div>';
-				
 			$html .= '</div>';
 		}
 	?>	
