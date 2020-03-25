@@ -36,7 +36,7 @@ class CategorySlider extends Template implements BlockInterface
     public  function getSubCateList($categoryId)
     {
         $parentCategory = $this->categoryRepository->get($categoryId, $this->_storeManager->getStore()->getId());
-        $subCategories = $parentCategory->getChildrenCategories();
+        $subCategories = $parentCategory->getChildrenCategories()->addAttributeToSelect('*');
 
         $cateList = [];
 
@@ -46,9 +46,9 @@ class CategorySlider extends Template implements BlockInterface
             if($firstProductInStock) {
                 $image_url = $this->imageHelper->init($firstProductInStock, 'custom_product_base_image')->getUrl();
             }
-
+            
             $cateObj = (object) [
-                'color' => '',
+                'colour' => $subCate->getData('custom_category_colour'),
                 'name' => $subCate->getName(),
                 'product_count' => $subCate->getProductCount(),
                 'url' => $subCate->getUrl(),

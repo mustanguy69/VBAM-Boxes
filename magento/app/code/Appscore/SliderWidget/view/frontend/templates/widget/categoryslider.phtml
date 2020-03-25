@@ -1,13 +1,16 @@
 <?php 
 	$categoryId = $block->getData('category_id');
 	$cateList = $block->getSubCateList($categoryId);
+	$backgroundColor = '#F7F5F5';
 ?>
 
 <?php if($categoryId): ?>
 	<?php 
 		$html = '';
 		foreach ($cateList as $cate) {
-			$html .= '<div class="industry-slide">';
+			$backgroundColor = $cate->colour;
+
+			$html .= '<div class="industry-slide" style="background: '.$backgroundColor.'">';
 				$html .= '<div class="industry-info">';
 					$html .= '<h3>'.$cate->name.'</h3>';
 					$html .= '<p>'.$cate->product_count.' Products</p>';
@@ -47,8 +50,8 @@
   				centerMode: true,
 				focusOnSelect: false,
 				centerPadding: '100px',
-				prevArrow: '<button type="button" class="slick-prev"><img src="" alt="slide-back"/></button>',
-				nextArrow: '<button type="button" class="slick-next"><img src="" alt="slide-next"/></button>',
+				prevArrow: '<button type="button" class="slick-prev"><img src="<?= $this->getViewFileUrl('images/left_chev_white.svg') ?>" width="10" alt="slide-back"/></button>',
+				nextArrow: '<button type="button" class="slick-next"><img src="<?= $this->getViewFileUrl('images/right_chev_white.svg') ?>" width="10" alt="slide-next"/></button>',
 				responsive: [
 					{
 						breakpoint: 769,
