@@ -1,0 +1,22 @@
+{
+    "name": "appscore/module-compareproducts",
+    "description": "Custom compare products module",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Bao",
+            "email": "bao.luong@appscore.com.au"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Appscore\\CompareProducts\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

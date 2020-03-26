@@ -52,14 +52,8 @@
     box-sizing: border-box;
 }
 
-body {
-    background: #F7F5F5;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'BrauerNeue';
-    font-weight: 900;
-    margin-top: 0;
+.breadcrumbs {
+    display: none;
 }
 
 strong {
@@ -67,19 +61,36 @@ strong {
     font-weight: bold;
 }
 
+.black {
+    font-family: 'BrauerNeue';
+    font-weight: 900;
+}
+
+.regular {
+    font-family: 'BrauerNeue';
+    font-weight: normal;
+}
+
 body, p {
     font-family: 'MuseoSans';
     font-weight: normal;
 }
 
+body {
+    background: #F7F5F5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    &:extend(.black);
+    margin-top: 0;
+}
+
 input[type="text"], input[type="password"], input[type="url"], input[type="tel"], input[type="search"], input[type="number"], input[type="datetime"], input[type="email"] {
-    font-family: 'BrauerNeue';
-    font-weight: normal;
+    &:extend(.regular);
 }
 
 button {
-    font-family: 'BrauerNeue';
-    font-weight: 900;
+    &:extend(.black);
     background: #00A261;
     box-shadow: none !important;
     border: none !important;
@@ -112,10 +123,54 @@ button {
         padding-bottom: 20px;
 
         strong {
+            &:extend(.black);
             font-size: 21px;
-            font-family: 'BrauerNeue';
-            font-weight: 900;
             text-transform: uppercase;
+        }
+    }
+}
+
+.page-title-wrapper {
+    &:extend(.widget .block-title);
+
+    .page-title {
+        text-transform: uppercase;
+        margin-bottom: 0;
+        font-size: 21px;
+    }
+}
+
+.toolbar-products {
+    .modes {
+        display: none;
+    }
+
+    .toolbar-amount {
+        color:#9AA5AF;
+        font-size: 15px;
+    }
+
+    .toolbar-sorter {
+        .sorter-options {
+            background: #fff;
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+            font-size: 14px;
+            width: 170px;
+            &:extend(.black);
+            cursor: pointer;
+        }
+
+        &:after {
+            content: '';
+            background: url('@{baseDir}images/chev-down-gray.svg') no-repeat;
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            top: 13px;
+            right: 50px;
+            background-size: contain;
         }
     }
 }
@@ -162,15 +217,13 @@ button {
             margin-top: 40px;
     
             p {
+                &:extend(.regular);
                 font-size: 12px;
-                font-family: 'BrauerNeue';
-                font-weight: normal;
             }
     
             .industry-link {
+                &:extend(.black);
                 margin-top: 30px;
-                font-family: 'BrauerNeue';
-                font-weight: 900;
                 font-size: 12px;
                 
                 a {
@@ -200,8 +253,7 @@ button {
     
                 p {
                     font-size: 16px;
-                    font-family: 'BrauerNeue';
-                    font-weight: normal;
+                    &:extend(.regular);
                 }
             }
         }
@@ -223,9 +275,8 @@ button {
             padding-right: 20px;
 
             p {
+                &:extend(.regular);
                 margin-bottom: 0;
-                font-family: 'BrauerNeue';
-                font-weight: normal;
                 font-size: 14px;
             }
         }
@@ -254,6 +305,7 @@ button {
 }
 
 input.qty {
+    &:extend(.black);
     width: 23px;
     padding: 0;
     height: 100%;
@@ -261,8 +313,6 @@ input.qty {
     background: #F7F5F5;
     text-align: center;
     font-size: 18px;
-    font-family: "BrauerNeue";
-    font-weight: 900;
 }
 
 .block-search {
@@ -295,6 +345,7 @@ input.qty {
 
     .action.showcart {
         .counter.qty {
+            &:extend(.black);
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -303,8 +354,6 @@ input.qty {
             margin: 0;
             position: absolute;
             right: -10px;
-            font-family: 'BrauerNeue';
-            font-weight: 900;
         }
     }
 
@@ -356,7 +405,7 @@ input.qty {
 
 .items-catalog {
     .item-catalog {
-        margin-bottom: 25px;
+        margin-bottom: 30px;
 
         .product-item-info {
             background: #fff;
@@ -365,8 +414,7 @@ input.qty {
             position: relative;
 
             .product-item-name {
-                font-family: "BrauerNeue";
-                font-weight: 900;
+                &:extend(.black);
                 font-size: 16px;
                 margin: 0;
                 
@@ -413,10 +461,9 @@ input.qty {
                             margin-top: 10px;
 
                             .tocompare {
+                                &:extend(.regular);
                                 color: #0C2340;
                                 font-size: 12px;
-                                font-family: "BrauerNeue";
-                                font-weight: normal;
                                 text-align: right;
                                 text-transform: initial;
                                 display: block;    
@@ -427,9 +474,8 @@ input.qty {
             }
             
             .product-item-sku {
+                &:extend(.regular);
                 color: #9AA5AF;
-                font-family: "BrauerNeue";
-                font-weight: normal;
                 font-size: 12px; 
                 text-transform: uppercase;
                 margin-bottom: 0;
@@ -470,6 +516,7 @@ input.qty {
                     }
 
                     .qty {
+                        &:extend(.black);
                         width: 23px;
                         padding: 0;
                         height: 100%;
@@ -477,16 +524,13 @@ input.qty {
                         background: #F7F5F5;
                         text-align: center;
                         font-size: 18px;
-                        font-family: "BrauerNeue";
-                        font-weight: 900;
                     }
                 }
             }
 
             .price-box {
+                &:extend(.black);
                 color: #000;
-                font-family: "BrauerNeue";
-                font-weight: 900;
                 margin-top: 6px;
                 
                 .price-container {
@@ -538,7 +582,87 @@ input.qty {
     margin-right: 15px;
 }
 
+.sidebar-primary {
+    .sidebar-main,
+    .sidebar-additional {
+        width: 100%;
+        padding: 0;
+    }
+
+    .filter-options-item {
+        border: 0;
+    }
+
+    .filter-options-title,
+    .filter-options-content {
+        padding: 0;
+    }
+
+    .filter-options-title {
+        &:extend(.black);
+        font-size: 16px;
+        color: #00A261;
+
+        &:after {
+            top: 2px;
+            color: #9AA5AF;
+        }
+    }
+
+    .filter-options-content {
+        .item {
+            a {
+                &:extend(body);
+                font-size: 13px;
+                text-transform: uppercase;
+            }
+        }
+    }
+    .block-compare {
+        .block-compare-heading {
+            &:extend(.black);
+            font-size: 16px;
+            color: #00A261;
+        }
+
+        .counter.qty {
+            &:extend(.regular);
+            font-size: 16px;
+            color: #00A261;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.my-account {
+    .account-link {
+        a {
+            &:extend(.black);
+            color: #001489;
+        }
+    }
+}
+
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    strong {
+        font-family: 'BrauerNeue';
+        font-weight: bold;
+    }
+    
+    .black {
+        font-family: 'BrauerNeue';
+        font-weight: 900;
+    }
+    
+    .regular {
+        font-family: 'BrauerNeue';
+        font-weight: normal;
+    }
+    
+    body, p {
+        font-family: 'MuseoSans';
+        font-weight: normal;
+    }
     .page-header {
         .header.content {
             padding-top: 0;
@@ -610,7 +734,18 @@ input.qty {
         width: 25%;
         padding-left: 15px;
         padding-right: 15px;
-        flex-grow: 1;
+    }
+
+    .col-md-4 {
+        width: calc(~'100% / 3');
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .col-md-9 {
+        width: 75% !important;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .nav-sections {
@@ -632,10 +767,9 @@ input.qty {
             }
 
             .navigation__item {
+                &:extend(.black);
                 display: inline-block;
                 font-size: 16px;
-                font-family: 'BrauerNeue';
-                font-weight: 900;
                 text-transform: uppercase;
                 margin-left: 50px;
                 margin-bottom: 0;
@@ -753,9 +887,6 @@ input.qty {
 
         .account-link {
             font-size: 16px;
-            color: #001489;
-            font-family: "BrauerNeue";
-            font-weight: 900;
             text-transform: uppercase;
         }
     }
@@ -781,6 +912,25 @@ input.qty {
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    strong {
+        font-family: 'BrauerNeue';
+        font-weight: bold;
+    }
+    
+    .black {
+        font-family: 'BrauerNeue';
+        font-weight: 900;
+    }
+    
+    .regular {
+        font-family: 'BrauerNeue';
+        font-weight: normal;
+    }
+    
+    body, p {
+        font-family: 'MuseoSans';
+        font-weight: normal;
+    }
     .industry-slider {
         margin-left: -10px;
         margin-right: -10px;
@@ -897,7 +1047,6 @@ input.qty {
         width: 50%;
         padding-left: 15px;
         padding-right: 15px;
-        flex-grow: 1;
     }
 
     .product-items {
@@ -931,14 +1080,13 @@ input.qty {
 
         .nav-sections-item-title.active,
         .nav-sections-item-title {
+            &:extend(.black);
             background-color: #001489;
             border: none;
             width: auto;
             height: auto;
             padding-top: 0;
             padding-bottom: 20px;
-            font-family: "BrauerNeue";
-            font-weight: 900;
             font-size: 14px;
             z-index: 1;
 
@@ -971,8 +1119,7 @@ input.qty {
             padding-bottom: 20px;
 
             .authorization-link {
-                font-family: 'BrauerNeue';
-                font-weight: bold;
+                &:extend(strong);
                 font-size: 14px;
                 padding: 0 30px;
                 list-style-type: none;
@@ -987,10 +1134,9 @@ input.qty {
             }
 
             .navigation {
+                &:extend(.black);
                 background: none;
                 font-size: 16px;
-                font-family: "BrauerNeue";
-                font-weight: 900;
 
                 .navigation__item {
                     text-transform: uppercase;
@@ -1160,6 +1306,27 @@ input.qty {
                     
                 }
             }
+        }
+    }
+
+    .toolbar-products {    
+        .toolbar-sorter {
+            right: 30px;
+        }
+    }
+    
+    .sidebar-primary {
+        .filter-title {
+            strong {
+                right: 15px;
+                left: auto;
+            }
+        }
+    }
+
+    .page-products {
+        .columns {
+            padding-top: 0;
         }
     }
 }

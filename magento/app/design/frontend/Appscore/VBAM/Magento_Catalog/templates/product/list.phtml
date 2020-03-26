@@ -1,0 +1,291 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+use Magento\Framework\App\Action\Action;
+
+?>
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+?>
+<?php if (!$_productCollection->count()) :?>
+    <div class="message info empty"><div><?= $block->escapeHtml(__('We can\'t find products matching the selection.')) ?></div></div>
+<?php else :?>
+    <?= $block->getToolbarHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $imageDisplayArea = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $imageDisplayArea = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="products wrapper <?= /* @noEscape */ $viewMode ?> products-<?= /* @noEscape */ $viewMode ?>">
+        <div class="products list items items-catalog displayFlex">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product) :?>
+            <div class="item-catalog col-md-4 col-6">
+                <div class="product-item-info">
+                    <div class="product-item-details">
+                        <div class="product-item-info-general">
+                            <strong class="product-item-name">
+                                <a class="product-item-link" title=" <?= $block->escapeHtml($_product->getName()) ?>"
+                                    href="<?= $block->escapeUrl($_product->getProductUrl()) ?>">
+                                    <?= $block->escapeHtml($_product->getName()) ?>
+                                </a>
+                            </strong>
+                            <p class="product-item-sku">
+                                SKU#: <?= $block->escapeHtmlAttr($_product->getSku()) ?>
+                            </p>
+                            <?php if ($_product->isAvailable()) :?>
+                                <?= $block->getProductDetailsHtml($_product) ?>
+                            <?php endif; ?>
+
+                            <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                        </div>
+                        <div class="product-item-info-inner">
+                            <div class="product-item-actions">
+                                <div class="actions-secondary" data-role="add-to-links">
+                                    <?php //phpcs:disable ?>
+                                    <?php if ($this->helper(\Magento\Wishlist\Helper\Data::class)->isAllow()) : ?>
+                                    <?php //phpcs:enable ?>
+                                    <a href="#" data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_product) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                        <?php 
+                                            $inWishlist = $block->isInWishlist($_product->getId());
+                                            
+                                            if($inWishlist) {
+                                                // has wishlist
+                                            ?>
+                                                <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/heart_active.svg'); ?>" width="15"/>
+                                            <?php                                                        
+                                            } else {
+                                            ?>
+                                                <img alt="<?= $block->escapeHtml(__('Add to Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/heart_defualt.svg'); ?>" width="15"/>
+                                        <?php } ?>
+                                    </a>
+                                    <?php endif; ?>
+                                    <div class="action-tocompare">
+                                    <?php if ($block->getAddToCompareUrl()) : ?>
+                                        <?php //phpcs:disable ?>
+                                        <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                                        <?php //phpcs:enable ?>
+                                        <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                            <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                        </a>
+                                    <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" class="product-item-photo">
+                        <?= $block->getImage($_product, $imageDisplayArea)->toHtml() ?>
+                    </a>
+                    <div class="product-item-cart desktop">
+                        <div class="actions-primary">
+                            <?php if ($_product->isSaleable()) : ?>
+                                <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                <form data-role="tocart-form" data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>" action="<?= $block->escapeUrl($postParams['action']) ?>" method="post">
+                                    <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
+                                    <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                    <?= $block->getBlockHtml('formkey') ?>
+                                    
+                                    <div class="displayFlexNoMargin">
+                                        <div class="qty-wrapper">
+                                            <div class="qty-controller qty-minus">
+                                                <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                            </div>
+                                            <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                            <div class="qty-controller qty-plus">
+                                                <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                            </div>
+                                        </div>
+                                        <button type="submit"
+                                                title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                                class="action tocart primary">
+                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                        </button>
+                                    </div>
+                                </form>
+                            <?php else : ?>
+                                <?php if ($_item->getIsSalable()) : ?>
+                                    <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                <?php else : ?>
+                                    <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="product-item-cart-mobile mobile">
+                        <div class="displayFlexNoMargin">
+                            <div class="qty-wrapper">
+                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            </div>
+                            <div class="cart-wrapper">
+                                <button title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action opentocart">
+                                    <img src="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>" width="8" alt="plus"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-item-cart-quantity mobile">
+                        <div class="qty-close">
+                            <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
+                        </div>
+                        <div class="qty-container">
+                            <p><?php echo __('Place in cart')?></p>
+                            <div class="qty-wrapper">
+                                <div class="qty-controller qty-minus">
+                                    <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                </div>
+                                <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                <div class="qty-controller qty-plus">
+                                    <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                </div>
+                            </div>
+                            <strong><?php echo __('OR')?></strong>
+                            <div class="action-tocompare">
+                            <?php if ($block->getAddToCompareUrl()) : ?>
+                                <?php //phpcs:disable ?>
+                                <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                                <?php //phpcs:enable ?>
+                                <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                    <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                </a>
+                            <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?= $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) :?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?= $block->escapeJs($_product->getSku()) ?>"
+                }
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
+
+<script type="text/javascript">
+	require([
+		'jquery'
+	], function ($) {
+		"use strict";
+
+		$(document).ready(function(){
+            var $window = $(window);
+
+            function setInput(e, add = true) {
+                // get parent
+                var parent = e.parents('.product-item-info');
+
+                // get input field
+                var inputField = parent.find('.input-text.qty');
+
+                var nextVal = 1;
+
+                if(add === true) {
+                    nextVal = parseInt(inputField.val()) + 1;
+                } else {
+                    nextVal = parseInt(inputField.val()) - 1;
+                    if(nextVal <= 0) {
+                        nextVal = 1;
+                    }
+                }
+                
+                inputField.val(nextVal);
+            }
+
+			$(document).on('click', '.qty-controller.qty-minus', function () {
+                setInput($(this), false);
+            });
+
+            $(document).on('click', '.qty-controller.qty-plus', function () {
+                setInput($(this), true);
+            });
+
+            $(document).on('blur', '.input-text.qty', function () {
+                var parent = $(this).parents('.product-item-info');
+                var inputField = parent.find('.input-text.qty');
+
+                if(parseInt($(this).val()) <= 0) {
+                    inputField.val(1);
+                } else {
+                    inputField.val($(this).val());
+                }
+            });
+
+            $(document).on('click', '.opentocart', function() {
+                var windowsize = $window.width();
+                var parent = $(this).parents('.product-item-info');
+                var mobileContainer = parent.find('.product-item-cart-quantity');
+                var realAddToCartBtn = parent.find('.actions-primary .tocart');
+
+                if (windowsize <= 768) {
+                    if ($(this).width() + 30 < $(this).parent().width()) {
+                        $(this).animate({
+                            width: '100%'
+                        }, 200, function() {
+                            $(this).text('ADD TO CART');
+                        });
+
+                        mobileContainer.fadeIn('fast');
+                    } else {
+                        realAddToCartBtn.trigger('click');
+                    }
+                } 
+            });
+
+            $(document).on('click', '.qty-close', function() {
+                var windowsize = $window.width();
+                var parent = $(this).parents('.product-item-info');
+                var cartContainer = parent.find('.product-item-cart-mobile');
+                var mobileContainer = parent.find('.product-item-cart-quantity');
+
+                var openToCart = parent.find('.opentocart');
+                var cartWrapper = cartContainer.find('.cart-wrapper');
+
+                if (windowsize <= 768) {
+                    if (openToCart.width() + 30 >= cartWrapper.width()) {
+                        openToCart.animate({
+                            width: '35px'
+                        }, 200, function() {
+                            openToCart.html('<img src="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>" width="8" alt="plus"/>');
+                        });
+                        mobileContainer.fadeOut('fast');
+                    }
+                } 
+            });
+		});
+
+	});
+</script>

@@ -235,6 +235,7 @@ return [
         'Amazon_Payment' => 1,
         'Appscore_CatalogWidget' => 1,
         'Appscore_CategoryColour' => 1,
+        'Appscore_CompareProducts' => 1,
         'Appscore_HeaderBlock' => 1,
         'Appscore_SliderWidget' => 1,
         'Dotdigitalgroup_Email' => 1,

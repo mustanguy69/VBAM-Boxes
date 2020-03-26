@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
     <preference for="Magento\CatalogWidget\Block\Product\ProductsList" type="Appscore\CatalogWidget\Block\ProductsList" />
+    <preference for="Magento\Catalog\Block\Product\ListProduct" type="Appscore\CatalogWidget\Block\Product\ListProduct" />
 </config>
