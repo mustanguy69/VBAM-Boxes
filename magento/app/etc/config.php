@@ -234,6 +234,7 @@ return [
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
         'Appscore_CatalogWidget' => 1,
+        'Appscore_Checkout' => 1,
         'Appscore_HeaderBlock' => 1,
         'Appscore_SliderWidget' => 1,
         'Dotdigitalgroup_Email' => 1,
