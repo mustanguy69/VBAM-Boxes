@@ -1,25 +1,29 @@
 <!--Use 'stepCode' as id attribute-->
-<li data-mage-init='{"login2": {"message": "HELLO WORLD!"}}'>
+<!-- ko ifnot: isLoggedIn() -->
+<li id="login-choice">
     <div class="step-title" data-bind="i18n: stepTitle" data-role="title"></div>
     <div id="checkout-step-title"
          class="step-content"
          data-role="content">
-        <input type="radio" id="member" name="login" />
+    
+        <input type="radio" id="member" name="login" value="yes" />
         <label for="member">Checkout as member</label>
-        <input type="radio" id="guest" name="login" />
+        <input type="radio" id="guest" name="login" value="no" />
         <label for="guest">Checkout as guest</label>
         <form data-role="login"
               data-bind="submit:login"
-              method="post">
+              method="post"
+              id="login-form">
             <div class="fieldset"
                  data-bind="attr: {'data-hasrequired': $t('* Required Fields')}">
                 <div class="field field-email required">
-                    <label class="label" for="login-email"><span data-bind="i18n: 'Email Address'"></span></label>
+                    <label class="label" for="login-email"><span data-bind="i18n: 'Email'"></span></label>
                     <div class="control">
                         <input type="email"
                                class="input-text"
                                id="login-email"
                                name="username"
+                               placeholder="Enter tour email"
                                data-bind="attr: {autocomplete: autocomplete}"
                                data-validate="{required:true, 'validate-email':true}" />
                     </div>
@@ -31,6 +35,7 @@
                                class="input-text"
                                id="login-password"
                                name="password"
+                               placeholder="Enter your password"
                                data-bind="attr: {autocomplete: autocomplete}"
                                data-validate="{required:true}"
                                autocomplete="off"/>
@@ -46,11 +51,24 @@
                     <button type="submit" class="action action-login secondary"><span data-bind="i18n: 'Sign In'"></span></button>
                 </div>
                 <div class="secondary">
-                    <a class="action action-remind" data-bind="attr: { href: forgotPasswordUrl }">
-                        <span data-bind="i18n: 'Forgot Your Password?'"></span>
+                    <a class="action action-remind forgotten-password" data-bind="attr: { href: forgotPasswordUrl }">
+                        <span data-bind="i18n: 'Forgotten Password?'"></span>
                     </a>
                 </div>
             </div>
         </form>
+
+        <div id="guest-form">
+            <form data-bind="submit: navigateToNextStep" novalidate="novalidate">
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button data-role="opc-continue" type="submit" class="button action continue">
+                            <span><!-- ko i18n: 'Continue as guest'--><!-- /ko --></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </li>
+<!-- /ko -->

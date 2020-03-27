@@ -21,7 +21,8 @@ define(
         loginAction,
         validation,
         messageContainer,
-        fullScreenLoader
+        fullScreenLoader,
+        hello
     ) {
         'use strict';
 
@@ -42,7 +43,9 @@ define(
 
             //add here your logic to display step,
             isVisible: ko.observable(true),
-            isLogedIn: customer.isLoggedIn(),
+            isLoggedIn: function () {
+                return customer.isLoggedIn();
+            },
             //step code will be used as step content id in the component template
             stepCode: 'loginStep',
             //step title value
@@ -79,6 +82,31 @@ define(
                     ko.observable(false);
                     stepNavigator.next();
                 }
+                
+
+                $(document).ready(function () {
+                    var guestSelected = 0;
+                    $(document).on('change','input[name="login"]', function(){
+                        if ($(this).val() == 'yes') {
+                            $('#login-form').css('display', 'block');
+                            $('#guest-form, #shipping, #opc-shipping_method').css('display', 'none');
+                        } else if($(this).val() == 'no') {
+                            $('#login-form').css('display', 'none');
+                            $('#guest-form').css('display', 'block');
+                        }
+                    });
+
+                    $(document).on('click', '#guest-form button', function () {
+                        guestSelected = 1;
+                        $('#login-choice').css('display', 'none');
+                        $('#login-form').css('display', 'none');
+                    })
+
+                    if(guestSelected == 1) {
+                        $('#login-choice').css('display', 'none');
+                        $('#login-form').css('display', 'none');
+                    }
+                });
 
                 return this;
             },
@@ -115,7 +143,7 @@ define(
                         fullScreenLoader.stopLoader();
                     });
                 }
-            }
+            },
         });
     }
 );
