@@ -40,4 +40,27 @@
             <span><?= $block->escapeHtml(__('Set Descending Direction')) ?></span>
         </a>
     <?php endif; ?>
+    <div class="block-title filter-title">
+        <strong data-role="title" id="open-filter"><img src="<?php echo $this->getViewFileUrl('images/filter.svg'); ?>" alt="shop by" width="20"/></strong>
+    </div>
 </div>
+
+<script type="text/javascript">
+	require([
+		'jquery'
+	], function ($) {
+		"use strict";
+
+		$(document).ready(function(){
+			$(document).on('click', '#open-filter', function (e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                $('.sidebar-primary').toggleClass('active');
+                $('.page-wrapper').toggleClass('my-filter-active');
+                $('body').toggleClass('my-filter-active');
+            })
+		});
+
+	});
+</script>

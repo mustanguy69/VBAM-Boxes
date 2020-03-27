@@ -10,5 +10,6 @@
         <referenceContainer name="sidebar.additional">
             <referenceBlock name="wishlist_sidebar" remove="true"/>
         </referenceContainer>
+        <move element="catalog.compare.sidebar" destination="sidebar.main"/>
     </body>
 </page>

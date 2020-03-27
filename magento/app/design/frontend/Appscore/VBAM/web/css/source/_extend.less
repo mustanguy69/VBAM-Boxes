@@ -96,7 +96,7 @@ button {
     border: none !important;
     color: #fff;
     text-transform: uppercase;
-    border-radius: 0;
+    border-radius: 0 !important;
 
     &:hover,
     &:focus,
@@ -105,6 +105,10 @@ button {
         background: #00A261;
         color: #fff;
     }
+}
+
+.action.primary {
+    &:extend(button);
 }
 
 .slick-slide {
@@ -171,6 +175,55 @@ button {
             top: 13px;
             right: 50px;
             background-size: contain;
+        }
+    }
+}
+
+// stupid magento with their block magic
+.products.wrapper ~ .toolbar {
+    border-top: 1px solid #DBDBDB;
+    border-bottom: 1px solid #DBDBDB;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    .limiter {
+        &:extend(.regular);
+        
+        label {
+            margin-right: 10px;
+
+            span {
+                font-size: 12px;
+                color: #9AA5AF;
+            }
+        }
+
+        .control {
+            position: relative;
+            width: 105px;
+
+            #limiter {
+                background: #fff;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                font-size: 16px;
+                &:extend(.black);
+                cursor: pointer;
+                margin: 0;
+                width: 100%;
+            }
+
+            &:after {
+                content: '';
+                background: url('@{baseDir}images/chev-down-gray.svg') no-repeat;
+                position: absolute;
+                height: 10px;
+                width: 10px;
+                top: 13px;
+                right: 10px;
+                background-size: contain;
+            }
         }
     }
 }
@@ -598,14 +651,36 @@ input.qty {
         padding: 0;
     }
 
+    .filter-current {
+        .filter-current-subtitle,
+        .items {
+            padding: 0;
+        }
+
+        .filter-current-subtitle {
+            &:extend(.black);
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .items {
+            .item {
+                span {
+                    &:extend(body);
+                    font-size: 13px;
+                    text-transform: uppercase;
+                    background: none;
+                }
+            }
+        }
+    }
+
     .filter-options-title {
         &:extend(.black);
         font-size: 16px;
-        color: #00A261;
 
         &:after {
             top: 2px;
-            color: #9AA5AF;
         }
     }
 
@@ -615,6 +690,7 @@ input.qty {
                 &:extend(body);
                 font-size: 13px;
                 text-transform: uppercase;
+                background: none;
             }
         }
     }
@@ -622,14 +698,26 @@ input.qty {
         .block-compare-heading {
             &:extend(.black);
             font-size: 16px;
-            color: #00A261;
         }
 
         .counter.qty {
             &:extend(.regular);
             font-size: 16px;
-            color: #00A261;
             text-transform: uppercase;
+        }
+
+        .product-item-name {
+            a {
+                &:extend(body);
+                font-size: 13px;
+                text-transform: uppercase;
+                background: none;
+            }
+        }
+
+        .action.primary:hover {
+            background: #000;
+            color: #fff;
         }
     }
 }
@@ -902,6 +990,36 @@ input.qty {
         position: relative;
     }
 
+    .sidebar-primary {
+        .filter-options-title {
+            color: #00A261;
+    
+            &:after {
+                color: #9AA5AF;
+            }
+        }
+    
+        .block-compare {
+            .block-compare-heading {
+                color: #00A261;
+            }
+    
+            .counter.qty {
+                color: #00A261;
+            }
+        }
+
+        .filter-current {
+            .filter-current-subtitle {
+                color: #00A261;
+            }
+        }
+
+        .filter-actions {
+            padding-left: 17px;
+        }
+    }
+
     .mobile {
         display: none !important;
     }
@@ -992,6 +1110,10 @@ input.qty {
             padding-left: 30px;
             padding-right: 30px;
             padding-top: 30px;
+
+            .nav-toggle, .logo {
+                z-index: 1;
+            }
         }
     }
 
@@ -1070,6 +1192,10 @@ input.qty {
     }
 
     .my-account {
+        display: none;
+    }
+
+    .filter-title {
         display: none;
     }
 
@@ -1311,22 +1437,186 @@ input.qty {
 
     .toolbar-products {    
         .toolbar-sorter {
-            right: 30px;
+            right: 60px;
         }
     }
     
-    .sidebar-primary {
-        .filter-title {
-            strong {
-                right: 15px;
-                left: auto;
-            }
+    .filter-title {
+        display: block;
+        strong {
+            right: -45px;
+            left: auto;
+            background: #fff;
+            box-shadow: none;
+            padding: 6px;
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
         }
     }
 
     .page-products {
         .columns {
             padding-top: 0;
+        }
+    }
+    
+    .sidebar-primary {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        background: #00A261;
+        z-index: 9999;
+        height: 100%;
+        width: 90%;
+        transition: 0.2s all ease-in-out;
+        padding: 85px 30px 30px 30px;
+
+        .filter.block {
+            position: relative;
+
+            .filter-close {
+                position: absolute;
+                top: -50px;
+                right: 0;
+                cursor: pointer;
+            }
+        }
+
+        .filter-options,
+        .block-compare,
+        .block-compare-heading {
+            display: block;
+        }
+        
+        .filter-options-title {
+            color: #fff; 
+
+            &:after {
+                right: 1px;
+            }
+        }
+
+        .filter-options-content {
+            .item {
+                a {
+                    color: #fff;
+
+                    span {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .filter-current {
+            margin: 0;
+            border: none;
+
+            .filter-current-subtitle {
+                color: #fff;
+
+                &:before {
+                    top: 1px;
+                    right: 1px;
+                }
+
+                &:after {
+                    color: #fff;
+                    font-size: 16px;
+                }
+            }
+
+            .items {
+                margin-top: 15px;
+                .item {
+                    a, span, a:before {
+                        color: #fff;
+                    }
+                }
+            }
+            
+        }
+
+        .filter-actions {
+            padding-left: 27px;
+
+            a {
+                color: #fff;
+            }
+        }
+
+        .block-compare {
+            margin-top: 30px;
+
+            .block-title {
+                margin-bottom: 15px;
+            }
+
+            .block-compare-heading,
+            .counter {
+                color: #fff;
+                display: inline-block;
+            }
+
+            #compare-items {
+                .product-item-name {
+                    margin-left: 17px;
+
+                    a {
+                        color: #fff;
+                    }
+                }
+
+                a:before {
+                    color: #fff;
+                }
+            }
+
+            .action.primary {
+                background: #fff;
+                color: #000;
+            }
+        }
+        
+    }
+
+    .page-wrapper {
+        transition: 0.3s all ease-in-out;
+        left: 0;
+        position: relative;
+
+        &.my-filter-active {
+            left: 90%;
+            overflow: hidden;
+
+            &:after {
+                content: '';
+                background: #000;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                opacity: 0.7;
+                position: absolute;
+            }
+        }
+    }
+
+    .sidebar-primary.active {
+        left: 0;
+    }
+
+    body.my-filter-active {
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+    }
+    
+    .products.wrapper ~ .toolbar {        
+        .limiter {
+            display: block;
+            text-align: right;
         }
     }
 }

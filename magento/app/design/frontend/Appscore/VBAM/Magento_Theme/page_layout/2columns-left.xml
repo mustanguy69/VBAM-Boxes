@@ -9,7 +9,7 @@
     <update handle="1column"/>
     <referenceContainer name="main" htmlClass="column main col-md-9 col-12"/>
     <referenceContainer name="columns" htmlClass="columns displayFlex">
-        <container name="div.sidebar.primary" htmlTag="div" htmlClass="sidebar-primary col-md-3">
+        <container name="div.sidebar.primary" htmlTag="div" htmlClass="sidebar-primary col-md-3 col-12">
             <container name="div.sidebar.main" htmlTag="div" htmlClass="sidebar sidebar-main" after="main">
                 <container name="sidebar.main" as="sidebar_main" label="Sidebar Main"/>
             </container>
