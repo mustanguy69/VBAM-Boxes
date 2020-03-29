@@ -1,6 +1,6 @@
 <!--Use 'stepCode' as id attribute-->
 <!-- ko ifnot: isLoggedIn() -->
-<li id="login-choice">
+<li id="login-choice" data-bind="fadeVisible: isVisible">
     <div class="step-title" data-bind="i18n: stepTitle" data-role="title"></div>
     <div id="checkout-step-title"
          class="step-content"

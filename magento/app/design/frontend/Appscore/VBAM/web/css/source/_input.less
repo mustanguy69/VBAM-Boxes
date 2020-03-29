@@ -1,4 +1,4 @@
-input.input-text {
+input.input-text, select {
     padding: 20px 10px;
     border: none;
 }
@@ -21,4 +21,13 @@ select:-webkit-autofill:focus {
 
 ._keyfocus *:focus, input:not([disabled]):focus, textarea:not([disabled]):focus, select:not([disabled]):focus {
     box-shadow: none !important;
+}
+
+@form-element-input-placeholder__color: @gray;
+
+form .field {
+  label {
+    color: @black-blue;
+    font-weight: 600;
+  }
 }
