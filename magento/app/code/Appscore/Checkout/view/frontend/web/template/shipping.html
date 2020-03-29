@@ -37,13 +37,12 @@
 
     <form id="co-shipping-form"
                   class="form shipping"
-                  submit="navigate"
-                  novalidate="novalidate">
+                  data-bind="submit: setShippingInformation">
             
         <div class="actions-toolbar" id="shipping-buttons-container">
             <div class="primary">
-                <button data-role="opc-continue" type="submit" class="button action continue primary">
-                    <span>Place order</span>
+                <button data-role="opc-continue" type="submit" class="button action continue primary green-button-empty">
+                    <span>Next</span>
                 </button>
             </div>
         </div>

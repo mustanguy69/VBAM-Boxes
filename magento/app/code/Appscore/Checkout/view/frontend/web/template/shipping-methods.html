@@ -3,7 +3,7 @@ class="checkout-shipping-method"
 data-bind="fadeVisible: isVisible, attr: { id: shipping_method }"
 role="presentation">
 <div class="checkout-shipping-method">
-    <div class="step-title" data-bind="i18n: 'Shipping Methods'" data-role="title"></div>
+    <div class="step-title" data-bind="i18n: 'DELIVERY'" data-role="title"></div>
     <!-- ko foreach: getRegion('before-shipping-method-form') -->
     <!-- ko template: getTemplate() --><!-- /ko -->
     <!-- /ko -->
@@ -97,7 +97,7 @@ role="presentation">
             <!-- /ko -->
             <div class="actions-toolbar" id="shipping-method-buttons-container">
                 <div class="primary">
-                    <button data-role="opc-continue" type="submit" class="button action continue primary">
+                    <button data-role="opc-continue" type="submit" class="button action continue primary green-button-empty">
                         <span><!-- ko i18n: 'Next'--><!-- /ko --></span>
                     </button>
                 </div>
