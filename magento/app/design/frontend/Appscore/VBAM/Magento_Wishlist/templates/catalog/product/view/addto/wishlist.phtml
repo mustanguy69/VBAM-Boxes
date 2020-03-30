@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist $block */
+?>
+<?php if ($block->isWishListAllowed()) : ?>
+<div class="towishlist-wrapper">
+    <a href="#"
+       class="action towishlist"
+       data-post='<?= /* @noEscape */ $block->getWishlistParams() ?>'
+       data-action="add-to-wishlist"><img src="<?php echo $this->getViewFileUrl('images/heart_defualt.svg');?>" width="9" alt="add to wishlist"/></a>
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "addToWishlist": <?= /* @noEscape */ $block->getWishlistOptionsJson() ?>
+        }
+    }
+</script>

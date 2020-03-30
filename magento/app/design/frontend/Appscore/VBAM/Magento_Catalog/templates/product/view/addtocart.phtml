@@ -1,0 +1,95 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()) :?>
+<div class="box-tocart product-item-cart">
+    <div class="actions-primary">
+        <div class="displayFlexNoMargin">
+            <div class="qty-wrapper">
+                <div class="qty-controller qty-minus">
+                    <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                </div>
+                <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                <div class="qty-controller qty-plus">
+                    <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                </div>
+            </div>
+            <button type="submit"
+                    title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                    class="action tocart primary" id="product-addtocart-button" disabled>
+                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+            </button>
+            <?= $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+	require([
+		'jquery'
+	], function ($) {
+		"use strict";
+
+		$(document).ready(function(){
+            var $window = $(window);
+
+            function setInput(e, add = true) {
+                // get parent
+                var parent = e.parents('.qty-wrapper');
+
+                // get input field
+                var inputField = parent.find('.input-text.qty');
+
+                var nextVal = 1;
+
+                if(add === true) {
+                    nextVal = parseInt(inputField.val()) + 1;
+                } else {
+                    nextVal = parseInt(inputField.val()) - 1;
+                    if(nextVal <= 0) {
+                        nextVal = 1;
+                    }
+                }
+                
+                inputField.val(nextVal);
+            }
+
+			$(document).on('click', '.qty-controller.qty-minus', function () {
+                setInput($(this), false);
+            });
+
+            $(document).on('click', '.qty-controller.qty-plus', function () {
+                setInput($(this), true);
+            });
+
+            $(document).on('blur', '.input-text.qty', function () {
+                var parent = $(this).parents('.qty-wrapper');
+                var inputField = parent.find('.input-text.qty');
+
+                if(parseInt($(this).val()) <= 0) {
+                    inputField.val(1);
+                } else {
+                    inputField.val($(this).val());
+                }
+            });
+		});
+
+	});
+</script>
+

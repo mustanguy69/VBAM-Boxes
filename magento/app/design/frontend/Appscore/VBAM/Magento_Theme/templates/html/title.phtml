@@ -7,13 +7,21 @@
 /**
  * @var $block \Magento\Theme\Block\Html\Title
  */
+
+$currentPage = $block->getRequest()->getFullActionName();
 $cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
 $titleHtml = '';
+$hasShoppingText = '';
+
+if($currentPage === 'catalog_category_view') {
+    $hasShoppingText = 'SHOPPING - ';
+}
+
 if (trim($block->getPageHeading())) {
     $titleHtml = '<span class="base" data-ui-id="page-title-wrapper" '
         . $block->getAddBaseAttribute()
         . '>'
-        . 'SHOPPING - ' . $block->escapeHtml($block->getPageHeading())
+        . $hasShoppingText . $block->escapeHtml($block->getPageHeading())
         . '</span>';
 }
 ?>
