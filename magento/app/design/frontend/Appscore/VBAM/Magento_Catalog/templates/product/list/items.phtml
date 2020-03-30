@@ -164,7 +164,7 @@ switch ($type = $block->getType()) {
         <?php else :?>
         <div class="block <?= $block->escapeHtmlAttr($class) ?>">
             <?php endif; ?>
-            <div class="block-title title">
+            <div class="block-title title test">
                 <strong id="block-<?= $block->escapeHtmlAttr($class) ?>-heading" role="heading" aria-level="2"><?= $block->escapeHtml($title) ?></strong>
             </div>
             <div class="block-content content" aria-labelledby="block-<?= $block->escapeHtmlAttr($class) ?>-heading">
@@ -184,9 +184,17 @@ switch ($type = $block->getType()) {
                                 <?php endif; ?>
                             <?php endif; ?>
                             <?php if ($type == 'related' || $type == 'upsell') :?>
+                                <?php if ($type == 'related') :?>
+                                <div class="item product item-catalog col-12 col-md-12" style="display: none;">
+                                <?php else :?>
                                 <div class="item product item-catalog col-md-3 col-6" style="display: none;">
+                                <?php endif; ?>
                             <?php else :?>
+                                <?php if ($type == 'related') :?>
+                                <div class="item product item-catalog col-12">
+                                <?php else :?>
                                 <div class="item product item-catalog col-md-3 col-6">
+                                <?php endif; ?>
                             <?php endif; ?>
                             <div class="product-item-info <?= /* @noEscape */ $available ?>">
                                 <div class="product-item-details">
