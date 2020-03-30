@@ -69,8 +69,7 @@ define(
                 }
                 
 
-                $(window).load(function () {
-                    var guestSelected = 0;
+                $(document).ready(function () {
                     $(document).on('change','input[name="login"]', function(){
                         if ($(this).val() == 'yes') {
                             $('#login-form').css('display', 'block');
@@ -82,9 +81,6 @@ define(
                     });
                 });
 
-                $(document).ajaxComplete(function() {
-                    console.log("defo charged");
-                });
 
                 return this;
             },
