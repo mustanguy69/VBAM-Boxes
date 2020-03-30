@@ -898,6 +898,51 @@ input.qty {
     }
 }
 
+.upsell {
+    margin-top: 10px;
+    border-top: 1px solid #DBDBDB;
+    padding-top: 40px;
+
+    .action-tocompare {
+        letter-spacing: normal;
+    }
+
+    .block-title {
+        strong {
+            &:extend(.black);
+            color: #001489;
+            font-size: 21px;
+            text-transform: uppercase;
+        }
+    }
+
+    .product-item-info-general {
+        .product-item-name,
+        p,
+        .price-box,
+        span {
+            line-height: normal;
+            letter-spacing: normal;
+        }
+    }
+
+    .product-item-cart-quantity {
+        input {
+            &:extend(.black);
+        }
+
+        p,
+        span {
+            line-height: normal;
+            letter-spacing: normal;
+        }
+    }
+
+    .qty-wrapper {
+        line-height: normal;
+    }
+}
+
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
     strong {
         font-family: 'BrauerNeue';
@@ -1934,6 +1979,7 @@ input.qty {
         bottom: 0;
         padding: 20px 30px;
         display: flex;
+        z-index: 2;
 
         .product-info-price {
             max-width: 150px;
@@ -1979,4 +2025,7 @@ input.qty {
         }
     }
     
+    .upsell {
+        display: none;
+    }
 }

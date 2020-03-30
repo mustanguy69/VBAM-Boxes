@@ -140,7 +140,7 @@ use Magento\Framework\App\Action\Action;
                                         <?= $block->getProductPriceHtml($_item, $type) ?>
                                     </div>
                                     <div class="cart-wrapper">
-                                        <button title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action opentocart">
+                                        <button title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action opentocart" image-bind="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>">
                                             <img src="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>" width="8" alt="plus"/>
                                         </button>
                                     </div>
@@ -184,97 +184,10 @@ use Magento\Framework\App\Action\Action;
         </div>
     </div>
 <?php endif;?>
-<script type="text/javascript">
-	require([
-		'jquery'
-	], function ($) {
-		"use strict";
-
-		$(document).ready(function(){
-            var $window = $(window);
-
-            function setInput(e, add = true) {
-                // get parent
-                var parent = e.parents('.product-item-info');
-
-                // get input field
-                var inputField = parent.find('.input-text.qty');
-
-                var nextVal = 1;
-
-                if(add === true) {
-                    nextVal = parseInt(inputField.val()) + 1;
-                } else {
-                    nextVal = parseInt(inputField.val()) - 1;
-                    if(nextVal <= 0) {
-                        nextVal = 1;
-                    }
-                }
-                
-                inputField.val(nextVal);
-            }
-
-			$(document).on('click', '.qty-controller.qty-minus', function () {
-                setInput($(this), false);
-            });
-
-            $(document).on('click', '.qty-controller.qty-plus', function () {
-                setInput($(this), true);
-            });
-
-            $(document).on('blur', '.input-text.qty', function () {
-                var parent = $(this).parents('.product-item-info');
-                var inputField = parent.find('.input-text.qty');
-
-                if(parseInt($(this).val()) <= 0) {
-                    inputField.val(1);
-                } else {
-                    inputField.val($(this).val());
-                }
-            });
-
-            $(document).on('click', '.opentocart', function() {
-                var windowsize = $window.width();
-                var parent = $(this).parents('.product-item-info');
-                var mobileContainer = parent.find('.product-item-cart-quantity');
-                var realAddToCartBtn = parent.find('.actions-primary .tocart');
-
-                if (windowsize <= 768) {
-                    if ($(this).width() + 30 < $(this).parent().width()) {
-                        $(this).animate({
-                            width: '100%'
-                        }, 200, function() {
-                            $(this).text('ADD TO CART');
-                        });
-
-                        mobileContainer.fadeIn('fast');
-                    } else {
-                        realAddToCartBtn.trigger('click');
-                    }
-                } 
-            });
-
-            $(document).on('click', '.qty-close', function() {
-                var windowsize = $window.width();
-                var parent = $(this).parents('.product-item-info');
-                var cartContainer = parent.find('.product-item-cart-mobile');
-                var mobileContainer = parent.find('.product-item-cart-quantity');
-
-                var openToCart = parent.find('.opentocart');
-                var cartWrapper = cartContainer.find('.cart-wrapper');
-
-                if (windowsize <= 768) {
-                    if (openToCart.width() + 30 >= cartWrapper.width()) {
-                        openToCart.animate({
-                            width: '35px'
-                        }, 200, function() {
-                            openToCart.html('<img src="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>" width="8" alt="plus"/>');
-                        });
-                        mobileContainer.fadeOut('fast');
-                    }
-                } 
-            });
-		});
-
-	});
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "js/myaddtocart":{}
+        }
+    }        
 </script>

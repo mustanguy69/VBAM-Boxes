@@ -38,58 +38,11 @@
         }
     }
 </script>
-
-
-<script type="text/javascript">
-	require([
-		'jquery'
-	], function ($) {
-		"use strict";
-
-		$(document).ready(function(){
-            var $window = $(window);
-
-            function setInput(e, add = true) {
-                // get parent
-                var parent = e.parents('.qty-wrapper');
-
-                // get input field
-                var inputField = parent.find('.input-text.qty');
-
-                var nextVal = 1;
-
-                if(add === true) {
-                    nextVal = parseInt(inputField.val()) + 1;
-                } else {
-                    nextVal = parseInt(inputField.val()) - 1;
-                    if(nextVal <= 0) {
-                        nextVal = 1;
-                    }
-                }
-                
-                inputField.val(nextVal);
-            }
-
-			$(document).on('click', '.qty-controller.qty-minus', function () {
-                setInput($(this), false);
-            });
-
-            $(document).on('click', '.qty-controller.qty-plus', function () {
-                setInput($(this), true);
-            });
-
-            $(document).on('blur', '.input-text.qty', function () {
-                var parent = $(this).parents('.qty-wrapper');
-                var inputField = parent.find('.input-text.qty');
-
-                if(parseInt($(this).val()) <= 0) {
-                    inputField.val(1);
-                } else {
-                    inputField.val($(this).val());
-                }
-            });
-		});
-
-	});
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "js/myaddtocart":{}
+        }
+    }        
 </script>
 
