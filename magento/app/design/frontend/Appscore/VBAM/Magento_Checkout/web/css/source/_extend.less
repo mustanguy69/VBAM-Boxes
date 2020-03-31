@@ -5,7 +5,7 @@
 
     .opc-wrapper {
         padding-right: 0;
-        width: 100%;
+        /*width: 100%;*/
         #login-form, #guest-form {
             display: none;
             margin-top: 20px;
@@ -54,11 +54,11 @@
     
         .step-content {
             min-height: 300px;
-            width: 66%;
+            width: 100%;
         }
 
         .form {
-            width: 66%;
+            width: 100%;
         }
     
         .actions-toolbar .primary {
@@ -67,8 +67,9 @@
     }
     
     .opc-sidebar {
-        margin-top: 75px;
-        position: absolute;
+        /*margin-top: 75px;*/
+        /*position: absolute;*/
+        margin-top: 0;
         right: 0;
         .opc-block-summary {
             background-color: white;
@@ -417,6 +418,18 @@
             right: 30px;
         }
     }
+
+    .checkout-index-index .nav-sections{
+        display: block;
+    }
+
+    .custom-wrapper {
+    
+        .opc-wrapper {
+            width: 64%;
+            float: left;
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
@@ -443,5 +456,17 @@
                 float: left;
             }
         }
+    }
+
+    .checkout-index-index .nav-toggle{
+        display: block;
+    }
+
+    .checkout-index-index .logo {
+        margin-left: 50px;
+    }
+
+    .checkout-index-index .nav-sections {
+        display: block;
     }
 }
