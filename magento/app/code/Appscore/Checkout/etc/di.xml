@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\Theme\Block\Html\Header" type="Appscore\HeaderBlock\Block\Html\Header" />
+    <type name="Magento\Checkout\Block\Checkout\AttributeMerger">
+        <plugin name="placeholders" type="Appscore\Checkout\Plugin\Checkout\Block\Checkout\AttributeMerger\Plugin"/>
+    </type>
+</config>

@@ -236,6 +236,8 @@ return [
         'Appscore_CatalogWidget' => 1,
         'Appscore_CategoryColour' => 1,
         'Appscore_CompareProducts' => 1,
+        'Appscore_Checkout' => 1,
+        'Appscore_Directory' => 1,
         'Appscore_HeaderBlock' => 1,
         'Appscore_SliderWidget' => 1,
         'Dotdigitalgroup_Email' => 1,

@@ -6,7 +6,7 @@ define([
 
         $(document).ready(function($){
             var $window = $(window);
-
+            
             function checkWidthForNavigation() {
                 var windowsize = $window.width();
                 if (windowsize > 768) {
@@ -49,7 +49,14 @@ define([
                     }
                 )
             }
-
+            
+            function hello() {
+                $('#member').on('click', function() {
+                    console.log('test');
+                });
+            }
+            
+            
             // checking for window resize
             $(window).resize(function() {
                 checkWidthForNavigation();
