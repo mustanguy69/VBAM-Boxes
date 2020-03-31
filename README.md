@@ -4,7 +4,7 @@ As we don't have Magento cloud account yet, we use Magento Community Edition cod
 ## Setup for local environment
 Run normal Magento setup
 - composer install
-- php bin/magento setup:install (read more at Magento devdocs)
+- php bin/magento setup:install --admin-firstname=Appscore --admin-lastname=Appscore --admin-email=bao.luong@appscore.com.au --admin-user=admin --admin-password='' --base-url='' --db-name='' --db-user='' --db-password='' --backend-frontname=admin --use-rewrites=1 --timezone=Australia/Melbourne
 - php bin/magento setup:static-content:deploy -f
 - php bin/magento cache:flush
 
