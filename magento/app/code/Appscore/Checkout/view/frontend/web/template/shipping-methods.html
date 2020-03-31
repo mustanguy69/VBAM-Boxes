@@ -13,6 +13,9 @@ role="presentation">
          role="tabpanel"
          aria-hidden="false">
         <!-- ko if: rates().length  -->
+
+        <button type="button" class="action primary green-button-full selected delivery">DELIVERY</button>
+        <button type="button" class="action primary green-button-empty clickandcollect">CLICK 'n' COLLECT</button>
         <form class="form methods-shipping" id="co-shipping-method-form" data-bind="submit: setShippingInformation" novalidate="novalidate">
             <div id="checkout-shipping-method-load">
                 <table class="table-checkout-shipping-method">
@@ -95,16 +98,20 @@ role="presentation">
                 <span><!-- ko text: errorValidationMessage()--><!-- /ko --></span>
             </div>
             <!-- /ko -->
-            <div class="actions-toolbar" id="shipping-method-buttons-container">
-                <div class="primary">
-                    <button data-role="opc-continue" type="submit" class="button action continue primary green-button-empty">
-                        <span><!-- ko i18n: 'Next'--><!-- /ko --></span>
-                    </button>
-                </div>
-            </div>
         </form>
+
+        <div class="clickandcollect-container">
+            <p>Here click and collect module</p>
+        </div>
         <!-- /ko -->
         <!-- ko ifnot: rates().length > 0 --><div class="no-quotes-block"><!-- ko i18n: 'Sorry, no quotes are available for this order at this time'--><!-- /ko --></div><!-- /ko -->
+    </div>
+    <div class="actions-toolbar" id="shipping-method-buttons-container">
+        <div class="primary">
+            <button data-role="opc-continue" type="submit" class="button action continue primary green-button-empty">
+                <span><!-- ko i18n: 'Next'--><!-- /ko --></span>
+            </button>
+        </div>
     </div>
 </div>
 </li>
