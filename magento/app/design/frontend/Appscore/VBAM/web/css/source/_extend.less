@@ -105,28 +105,6 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
     &:extend(.regular);
 }
 
-button {
-    &:extend(.black);
-    background: #00A261;
-    box-shadow: none !important;
-    border: none !important;
-    color: #fff;
-    text-transform: uppercase;
-    border-radius: 0 !important;
-
-    &:hover,
-    &:focus,
-    &:active {
-        box-shadow: none !important;
-        background: #00A261;
-        color: #fff;
-    }
-}
-
-.action.primary {
-    &:extend(button);
-}
-
 .slick-slide {
     margin-left: 10px;
     margin-right: 10px;
@@ -188,7 +166,7 @@ button {
             position: absolute;
             height: 10px;
             width: 10px;
-            top: 13px;
+            top: 18px;
             right: 50px;
             background-size: contain;
         }
@@ -411,6 +389,7 @@ button {
     &:extend(button);
     background: #F7F5F5;
     padding: 13px 13px;
+    border: none !important;
 }
 
 input.qty {
@@ -611,6 +590,7 @@ input.qty {
 
                 .tocart {
                     width: 50%;
+                    &:extend(.myButtonStyle);
                 }
 
                 .qty-wrapper {
@@ -890,6 +870,7 @@ input.qty {
                 text-align: center;
                 padding: 11px;
                 margin-top: 30px;
+                display: block;
             }
         }
     }
@@ -1731,6 +1712,13 @@ input.qty {
                         text-align: right;
 
                         .opentocart {
+                            &:extend(.black);
+                            background: #00A261;
+                            box-shadow: none !important;
+                            border: none !important;
+                            color: #fff;
+                            text-transform: uppercase;
+                            border-radius: 0 !important;
                             padding: 8px 12px;
                             text-transform: uppercase;
                             white-space: nowrap;

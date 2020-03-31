@@ -18,3 +18,21 @@ button.green-button-empty {
     background-color: transparent;
     color: @green;
 }
+
+.myButtonStyle {
+    &:extend(.black);
+    background: #00A261;
+    box-shadow: none !important;
+    border: none !important;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 0 !important;
+
+    &:hover,
+    &:focus,
+    &:active {
+        box-shadow: none !important;
+        background: #00A261;
+        color: #fff;
+    }
+}

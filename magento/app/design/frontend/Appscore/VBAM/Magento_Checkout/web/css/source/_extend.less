@@ -350,6 +350,10 @@
 
             .cart-buttons {
                 margin-top: 30px;
+
+                .checkout {
+                    &:extend(.myButtonStyle);
+                }
             }
 
             .action.primary.checkout,
@@ -368,7 +372,7 @@
 
             .cart-item-qty {
                 width: 30px;
-                margin-left: -3px;
+                margin-left: -4px;
                 margin-right: -4px;
                 padding-top: 7px;
                 padding-bottom: 12px;
@@ -378,6 +382,11 @@
 
             .product.actions {
                 margin-top: -36px;
+                border: none;
+
+                button {
+                    &:extend(.myButtonStyle);
+                }
 
                 .secondary {
                     margin-left: 5px;
@@ -414,6 +423,7 @@
     .minicart-wrapper {
         .block-minicart {
             right: -10px;
+            min-width: 360px;
 
             &:before,
             &:after {
@@ -424,6 +434,14 @@
         .action.close {
             top: 13px;
             right: 13px;
+        }
+
+        .product.actions {
+            float: right;
+
+            .update-cart-item {
+                float: left;
+            }
         }
     }
 }
