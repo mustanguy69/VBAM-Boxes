@@ -16,7 +16,7 @@ role="presentation">
 
         <button type="button" class="action primary green-button-full selected delivery">DELIVERY</button>
         <button type="button" class="action primary green-button-empty clickandcollect">CLICK 'n' COLLECT</button>
-        <form class="form methods-shipping" id="co-shipping-method-form" data-bind="submit: setShippingInformation" novalidate="novalidate">
+        <form class="form methods-shipping" id="co-shipping-method-form" data-bind="submit: navigateToNextStep" novalidate="novalidate">
             <div id="checkout-shipping-method-load">
                 <table class="table-checkout-shipping-method">
                     <thead>
@@ -108,7 +108,7 @@ role="presentation">
     </div>
     <div class="actions-toolbar" id="shipping-method-buttons-container">
         <div class="primary">
-            <button data-role="opc-continue" type="submit" class="button action continue primary green-button-empty">
+            <button data-role="opc-continue" type="button" class="button action continue primary green-button-empty">
                 <span><!-- ko i18n: 'Next'--><!-- /ko --></span>
             </button>
         </div>
