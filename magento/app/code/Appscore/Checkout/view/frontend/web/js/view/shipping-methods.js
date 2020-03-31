@@ -82,6 +82,26 @@ define(
     
                     17
                 );
+
+                $(document).ready(function() {
+                    $(document).on('click', '.delivery', function () {
+                        $('.table-checkout-shipping-method').css('display', 'block');
+                        $('.delivery').removeClass('green-button-empty').addClass('green-button-full');
+                        $('.clickandcollect').removeClass('green-button-full').addClass('green-button-empty');
+                        $('.clickandcollect-container').css('display', 'none');
+                    });
+
+                    $(document).on('click', '.clickandcollect', function () {
+                        $('.table-checkout-shipping-method').css('display', 'none');
+                        $('.delivery').removeClass('green-button-full').addClass('green-button-empty');
+                        $('.clickandcollect').removeClass('green-button-empty').addClass('green-button-full');
+                        $('.clickandcollect-container').css('display', 'block');
+                    });
+
+                    $(document).on('click', '#shipping-method-buttons-container', function() {
+                        $('#co-shipping-method-form').submit();
+                    });
+                });
     
     
                 return this;
