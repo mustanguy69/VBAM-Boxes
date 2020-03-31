@@ -52,6 +52,7 @@
             width: 100%;
             position: absolute;
             top: 0;
+            &:extend(.black);
         }
     
         .step-content {
@@ -264,6 +265,12 @@
     
         #shipping-method-buttons-container {
             width: 100%;
+        }
+    }
+
+    .checkout-agreements-block {
+        .checkout {
+            &:extend(button.green-button-full);
         }
     }
 
