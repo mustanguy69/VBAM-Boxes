@@ -6,10 +6,14 @@
          class="step-content"
          data-role="content">
     
-        <input type="radio" id="member" name="login" value="yes" />
-        <label for="member">Checkout as member</label>
-        <input type="radio" id="guest" name="login" value="no" />
-        <label for="guest">Checkout as guest</label>
+        <div class="radio-choice">
+            <input type="radio" id="member" name="login" value="yes" />
+            <label for="member">Checkout as member</label>
+        </div>
+        <div class="radio-choice">
+            <input type="radio" id="guest" name="login" value="no" />
+            <label for="guest">Checkout as guest</label>
+        </div>
         <form data-role="login"
               data-bind="submit:login"
               method="post"
