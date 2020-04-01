@@ -1,0 +1,27 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="opc-estimated-wrapper" data-bind="blockLoader: isLoading">
+    <div class="estimated-block">
+    <div class="order-total">
+        <span class="estimated-label" data-bind="i18n: 'Order Total'"></span>
+        (
+        <span>
+            <span class="count" data-bind="text: getQuantity()"/>
+            <translate args="'item'" if="getQuantity() === 1"/>
+            <translate args="'items'" if="getQuantity() > 1"/>
+        </span>
+        )
+    </div>
+        <span class="estimated-price" data-bind="text: getValue()"></span>
+    </div>
+    <div class="grand-total">
+        <div class="cart-logo">
+            <img  data-bind="attr: { src: require.toUrl('images/shopping-basket.svg') }" alt="">
+            <div class="item-count" data-bind="text: getQuantity()"></div>
+        </div>
+    </div>
+</div>
