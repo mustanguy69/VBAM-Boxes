@@ -174,6 +174,23 @@
                     padding-left: 15px;
                     padding-right: 15px;
                 }
+
+                .password-strength-meter {
+                    padding-left: 0;
+                    font-size: 13px;
+                    margin-top: 10px;
+                    color: @black;
+                    &:extend(p);
+                }
+            }
+        }
+    }
+
+    .actions-toolbar {
+        .primary {
+            button {
+                &:extend(.myButtonStyle);
+                height: 40px;
             }
         }
     }
@@ -228,11 +245,10 @@
     }
 
     .form-create-account {
-        .fieldset {
-            .legend {
-                span {
-
-                }
+        .actions-toolbar {
+            .primary {
+                max-width: 320px;
+                width: 100%;
             }
         }
     }
@@ -261,16 +277,6 @@
     .customer-account-forgotpassword {
         .block-new-customer {
             margin-top: 60px;
-        }
-    }
-
-    .form-create-account {
-        .fieldset {
-            .legend {
-                span {
-
-                }
-            }
         }
     }
 }
