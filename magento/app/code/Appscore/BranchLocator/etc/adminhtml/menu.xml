@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+      <add id="Appscore_BranchLocator::branchlocator" title="Branch Locator" translate="title" module="Appscore_BranchLocator" sortOrder="100" dependsOnModule="Appscore_BranchLocator" resource="Magento_Backend::content"/>
+      <add id="Appscore_BranchLocator::branchlocator_list" title="Branch List" translate="title" module="Appscore_BranchLocator" parent="Appscore_BranchLocator::branchlocator" sortOrder="10" dependsOnModule="Appscore_BranchLocator" action="appscore_branchlocator/branchlist/index" resource="Magento_Backend::content"/>
+    </menu>
+</config>
