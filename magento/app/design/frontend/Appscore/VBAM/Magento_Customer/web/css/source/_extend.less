@@ -95,6 +95,87 @@
                 }
             }
         }
+    }    
+}
+
+.customer-account-forgotpassword {
+    .form.password.forget {
+        .fieldset {
+            &:after {
+                display: none;
+            }
+
+            margin-bottom: 30px;
+        }
+
+        .field {
+            font-size: 13px;
+            color: @black;
+
+            .label {
+                span {
+                    &:extend(.black);
+                    font-size: 16px;
+                    color: @black-blue;
+                }
+            }
+
+            .control {
+                width: 100%;
+
+                input {
+                    &:extend(.black);
+                    font-size: 18px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+            }
+        }
+    }
+
+    .actions-toolbar {
+        .primary {
+            width: 100%;
+            height: 40px;
+            margin-right: 21px;
+
+            button {
+                &:extend(.myButtonStyle);
+            }
+        }
+    }
+}
+
+.form-create-account {
+    .fieldset {
+        .legend {
+            border: none;
+            padding-bottom: 0;
+            span {
+                &:extend(.black);
+                font-size: 16px;
+                text-transform: uppercase;
+            }
+        }
+
+        .field {
+            label {
+                span {
+                    &:extend(.black);
+                    font-size: 16px;
+                    color: @black-blue;
+                }
+            }
+
+            .control {
+                input {
+                    &:extend(.black);
+                    font-size: 18px;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+            }
+        }
     }
 }
 
@@ -112,6 +193,49 @@
             }
         }
     }
+
+    .customer-account-forgotpassword {
+        .form.password.forget {
+            width: 48%;
+            clear: left;
+            float: left;
+            min-width: auto;
+        }
+
+        .block-new-customer {
+            float: right;
+            width: 48%;
+            
+            .block-title {
+                margin-bottom: 10px;
+            }
+            
+            .actions-toolbar {
+                margin-top: 20px;
+                max-width: 320px;
+            }
+        }        
+        .actions-toolbar {
+            .primary {
+                width: 100%;
+                max-width: 150px;
+    
+                button {
+                    &:extend(.myButtonStyle);
+                }
+            }
+        }
+    }
+
+    .form-create-account {
+        .fieldset {
+            .legend {
+                span {
+
+                }
+            }
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
@@ -121,7 +245,7 @@
             .block-content {
                 .actions-toolbar {
                     margin-top: 30px;
-                    
+
                     .primary {
                         max-width: 100%;
                         margin-bottom: 20px;
@@ -129,6 +253,22 @@
                     .secondary {
                         text-align: center;
                     }
+                }
+            }
+        }
+    }
+
+    .customer-account-forgotpassword {
+        .block-new-customer {
+            margin-top: 60px;
+        }
+    }
+
+    .form-create-account {
+        .fieldset {
+            .legend {
+                span {
+
                 }
             }
         }
