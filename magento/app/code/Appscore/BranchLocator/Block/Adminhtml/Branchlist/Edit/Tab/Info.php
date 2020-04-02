@@ -112,11 +112,19 @@ class Info extends Generic implements TabInterface
 
         $fieldset->addField(
             'state',
-            'text',
+            'select',
             [
                 'name'        => 'state',
                 'label'    => __('State'),
-                'required'     => true
+                'required'     => true,
+                "values"    =>      [
+                    ["value" => "NSW","label" => __("New South Wales")],
+                    ["value" => "QLD","label" => __("Queensland")],
+                    ["value" => "SA","label" => __("South Australia")],
+                    ["value" => "TAS","label" => __("Tasmania")],
+                    ["value" => "VIC","label" => __("Victoria")],
+                    ["value" => "WA","label" => __("Western Australia")],
+                ]
             ]
         );
 
