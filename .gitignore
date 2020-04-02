@@ -69,3 +69,5 @@ magento/generated/*
 !magento/generated/.htaccess
 magento/.DS_Store
 magento/app/etc/config.php
+magento/app/etc/config.php
+magento/app/etc/config.php

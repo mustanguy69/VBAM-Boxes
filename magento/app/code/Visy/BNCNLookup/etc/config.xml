@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     BNCNLookup
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <visy_bnl>
+            <general>
+                <service_url>https://abr.business.gov.au/</service_url>
+                <service_directory>abrxmlsearch/AbrXmlSearch.asmx/</service_directory>
+                <historical_details>y</historical_details>
+            </general>
+            <bn>
+                <service>SearchByABN</service>
+                <version>v202001</version>
+            </bn>
+            <cn>
+                <service>SearchByASIC</service>
+                <version>v201408</version>
+            </cn>
+        </visy_bnl>
+    </default>
+</config>

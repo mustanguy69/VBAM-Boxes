@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Visy_Checkout::checkout"
+             resource="Visy_Checkout::checkout"
+             title="Checkout"
+             module="Visy_Checkout"
+             sortOrder="2"
+             parent="Visy_Core::main_menu"
+             dependsOnModule="Visy_Checkout"/>
+        <add id="Visy_Checkout::configuration"
+             title="Configuration"
+             module="Visy_Checkout"
+             sortOrder="10"
+             parent="Visy_Checkout::checkout"
+             action="adminhtml/system_config/edit/section/visy_checkout"
+             resource="Visy_Checkout::configuration"/>
+    </menu>
+</config>

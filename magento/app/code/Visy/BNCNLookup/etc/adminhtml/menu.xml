@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Visy_BNCNLookup::bnl"
+             resource="Visy_BNCNLookup::bnl"
+             title="Business Company Number Lookup"
+             module="Visy_BNCNLookup"
+             sortOrder="10"
+             parent="Visy_Core::main_menu"
+             dependsOnModule="Visy_BNCNLookup"/>
+        <add id="Visy_BNCNLookup::configuration"
+             title="Configuration"
+             module="Visy_BNCNLookup"
+             sortOrder="10"
+             parent="Visy_BNCNLookup::bnl"
+             action="adminhtml/system_config/edit/section/visy_bnl"
+             resource="Visy_BNCNLookup::configuration"/>
+    </menu>
+</config>

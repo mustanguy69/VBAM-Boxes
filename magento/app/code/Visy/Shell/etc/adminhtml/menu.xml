@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Visy_Shell::integration"
+             resource="Visy_Shell::integration"
+             title="Integration"
+             module="Visy_Shell"
+             sortOrder="3"
+             parent="Visy_Core::main_menu"
+             dependsOnModule="Visy_Shell"/>
+        <add id="Visy_Shell::configuration"
+             title="Configuration"
+             module="Visy_Shell"
+             sortOrder="10"
+             parent="Visy_Shell::integration"
+             action="adminhtml/system_config/edit/section/visy_integration"
+             resource="Visy_Shell::configuration"/>
+    </menu>
+</config>

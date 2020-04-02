@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     Shell
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="visy_integration" translate="label" type="text" sortOrder="1301" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>VISY Integration</label>
+            <tab>sales</tab>
+            <resource>Visy_Shell::integration</resource>
+            <group id="salesorder" type="text"  sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sales Order Integration Configuration</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Sales Order Service</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Sending sales order to SAP</comment>
+                </field>
+                <field id="webservice_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Web Service URL</label>
+                </field>
+                <field id="consumer_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Consumer Key</label>
+                </field>
+                <field id="consumer_secret" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Consumer Secret</label>
+                </field>
+                <field id="access_token" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Access Token</label>
+                </field>
+                <field id="access_token_secret" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Access Token Secret</label>
+                </field>
+            </group>
+            <group id="pricing" type="text"  sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Custom Product Pricing</label>
+                <field id="indexer" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Run Indexer Type</label>
+                    <comment>ie: catalog_product_price</comment>
+                </field>
+                <field id="enable_indexer_log" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Indexer Logs</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+        <section id="admin">
+            <group id="reindex" translate="label" type="text" sortOrder="2010" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Manual Re-Index (*Don't run often)</label>
+                <field id="indexer" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Run Indexer Type</label>
+                    <comment>ie: catalog_product_price</comment>
+                </field>
+                <field id="run_button" translate="label comment tooltip" type="button" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Reindex</label>
+                    <frontend_model>Visy\Shell\Block\System\Config\Run</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

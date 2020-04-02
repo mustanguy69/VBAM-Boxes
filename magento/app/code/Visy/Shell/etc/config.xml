@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     Shell
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <visy_integration>
+            <salesorder>
+                <active>0</active>
+            </salesorder>
+            <pricing>
+                <enable_indexer_log>1</enable_indexer_log>
+            </pricing>
+        </visy_integration>
+    </default>
+</config>

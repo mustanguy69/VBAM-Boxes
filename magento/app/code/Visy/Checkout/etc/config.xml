@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     Checkout
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <visy_checkout>
+            <general>
+                <format>dd-mm-yy</format>
+                <disabled>-1</disabled>
+                <enable_delivery_time>0</enable_delivery_time>
+                <hourMin>8</hourMin>
+                <hourMax>22</hourMax>
+                <required_delivery_date>1</required_delivery_date>
+                <disable_delivery_date>1</disable_delivery_date>
+                <minDate>3</minDate>
+            </general>
+        </visy_checkout>
+    </default>
+</config>

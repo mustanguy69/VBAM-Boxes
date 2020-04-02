@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     BNCNLookup
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="visy_bnl" translate="label" type="text" sortOrder="800" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>VISY Validate Business/Company Number</label>
+            <tab>customer</tab>
+            <resource>Visy_BNCNLookup::bnl</resource>
+            <group id="general" type="text"  sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="authentication_guid" translate="label" type="password" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Auth GUID</label>
+                </field>
+                <field id="service_url" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Web Service Url</label>
+                    <comment>https://abr.business.gov.au/</comment>
+                </field>
+                <field id="service_directory" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Service Directory</label>
+                    <comment>abrxmlsearch/AbrXmlSearch.asmx/</comment>
+                </field>
+                <field id="historical_details" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Should Include Historical Details</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="bn" type="text"  sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Business Number Settings</label>
+                <field id="service" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Service Name</label>
+                    <comment>SearchByABN</comment>
+                </field>
+                <field id="version" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Service Version</label>
+                    <comment>v202001</comment>
+                </field>
+            </group>
+            <group id="cn" type="text"  sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Company Number Settings</label>
+                <field id="service" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Service Name</label>
+                    <comment>SearchByASIC</comment>
+                </field>
+                <field id="version" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Service Version</label>
+                    <comment>v201408</comment>
+                </field>
+            </group>
+            <group id="test" type="text"  sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Validate Check</label>
+                <field id="test_string" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Test Search String</label>
+                    <comment>Enter Lookup String: ie ABN - 51835430479 | ACN - 000250000</comment>
+                </field>
+                <field id="test_button" translate="label comment tooltip" type="button" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Check now</label>
+                    <frontend_model>Visy\BNCNLookup\Block\System\Config\Test</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

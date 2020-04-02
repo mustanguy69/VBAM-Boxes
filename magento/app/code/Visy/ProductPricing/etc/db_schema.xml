@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     ProductPricing
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="visy_customer_product_pricing" resource="default" engine="innodb" comment="Customer Product Pricing">
+        <column xsi:type="int" name="customer_price_id" padding="11" unsigned="false" nullable="false" identity="true"
+                comment="Customer Price ID"/>
+        <column xsi:type="varchar" name="customer_code" nullable="false" length="16" comment="SAP Customer Code"/>
+        <column xsi:type="varchar" name="product_sku" nullable="false" length="64" comment="SKU"/>
+        <column xsi:type="int" name="qty_1" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty One"/>
+        <column xsi:type="decimal" name="price_1" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price One"/>
+        <column xsi:type="int" name="qty_2" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Two"/>
+        <column xsi:type="decimal" name="price_2" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Two"/>
+        <column xsi:type="int" name="qty_3" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Three"/>
+        <column xsi:type="decimal" name="price_3" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Three"/>
+        <column xsi:type="int" name="qty_4" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Four"/>
+        <column xsi:type="decimal" name="price_4" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Four"/>
+        <column xsi:type="int" name="qty_5" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Five"/>
+        <column xsi:type="decimal" name="price_5" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Five"/>
+        <column xsi:type="int" name="qty_6" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Six"/>
+        <column xsi:type="decimal" name="price_6" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Six"/>
+        <column xsi:type="int" name="qty_7" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Seven"/>
+        <column xsi:type="decimal" name="price_7" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Seven"/>
+        <column xsi:type="int" name="qty_8" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Eight"/>
+        <column xsi:type="decimal" name="price_8" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Eight"/>
+        <column xsi:type="int" name="qty_9" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Nine"/>
+        <column xsi:type="decimal" name="price_9" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Nine"/>
+        <column xsi:type="int" name="qty_10" padding="6" unsigned="false" nullable="true"
+                identity="false" comment="Qty Ten"/>
+        <column xsi:type="decimal" name="price_10" scale="6" precision="20" unsigned="false" nullable="true"
+                default="0" comment="Price Ten"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="false"
+                comment="Record Created Time"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true"
+                comment="Record Updated Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="customer_price_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="CUS_PROD_PRICE_PRD_ID_CAT_PRD_ENT_ENT_ID"
+                    table="visy_customer_product_pricing" column="product_sku"
+                    referenceTable="catalog_product_entity"
+                    referenceColumn="sku" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="CUS_PROD_PRICE_PRODUCT_SKU_CUS_CODE">
+            <column name="product_sku"/>
+            <column name="customer_code"/>
+        </constraint>
+        <index referenceId="CUS_PROD_PRICE_PRODUCT_SKU" indexType="btree">
+            <column name="product_sku"/>
+        </index>
+        <index referenceId="CUS_PROD_PRICE_CUS_CODE" indexType="btree">
+            <column name="customer_code"/>
+        </index>
+    </table>
+</schema>
