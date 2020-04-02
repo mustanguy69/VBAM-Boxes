@@ -1,0 +1,25 @@
+{
+  "name": "visy/module-bncnlookup",
+  "description": "Visy M2 core module",
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0",
+    "magento/module-config": "*",
+    "magento/framework": "*",
+    "ext-simplexml": "*",
+    "ext-curl": "*"
+  },
+  "type": "magento2-module",
+  "version": "3.3.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Visy\\BNCNLookup\\": ""
+    }
+  }
+}

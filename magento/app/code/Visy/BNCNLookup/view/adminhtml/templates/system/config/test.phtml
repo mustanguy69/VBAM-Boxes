@@ -1,0 +1,41 @@
+<?php /* @var $block \Visy\BNCNLookup\Block\System\Config\Test */ ?>
+<script>
+
+    require([
+        'jquery',
+        'prototype',
+    ], function(jQuery){
+        function refresh_token() {
+            params = {
+            };
+            var tokenMessage = jQuery('#test_result');
+            new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxTestUrl() ?>', {
+                loaderArea:     false,
+                asynchronous:   true,
+                parameters:     params,
+                onSuccess: function(transport) {
+                    var response = JSON.parse(transport.responseText);
+                    if(response.success == 'OK') {
+                        tokenMessage.removeClass('hidden').addClass('success');
+                    } else {
+                        tokenMessage.removeClass('hidden').addClass('error');
+                    }
+                    tokenMessage.text(response.message);
+
+                }, onFailure: function( transport )
+                {
+                    var response = transport.responseText;
+                    tokenMessage.removeClass('hidden').addClass('error');
+                    tokenMessage.text(response.message);
+                }
+            });
+        }
+
+        jQuery('#test_button').click(function () {
+            refresh_token();
+        });
+    });
+</script>
+
+<?php echo $block->getButtonHtml() ?>
+<div id="test_result" class="message-validation hidden"></div>
