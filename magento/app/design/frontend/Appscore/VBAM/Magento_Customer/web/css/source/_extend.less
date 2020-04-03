@@ -34,7 +34,8 @@
                     .control {
                         width: 100%;
 
-                        input {
+                        input,
+                        select {
                             &:extend(.black);
                             font-size: 18px;
                             padding-left: 15px;
@@ -168,7 +169,8 @@
             }
 
             .control {
-                input {
+                input,
+                select {
                     &:extend(.black);
                     font-size: 18px;
                     padding-left: 15px;
@@ -181,6 +183,8 @@
                     margin-top: 10px;
                     color: @black;
                     &:extend(p);
+                    height: 20px;
+                    line-height: 20px;
                 }
             }
         }
@@ -193,6 +197,10 @@
                 height: 40px;
             }
         }
+    }
+
+    .fieldset.create.account:after {
+        display: none;
     }
 }
 

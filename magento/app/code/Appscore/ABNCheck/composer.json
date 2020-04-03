@@ -1,0 +1,26 @@
+{
+  "name": "Appscore/module-abncheck",
+  "description": "Check for ABN/ACN using logic provided by VISY module",
+  "require": {
+    "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0",
+    "magento/module-config": "*",
+    "magento/framework": "*",
+    "ext-simplexml": "*",
+    "ext-curl": "*",
+    "visy/module-bncnlookup": "*"
+  },
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "license": [
+    "OSL-3.0",
+    "AFL-3.0"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Appscore\\ABNCheck\\": ""
+    }
+  }
+}

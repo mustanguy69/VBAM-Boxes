@@ -7,6 +7,7 @@
 /** @var \Magento\Customer\Block\Form\Register $block */
 ?>
 <?= $block->getChildHtml('form_fields_before') ?>
+<?php $abnCheck = $block->getLayout()->createBlock(\Appscore\ABNCheck\Block\ABNCheck::class) ?>
 <?php /* Extensions placeholder */ ?>
 <?= $block->getChildHtml('customer.form.register.extra') ?>
 <form class="form create account form-create-account" action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>" method="post" id="form-validate" enctype="multipart/form-data" autocomplete="off">
@@ -31,105 +32,112 @@
         <?php if ($_gender->isEnabled()) : ?>
             <?= $_gender->setGender($block->getFormData()->getGender())->toHtml() ?>
         <?php endif ?>
+    </fieldset>
+
+    <fieldset class="fieldset address">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Company Information')) ?></span></legend><br> 
+        <input type="hidden" name="create_address" value="1" />
+
+        <div class="field required">
+            <label for="customer_position" class="label"><span><?= __('Position') ?></span></label>
+            <div class="control">
+                <input type="text" name="customer_position" id="customer_position" value="<?= $block->escapeHtml($block->getFormData()->getCustomerPosition()) ?>" title="<?= __('Position') ?>" class="input-text" data-validate="{required:true}">
+            </div>
+        </div>
+
+        <div class="field required">
+            <label for="customer_business" class="label"><span><?= __('Business Name') ?></span></label>
+            <div class="control">
+                <input type="text" name="customer_business" id="customer_business" value="<?= $block->escapeHtml($block->getFormData()->getCustomerBusiness()) ?>" title="<?= __('Business Name') ?>" class="input-text" data-validate="{required:true}">
+            </div>
+        </div>
+
+        <?php //phpcs:disable ?>
+        <?php $_streetValidationClass = $this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('street'); ?>
+        <?php //phpcs:enable ?>
+        <div class="field street required">
+            <label for="street_1" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?></span></label>
+            <div class="control">
+                <input type="text" name="street[]" value="<?= $block->escapeHtmlAttr($block->getFormData()->getStreet(0)) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?>" id="street_1" class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>">
+                <div class="nested">
+                    <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                    <?php //phpcs:disable ?>
+                    <?php for ($_i = 2, $_n = $this->helper(\Magento\Customer\Helper\Address::class)->getStreetLines(); $_i <= $_n; $_i++) : ?>
+                    <?php //phpcs:enable ?>
+                        <div class="field additional">
+                            <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
+                                <span><?= $block->escapeHtml(__('Address')) ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" name="street[]" value="<?= $block->escapeHtmlAttr($block->getFormData()->getStreetLine($_i - 1)) ?>" title="<?= $block->escapeHtmlAttr(__('Street Address %1', $_i)) ?>" id="street_<?= /* @noEscape */ $_i ?>" class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>">
+                            </div>
+                        </div>
+                    <?php endfor; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="field required">
+            <label for="city" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span></label>
+            <div class="control">
+                <?php //phpcs:disable ?>
+                <input type="text" name="city" value="<?= $block->escapeHtmlAttr($block->getFormData()->getCity()) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>" class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('city')) ?>" id="city">
+                <?php //phpcs:enable ?>
+            </div>
+        </div>
+
+        <div class="field region required">
+            <label for="region_id" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?></span></label>
+            <div class="control">
+                <select id="region_id" name="region_id" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>" class="validate-select region_id" style="display:none;">
+                    <option value=""><?= $block->escapeHtml(__('Please select a region, state or province.')) ?></option>
+                </select>
+                <?php //phpcs:disable ?>
+                <input type="text" id="region" name="region" value="<?= $block->escapeHtmlAttr($block->getRegion()) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>" class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('region')) ?>" style="display:none;">
+                <?php //phpcs:enable ?>
+            </div>
+        </div>
+
+        <div class="field zip required">
+            <label for="zip" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span></label>
+            <div class="control">
+                <?php //phpcs:disable ?>
+                <input type="text" name="postcode" value="<?= $block->escapeHtmlAttr($block->getFormData()->getPostcode()) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>" id="zip" class="input-text validate-zip-international <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('postcode')) ?>">
+                <?php //phpcs:enable ?>
+            </div>
+        </div>
+
+        <div class="field country required">
+            <label for="country" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span></label>
+            <div class="control">
+                <?= $block->getCountryHtmlSelect() ?>
+            </div>
+        </div>
+
         <div class="field required">
             <label for="abcn" class="label"><span><?= __('ABN/ACN') ?></span></label>
             <div class="control">
                 <input type="text" name="abcn" id="abcn" value="<?= $block->escapeHtml($block->getFormData()->getAbcn()) ?>" title="<?= __('ABN/ACN') ?>" class="input-text" data-validate="{required:true}">
             </div>
         </div>
+
+        <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
+        <?php if ($_telephone->isEnabled()) : ?>
+            <?= $_telephone->setTelephone($block->getFormData()->getTelephone())->toHtml() ?>
+        <?php endif ?>
+
+        
+        <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
+        <?php if ($addressAttributes) : ?>
+            <?php $addressAttributes->setEntityType('customer_address'); ?>
+            <?php $addressAttributes->setFieldIdFormat('address:%1$s')->setFieldNameFormat('address[%1$s]');?>
+            <?php $block->restoreSessionData($addressAttributes->getMetadataForm(), 'address');?>
+            <?= $addressAttributes->setShowContainer(false)->toHtml() ?>
+        <?php endif;?>
+        <input type="hidden" name="default_billing" value="1">
+        <input type="hidden" name="default_shipping" value="1">
     </fieldset>
-    <?php if ($block->getShowAddressFields()) : ?>
-        <fieldset class="fieldset address">
-            <legend class="legend"><span><?= $block->escapeHtml(__('Address Information')) ?></span></legend><br>
-            <input type="hidden" name="create_address" value="1" />
 
-            <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
-            <?php if ($_company->isEnabled()) : ?>
-                <?= $_company->setCompany($block->getFormData()->getCompany())->toHtml() ?>
-            <?php endif ?>
-
-            <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
-            <?php if ($_telephone->isEnabled()) : ?>
-                <?= $_telephone->setTelephone($block->getFormData()->getTelephone())->toHtml() ?>
-            <?php endif ?>
-
-            <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
-            <?php if ($_fax->isEnabled()) : ?>
-                <?= $_fax->setFax($block->getFormData()->getFax())->toHtml() ?>
-            <?php endif ?>
-            <?php //phpcs:disable ?>
-            <?php $_streetValidationClass = $this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('street'); ?>
-            <?php //phpcs:enable ?>
-            <div class="field street required">
-                <label for="street_1" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?></span></label>
-                <div class="control">
-                    <input type="text" name="street[]" value="<?= $block->escapeHtmlAttr($block->getFormData()->getStreet(0)) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('street') ?>" id="street_1" class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>">
-                    <div class="nested">
-                        <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
-                        <?php //phpcs:disable ?>
-                        <?php for ($_i = 2, $_n = $this->helper(\Magento\Customer\Helper\Address::class)->getStreetLines(); $_i <= $_n; $_i++) : ?>
-                        <?php //phpcs:enable ?>
-                            <div class="field additional">
-                                <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
-                                    <span><?= $block->escapeHtml(__('Address')) ?></span>
-                                </label>
-                                <div class="control">
-                                    <input type="text" name="street[]" value="<?= $block->escapeHtmlAttr($block->getFormData()->getStreetLine($_i - 1)) ?>" title="<?= $block->escapeHtmlAttr(__('Street Address %1', $_i)) ?>" id="street_<?= /* @noEscape */ $_i ?>" class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>">
-                                </div>
-                            </div>
-                        <?php endfor; ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="field required">
-                <label for="city" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span></label>
-                <div class="control">
-                    <?php //phpcs:disable ?>
-                    <input type="text" name="city" value="<?= $block->escapeHtmlAttr($block->getFormData()->getCity()) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>" class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('city')) ?>" id="city">
-                    <?php //phpcs:enable ?>
-                </div>
-            </div>
-
-            <div class="field region required">
-                <label for="region_id" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?></span></label>
-                <div class="control">
-                    <select id="region_id" name="region_id" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>" class="validate-select region_id" style="display:none;">
-                        <option value=""><?= $block->escapeHtml(__('Please select a region, state or province.')) ?></option>
-                    </select>
-                    <?php //phpcs:disable ?>
-                    <input type="text" id="region" name="region" value="<?= $block->escapeHtmlAttr($block->getRegion()) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>" class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('region')) ?>" style="display:none;">
-                    <?php //phpcs:enable ?>
-                </div>
-            </div>
-
-            <div class="field zip required">
-                <label for="zip" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span></label>
-                <div class="control">
-                    <?php //phpcs:disable ?>
-                    <input type="text" name="postcode" value="<?= $block->escapeHtmlAttr($block->getFormData()->getPostcode()) ?>" title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>" id="zip" class="input-text validate-zip-international <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('postcode')) ?>">
-                    <?php //phpcs:enable ?>
-                </div>
-            </div>
-
-            <div class="field country required">
-                <label for="country" class="label"><span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span></label>
-                <div class="control">
-                    <?= $block->getCountryHtmlSelect() ?>
-                </div>
-            </div>
-            <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
-            <?php if ($addressAttributes) : ?>
-                <?php $addressAttributes->setEntityType('customer_address'); ?>
-                <?php $addressAttributes->setFieldIdFormat('address:%1$s')->setFieldNameFormat('address[%1$s]');?>
-                <?php $block->restoreSessionData($addressAttributes->getMetadataForm(), 'address');?>
-                <?= $addressAttributes->setShowContainer(false)->toHtml() ?>
-            <?php endif;?>
-            <input type="hidden" name="default_billing" value="1">
-            <input type="hidden" name="default_shipping" value="1">
-        </fieldset>
-
-    <?php endif; ?>
     <fieldset class="fieldset create account" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
         <legend class="legend"><span><?= $block->escapeHtml(__('Sign-in Information')) ?></span></legend><br>
         <div class="field required">
@@ -175,6 +183,9 @@
             <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
         </div>
     </div>
+
+    <div id="test_button">TEST</div>
+    <div id="test_result" class="message-validation hidden"></div>
 </form>
 <script>
 require([
@@ -207,7 +218,7 @@ require([
 
 });
 </script>
-<?php if ($block->getShowAddressFields()) : ?>
+
 <script type="text/x-magento-init">
     {
         "#country": {
@@ -228,7 +239,6 @@ require([
         }
     }
 </script>
-<?php endif; ?>
 
 <script type="text/x-magento-init">
     {
@@ -239,3 +249,57 @@ require([
         }
     }
 </script>
+
+<script>
+
+    require([
+        'jquery',
+        'prototype',
+    ], function(jQuery){
+        
+        function refresh_token() {
+            $formKey = jQuery.cookie('form_key');
+            params = {
+            };
+            var tokenMessage = jQuery('#test_result');
+
+            jQuery.ajax( {
+                url: '<?php /* @escapeNotVerified */ echo $abnCheck->getAjaxTestUrl() ?>',
+                data: {form_key: $formKey},
+                type: 'POST'
+            }).done(function(a) { 
+                console.log(a); // log: {a: "b"}
+            });
+
+            /*console.log(params);
+            new Ajax.Request('<?php /* @escapeNotVerified */ echo $abnCheck->getAjaxTestUrl() ?>', {
+                loaderArea:     false,
+                asynchronous:   true,
+                parameters:     params,
+                data: {
+                    form_key: $formKey
+                },
+                onSuccess: function(transport) {
+                    var response = JSON.parse(transport.responseText);
+                    if(response.success == 'OK') {
+                        tokenMessage.removeClass('hidden').addClass('success');
+                    } else {
+                        tokenMessage.removeClass('hidden').addClass('error');
+                    }
+                    tokenMessage.text(response.message);
+
+                }, onFailure: function( transport )
+                {
+                    var response = transport.responseText;
+                    tokenMessage.removeClass('hidden').addClass('error');
+                    tokenMessage.text(response.message);
+                }
+            });*/
+        }
+
+        jQuery('#test_button').click(function () {
+            refresh_token();
+        });
+    });
+</script>
+
