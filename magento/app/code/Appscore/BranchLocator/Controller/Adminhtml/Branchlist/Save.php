@@ -15,11 +15,9 @@ class Save extends Branchlist
 
       if ($isPost) {
          $branchModel = $this->_branchlistFactory->create();
-         $branchId = $this->getRequest()->getParam('branch')['id'];
          
-         if ($branchId) {
-            $branchModel->load($branchId);
-            
+         if (array_key_exists('id', $this->getRequest()->getParam('branch'))) {
+            $branchModel->load($this->getRequest()->getParam('branch')['id']);
          }
 
          $formData = $this->getRequest()->getParam('branch');

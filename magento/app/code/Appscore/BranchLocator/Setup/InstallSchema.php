@@ -87,6 +87,12 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                                 null,
                                 [ 'identity' => false, 'nullable' => false ],
                                 )
+                            ->addColumn(
+                                'country',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullable' => false ],
+                                )
                             ->setOption('charset','utf8');
             $conn->createTable($table);
         }

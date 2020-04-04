@@ -1,0 +1,146 @@
+<?php 
+
+    $branches = $block->getBranchList();
+    $branchesVic = $block->getBranchListVic();
+    $branchesNsw = $block->getBranchListNsw();
+    $branchesQld = $block->getBranchListQld();
+    $branchesSa = $block->getBranchListSa();
+    $branchesTas = $block->getBranchListTas();
+    $branchesAct = $block->getBranchListAct();
+    $branchesWa = $block->getBranchListWa();
+    $branchesAuckland = $block->getBranchListAuckland();
+?>
+
+<?php if ($block->getApiKey() == "") { ?>
+    <div id="no-map">
+        <h4><i>Please Add Google maps API Key in the Back-office</i></h4>
+    </div>
+<?php } else { ?>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $block->getApiKey(); ?>&callback=initMap" async defer></script>
+    <div id="map"></div>
+<?php } ?>
+<script>
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -37.8867462, lng: 144.841503},
+            zoom: 5,
+            disableDefaultUI: true
+        });
+
+        <?php foreach($branches as $branch) { ?>
+            placeMarker({lat: <?php echo $branch->getLatitude(); ?>, lng:  <?php echo $branch->getLongitude(); ?>})
+        <?php } ?>
+
+    }
+
+    function placeMarker(position) {
+        var logo = {
+            url: '<?php echo $block->getLogoSrc() ?>',
+            scaledSize: new google.maps.Size(60, 40),
+        };
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            icon: logo,
+        });
+    }
+    
+
+</script>
+
+<div class="branch-container">
+    <h1>Australia</h1>
+        <h4>Victoria <div class=""></div></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesVic as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+        </div>
+        <h4>New South Wales <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesNsw as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+        <h4>Queensland <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesQld as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+        <h4>South Australia <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesSa as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+        <h4>Tasmania <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesTas as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+        <h4>Australian Capital Territory <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesAct as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+        <h4>Western Australia <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesWa as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+    <h1>New Zealand</h1>
+        <h4>Auckland <div class="caret-right"></h4>
+        <div class="dropdown-content">
+            <?php foreach($branchesAuckland as $branch) { ?>
+                <div class="branch">
+                    <p><strong><?php echo $branch->getName(); ?></strong></p>
+                    <p><?php echo $branch->getAddress(); ?></p>
+                </div>
+            <?php } ?>
+        </div>
+</div>
+
+<script>
+require([
+    'jquery',
+    'accordion'  // the alias for "mage/accordion"
+], function ($) {
+    $(function () { // to ensure that code evaluates on page load
+        $('h4').children().toggleClass('carret-right')
+        $('h4').on('click', function() {
+            $(this).children().toggleClass('carret-down');
+        })
+    });
+});
+</script>

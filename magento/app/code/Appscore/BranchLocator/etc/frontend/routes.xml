@@ -4,8 +4,8 @@
 xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/
 App/etc/routes.xsd">
     <router id="standard">
-        <route id="branch" frontName="branchlocator">
-            <module name="Appscore_BranchLocator" />
+        <route id="branchlocator" frontName="branchlocator">
+            <module name="Appscore_Branchlocator" />
         </route>
     </router>
 </config>
