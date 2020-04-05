@@ -44,7 +44,7 @@ class Save extends Branchlist
          }
 
          $this->_getSession()->setFormData($formData);
-         $this->_redirect('*/*/edit', ['id' => $branchId]);
+         $this->_redirect('*/*/edit', ['id' => $branchModel->getId()]);
       }
    }
 }

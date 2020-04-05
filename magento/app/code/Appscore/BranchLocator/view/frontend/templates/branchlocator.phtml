@@ -10,49 +10,27 @@
     $branchesWa = $block->getBranchListWa();
     $branchesAuckland = $block->getBranchListAuckland();
 ?>
+<div id="branch-locator">
+    <?php if ($block->getApiKey() == "") { ?>
+        <div id="no-map">
+            <h4><i>Please Add Google maps API Key in the Back-office</i></h4>
+        </div>
+    <?php } else { ?>
+        <div id="map"></div>
+        <div id="popup-branch">
+            
+        </div>
+    <?php } ?>
 
-<?php if ($block->getApiKey() == "") { ?>
-    <div id="no-map">
-        <h4><i>Please Add Google maps API Key in the Back-office</i></h4>
-    </div>
-<?php } else { ?>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $block->getApiKey(); ?>&callback=initMap" async defer></script>
-    <div id="map"></div>
-<?php } ?>
-<script>
-    var map;
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -37.8867462, lng: 144.841503},
-            zoom: 5,
-            disableDefaultUI: true
-        });
+    <div id="branch-container" class="branch-container">
+        <h1>Australia</h1>
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>Victoria</h4>
+            </div>
+        </div>
 
-        <?php foreach($branches as $branch) { ?>
-            placeMarker({lat: <?php echo $branch->getLatitude(); ?>, lng:  <?php echo $branch->getLongitude(); ?>})
-        <?php } ?>
-
-    }
-
-    function placeMarker(position) {
-        var logo = {
-            url: '<?php echo $block->getLogoSrc() ?>',
-            scaledSize: new google.maps.Size(60, 40),
-        };
-        var marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            icon: logo,
-        });
-    }
-    
-
-</script>
-
-<div class="branch-container">
-    <h1>Australia</h1>
-        <h4>Victoria <div class=""></div></h4>
-        <div class="dropdown-content">
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesVic as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
@@ -62,85 +40,291 @@
                     <?php if ($branch->getFax()) { ?>
                         <p><?php echo $branch->getFax(); ?></p>
                     <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-        <h4>New South Wales <div class="caret-right"></h4>
-        <div class="dropdown-content">
+
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>New South Wales</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesNsw as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-        <h4>Queensland <div class="caret-right"></h4>
-        <div class="dropdown-content">
+
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>Queensland</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesQld as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-        <h4>South Australia <div class="caret-right"></h4>
-        <div class="dropdown-content">
+
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>South Australia</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesSa as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-        <h4>Tasmania <div class="caret-right"></h4>
-        <div class="dropdown-content">
+
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>Tasmania</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesTas as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-        <h4>Australian Capital Territory <div class="caret-right"></h4>
-        <div class="dropdown-content">
+
+        
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>Australian Capital Territory</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesAct as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-        <h4>Western Australia <div class="caret-right"></h4>
-        <div class="dropdown-content">
+        
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>Western Australia</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesWa as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
-    <h1>New Zealand</h1>
-        <h4>Auckland <div class="caret-right"></h4>
-        <div class="dropdown-content">
+        <br>
+        <h1>New Zealand</h1>
+        <div data-role="collapsible">
+            <div data-role="trigger">
+                <h4>Auckland</h4>
+            </div>
+        </div>
+        <div data-role="content" class="dropdown-content">
             <?php foreach($branchesAuckland as $branch) { ?>
                 <div class="branch">
                     <p><strong><?php echo $branch->getName(); ?></strong></p>
                     <p><?php echo $branch->getAddress(); ?></p>
+                    <p><?php echo $branch->getCity() . ', '. $branch->getState(). ', ' . $branch->getPostcode(); ?></p>
+                    <p>Phone : <?php echo $branch->getPhone(); ?></p>
+                    <?php if ($branch->getFax()) { ?>
+                        <p><?php echo $branch->getFax(); ?></p>
+                    <?php } ?>
+                    <a href="" data-id="<?php echo $branch->getId(); ?>" data-lat="<?php echo $branch->getLatitude(); ?>" data-lng="<?php echo $branch->getLongitude(); ?>">SEE MORE</a>
                 </div>
             <?php } ?>
         </div>
+    </div>
 </div>
-
 <script>
 require([
     'jquery',
-    'accordion'  // the alias for "mage/accordion"
+    'accordion',
+    'https://maps.googleapis.com/maps/api/js?key=<?php echo $block->getApiKey(); ?>',
 ], function ($) {
-    $(function () { // to ensure that code evaluates on page load
-        $('h4').children().toggleClass('carret-right')
-        $('h4').on('click', function() {
-            $(this).children().toggleClass('carret-down');
-        })
+
+    var map;
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -29.9362609, lng: 125.4594216},
+            zoom: 4,
+            disableDefaultUI: true
+        });
+
+    <?php foreach($branches as $branch) { ?>
+        placeMarker({lat: <?php echo $branch->getLatitude(); ?>, lng:  <?php echo $branch->getLongitude(); ?>}, <?php echo $branch->getId(); ?>)
+    <?php } ?>
+
+    function placeMarker(position, id) {
+        var logo = {
+            url: '<?php echo $block->getLogoSrc() ?>',
+            scaledSize: new google.maps.Size(60, 40),
+        };
+        var marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            icon: logo,
+            id: id
+        });
+
+        marker.addListener('click', function() {
+          map.setZoom(13);
+          map.setCenter(marker.getPosition());
+          setPopupData(marker.id);
+        });
+        
+    }
+
+    function setPopupData(id) {
+
+        $('#popup-branch').css('display', 'block');
+        $('#popup-branch').html('');
+        $.ajax({
+            url: 'branchlocator',
+            method: 'POST',
+            dataType: 'json',
+            showLoader: true,
+            data: {id: id},
+            }).done(function (branch) {
+                var d = new Date();
+                var n = d.getDay();
+                
+                var dayMatch = {
+                    0: branch.sunday, 
+                    1: branch.monday,
+                    2: branch.tuesday,
+                    3: branch.wednesday,
+                    4: branch.thursday,
+                    5: branch.friday,
+                    6: branch.saturday
+                }
+
+                var fax = "";
+                if(branch.fax != undefined) {
+                    fax = '<p>Fax: '+branch.fax+'</p>';
+                }
+
+                var html = '<span class="close"></span>' +
+                '<h1>'+branch.name+'</h1>'+
+                '<p>'+branch.address+', '+branch.city+', '+branch.state+', '+branch.postcode+'</p>'+
+                '<p>Phone: '+branch.phone+'</p>' +
+                fax +
+                '<h4>OPENING HOURS</h4>' +
+                '<table>'+ 
+                '<tr><td>Today</td><td>'+ getDayMonth(d, 0) +'</td><td>'+dayMatch[n]+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek(d, 1)+'</td><td>'+ getDayMonth(d, 1) +'</td><td>'+dayMatch[n+1]+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek(d, 2)+'</td><td>'+ getDayMonth(d, 2) +'</td><td>'+dayMatch[n+2]+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek(d, 3)+'</td><td>'+ getDayMonth(d, 3) +'</td><td>'+dayMatch[n+3]+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek(d, 4)+'</td><td>'+ getDayMonth(d, 4) +'</td><td>'+dayMatch[n+4]+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek(d, 5)+'</td><td>'+ getDayMonth(d, 5) +'</td><td>'+dayMatch[n+5]+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek(d, 6)+'</td><td>'+ getDayMonth(d, 6) +'</td><td>'+dayMatch[n+6]+'</td></tr>'+
+                '</table>'+
+                '<a href="#" id="find-another">FIND ANOTHER STORE</a>';
+                
+
+                $('#popup-branch').html(html);
+        });
+    }
+
+    $(document).on('click', '#find-another',function (e) {
+        $('html, body').animate({
+            scrollTop: $("#branch-container").offset().top + 500
+        }, 500);
+
+        $('#popup-branch').css('display', 'none');
+    });
+
+    $(document).on('click', '.close',function (e) {
+        e.preventDefault();
+        $('#popup-branch').css('display', 'none');
+    });
+
+    function getDayMonth(d, i) {
+        var dd = String(d.getDate() + i).padStart(2, '0');
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        var mm = String(monthNames[d.getMonth()]); 
+        
+        return dd + ' ' + mm;
+    }
+
+    function getDayOfTheWeek(d, i) {
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayName = days[d.getDay()+i];
+        
+        return dayName;
+    }
+
+    $(".branch-container").accordion({ 
+        collapsible: true,
+        multipleCollapsible: true,
+        icons: {"header": "caret-right", "activeHeader": "caret-down"},
+        animate: {duration:500,easing:"easeOutCubic"}
+    });
+
+    $('.branch a').on('click', function(e) {
+        e.preventDefault();
+        var lat = parseFloat($(this).attr('data-lat'));
+        var lng = parseFloat($(this).attr('data-lng'));
+        map.setCenter({lat: lat, lng: lng});
+        map.setZoom(13);
+        $('html, body').animate({
+            scrollTop: $("#maincontent").offset().top
+        }, 500)
+
+        setPopupData($(this).attr('data-id'));
     });
 });
 </script>

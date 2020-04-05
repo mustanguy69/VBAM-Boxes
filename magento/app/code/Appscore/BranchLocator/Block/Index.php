@@ -131,6 +131,11 @@ class Index extends \Magento\Framework\View\Element\Template
 		return $branchList;
 	}
 
+	public function getBranchById($id) {
+		$branch = $this->_branchlistFactory->create()->load($id);
+
+		return $branch;
+	}
 
 	public function getApiKey()
 	{

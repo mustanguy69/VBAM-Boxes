@@ -64,10 +64,46 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                                 ['nullbale'=>true,'default'=>'']
                                 )
                             ->addColumn(
-                                'opening_hours',
+                                'monday',
                                 Table::TYPE_TEXT,
                                 255,
-                                ['nullbale'=>false,'default'=>'']
+                                ['nullbale'=>false]
+                                )
+                            ->addColumn(
+                                'tuesday',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullbale'=>false]
+                                )
+                            ->addColumn(
+                                'wednesday',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullbale'=>false]
+                                )
+                            ->addColumn(
+                                'thursday',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullbale'=>false]
+                                )
+                            ->addColumn(
+                                'friday',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullbale'=>false]
+                                )
+                            ->addColumn(
+                                'saturday',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullbale'=>false]
+                                )
+                            ->addColumn(
+                                'sunday',
+                                Table::TYPE_TEXT,
+                                255,
+                                ['nullbale'=>false]
                                 )
                             ->addColumn(
                                 'latitude',

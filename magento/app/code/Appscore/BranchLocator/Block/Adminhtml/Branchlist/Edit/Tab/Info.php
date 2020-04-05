@@ -181,16 +181,6 @@ class Info extends Generic implements TabInterface
         );
 
         $fieldset->addField(
-            'opening_hours',
-            'text',
-            [
-                'name'        => 'opening_hours',
-                'label'    => __('Opening Hours'),
-                'required'     => true
-            ]
-        );
-
-        $fieldset->addField(
             'latitude',
             'text',
             [
@@ -355,6 +345,7 @@ class Info extends Generic implements TabInterface
         <script src="https://maps.googleapis.com/maps/api/js?key='. $this->getApiKey() .'&callback=initMap" async defer></script>
         <div id="map" style="width:500px; height:400px; margin-top:40px;">
         ');
+
         
         $form->setValues($model->getData());
         $this->setForm($form);

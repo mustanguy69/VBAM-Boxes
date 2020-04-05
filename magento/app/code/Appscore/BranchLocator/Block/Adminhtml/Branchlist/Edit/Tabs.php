@@ -36,6 +36,18 @@ class Tabs extends WidgetTabs
             ]
         );
 
+        $this->addTab(
+            'branch_hours',
+            [
+                'label' => __('Opening Hours'),
+                'title' => __('Opening Hours'),
+                'content' => $this->getLayout()->createBlock(
+                    'Appscore\BranchLocator\Block\Adminhtml\Branchlist\Edit\Tab\Hours'
+                )->toHtml(),
+                'active' => true
+            ]
+        );
+
         return parent::_beforeToHtml();
     }
 }
