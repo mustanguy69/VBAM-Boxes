@@ -209,7 +209,7 @@ require([
     function placeMarker(position, id) {
         var logo = {
             url: '<?php echo $block->getLogoSrc() ?>',
-            scaledSize: new google.maps.Size(60, 40),
+            scaledSize: new google.maps.Size(68.5, 27),
         };
         var marker = new google.maps.Marker({
             position: position,
@@ -238,17 +238,6 @@ require([
             data: {id: id},
             }).done(function (branch) {
                 var d = new Date();
-                var n = d.getDay();
-                
-                var dayMatch = {
-                    0: branch.sunday, 
-                    1: branch.monday,
-                    2: branch.tuesday,
-                    3: branch.wednesday,
-                    4: branch.thursday,
-                    5: branch.friday,
-                    6: branch.saturday
-                }
 
                 var fax = "";
                 if(branch.fax != undefined) {
@@ -262,19 +251,56 @@ require([
                 fax +
                 '<h4>OPENING HOURS</h4>' +
                 '<table>'+ 
-                '<tr><td>Today</td><td>'+ getDayMonth(d, 0) +'</td><td>'+dayMatch[n]+'</td></tr>'+
-                '<tr><td>'+ getDayOfTheWeek(d, 1)+'</td><td>'+ getDayMonth(d, 1) +'</td><td>'+dayMatch[n+1]+'</td></tr>'+
-                '<tr><td>'+ getDayOfTheWeek(d, 2)+'</td><td>'+ getDayMonth(d, 2) +'</td><td>'+dayMatch[n+2]+'</td></tr>'+
-                '<tr><td>'+ getDayOfTheWeek(d, 3)+'</td><td>'+ getDayMonth(d, 3) +'</td><td>'+dayMatch[n+3]+'</td></tr>'+
-                '<tr><td>'+ getDayOfTheWeek(d, 4)+'</td><td>'+ getDayMonth(d, 4) +'</td><td>'+dayMatch[n+4]+'</td></tr>'+
-                '<tr><td>'+ getDayOfTheWeek(d, 5)+'</td><td>'+ getDayMonth(d, 5) +'</td><td>'+dayMatch[n+5]+'</td></tr>'+
-                '<tr><td>'+ getDayOfTheWeek(d, 6)+'</td><td>'+ getDayMonth(d, 6) +'</td><td>'+dayMatch[n+6]+'</td></tr>'+
+                '<tr><td>Today</td><td>'+ getDayMonth(d, d.getDay()) +'</td><td>'+matchDay(d.getDay(), branch)+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek((d.getDay() +1) % 7)+'</td><td>'+ getDayMonth(d, 1) +'</td><td>'+matchDay((d.getDay() +1) % 7, branch)+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek((d.getDay() +2) % 7)+'</td><td>'+ getDayMonth(d, 2) +'</td><td>'+matchDay((d.getDay() +2) % 7, branch)+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek((d.getDay() +3) % 7)+'</td><td>'+ getDayMonth(d, 3) +'</td><td>'+matchDay((d.getDay() +3) % 7, branch)+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek((d.getDay() +4) % 7)+'</td><td>'+ getDayMonth(d, 4) +'</td><td>'+matchDay((d.getDay() +4) % 7, branch)+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek((d.getDay() +5) % 7)+'</td><td>'+ getDayMonth(d, 5) +'</td><td>'+matchDay((d.getDay() +5) % 7, branch)+'</td></tr>'+
+                '<tr><td>'+ getDayOfTheWeek((d.getDay() +6) % 7)+'</td><td>'+ getDayMonth(d, 6) +'</td><td>'+matchDay((d.getDay() +6) % 7, branch)+'</td></tr>'+
                 '</table>'+
                 '<a href="#" id="find-another">FIND ANOTHER STORE</a>';
-                
 
                 $('#popup-branch').html(html);
         });
+    }
+
+    function getDayMonth(d, i) {
+
+        var dd = String(d.getDate() + i).padStart(2, '0');
+        
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        var mm = String(monthNames[d.getMonth()]); 
+        
+        return dd + ' ' + mm;
+    }
+
+    function getDayOfTheWeek(i) {
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayName = days[i];
+        
+        return dayName;
+    }
+
+    function matchDay(i, branch) {
+        
+
+        var dayMatch = {
+            0: branch.sunday, 
+            1: branch.monday,
+            2: branch.tuesday,
+            3: branch.wednesday,
+            4: branch.thursday,
+            5: branch.friday,
+            6: branch.saturday
+        }
+
+        var day = dayMatch[i];
+
+        return day;
+
     }
 
     $(document).on('click', '#find-another',function (e) {
@@ -289,23 +315,6 @@ require([
         e.preventDefault();
         $('#popup-branch').css('display', 'none');
     });
-
-    function getDayMonth(d, i) {
-        var dd = String(d.getDate() + i).padStart(2, '0');
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        var mm = String(monthNames[d.getMonth()]); 
-        
-        return dd + ' ' + mm;
-    }
-
-    function getDayOfTheWeek(d, i) {
-        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        var dayName = days[d.getDay()+i];
-        
-        return dayName;
-    }
 
     $(".branch-container").accordion({ 
         collapsible: true,
