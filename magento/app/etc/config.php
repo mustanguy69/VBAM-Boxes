@@ -238,6 +238,7 @@ return [
         'Appscore_CategoryColour' => 1,
         'Appscore_Checkout' => 1,
         'Appscore_CompareProducts' => 1,
+        'Appscore_CountryHelper' => 1,
         'Appscore_CustomerCustomAttributes' => 1,
         'Appscore_Directory' => 1,
         'Appscore_HeaderBlock' => 1,

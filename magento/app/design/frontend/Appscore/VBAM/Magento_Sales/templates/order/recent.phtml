@@ -1,0 +1,79 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Sales\Block\Order\Recent */
+?>
+<div class="block block-dashboard-orders">
+<?php
+    $_orders = $block->getOrders();
+    $count = count($_orders);
+    $countryInterface = $this->helper('Appscore\CountryHelper\Helper\Country');
+?>
+    <div class="block-title order">
+        <strong><?= $block->escapeHtml(__('Recent Orders')) ?></strong>
+        <?php if ($count > 0) : ?>
+            <a class="action view" href="<?= $block->escapeUrl($block->getUrl('sales/order/history')) ?>">
+                <span><?= $block->escapeHtml(__('View All')) ?></span>
+            </a>
+        <?php endif; ?>
+    </div>
+    <div class="block-content">
+    <?= $block->getChildHtml() ?>
+    <?php if ($count > 0) : ?>
+        <div class="orders-recent">
+            <?php foreach ($_orders as $_order) : ?>
+                <div class="recent-order">
+                    <div class="id"><strong>#<?= $block->escapeHtml($_order->getRealOrderId()) ?></strong></div>
+                    <div class="displayFlex order-info">
+                        <div class="col-3 col-md-3"><?= __('Date:') ?></div>
+                        <div class="col-9 col-md-9 date"><?= $block->escapeHtml( date('d/m/y', strtotime($_order->getCreatedAt()))) ?></div>
+                    </div>
+                    <div class="displayFlex order-info">
+                        <div class="col-3 col-md-3"><?= __('Ship to:') ?></div>
+                        <div class="col-9 col-md-9 shipping"><?= $_order->getShippingAddress() ? $block->escapeHtml($_order->getShippingAddress()->getName() . ', ' . $_order->getShippingAddress()->getData('street') . ', ' . $_order->getShippingAddress()->getData('city') . ', ' . $_order->getShippingAddress()->getData('region') . ' ' . $_order->getShippingAddress()->getData('postcode') . ', ' . $countryInterface->getCountryname($_order->getShippingAddress()->getData('country_id'))) : "&nbsp;" ?></div>
+                    </div>
+                    <div class="displayFlex order-info">
+                        <div class="col-3 col-md-3"><?= __('Order Total:') ?></div>
+                        <div class="col-9 col-md-9 total"><?= /* @noEscape */ $_order->formatPrice($_order->getGrandTotal()) ?></div>
+                    </div>
+                    <div class="displayFlex order-info">
+                        <div class="col-3 col-md-3"><?= __('Status:') ?></div>
+                        <div class="col-9 col-md-9 status"><?= $block->escapeHtml($_order->getStatusLabel()) ?></div>
+                    </div>                   
+                    
+                    <div class="actions displayFlex">
+                        <div class="col-6 col-md-6">
+                        <?php if ($this->helper(\Magento\Sales\Helper\Reorder::class)
+                            ->canReorder($_order->getEntityId())
+                        ) : ?>
+                            <a href="#" data-post='<?= /* @noEscape */
+                            $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+                                ->getPostData($block->getReorderUrl($_order))
+                            ?>' class="action order">
+                                <button class="button green-button-empty">
+                                    <span><?= $block->escapeHtml(__('Reorder')) ?></span>
+                                </button>
+                            </a>
+                        <?php endif ?>
+                        </div>
+                        <div class="col-6 col-md-6">
+                            <a href="<?= $block->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
+                                <button class="button green-button-full">
+                                    <span><?= $block->escapeHtml(__('View Order')) ?></span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else : ?>
+        <div class="message info empty"><span><?= $block->escapeHtml(__('You have placed no orders.')) ?></span></div>
+    <?php endif; ?>
+    </div>
+</div>

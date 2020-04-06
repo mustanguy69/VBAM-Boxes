@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" htmlClass="page-title-wrapper col-md-12"/>
+    </body>
+
+    <referenceContainer name="main" htmlClass="column main col-md-7 col-12"/>
+    <referenceContainer name="columns" htmlClass="columns displayFlex">
+        <referenceContainer name="div.sidebar.primary" htmlClass="sidebar-primary col-md-5 col-12"/>
+        <referenceBlock name="div.sidebar.additional" remove="true"/>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="customer_account_navigation" remove="true"/>
+    </referenceContainer>
+    <move element="customer_account_dashboard_top" destination="div.sidebar.primary" before="-"/>
+</page>
