@@ -121,13 +121,13 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                                 'status',
                                 Table::TYPE_BOOLEAN,
                                 null,
-                                [ 'identity' => false, 'nullable' => false ],
+                                ['identity' => false, 'nullable' => false]
                                 )
                             ->addColumn(
                                 'country',
                                 Table::TYPE_TEXT,
                                 255,
-                                ['nullable' => false ],
+                                ['nullable' => false]
                                 )
                             ->setOption('charset','utf8');
             $conn->createTable($table);

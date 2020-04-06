@@ -137,6 +137,21 @@ class Index extends \Magento\Framework\View\Element\Template
 		return $branch;
 	}
 
+	public function searchBranch($query)
+	{
+		$branchList = $this->_branchlistFactory->create();
+		$branchList = $branchList->getCollection();
+		$branchList->addFieldToSelect('*');
+		$branchList->addFieldToFilter(['state', 'postcode', 'country'],
+		[
+			['like' => $query],
+			['like' => $query],
+			['like' => $query]
+		]);
+		
+		return $branchList;
+	}
+
 	public function getApiKey()
 	{
 		$scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT;

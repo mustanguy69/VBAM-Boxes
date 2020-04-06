@@ -13,44 +13,45 @@
     }
     
     #popup-branch {
-        display: none;
+        
         position: absolute;
         left: 25px;
-        height: 450px;
-        width: 350px;
         padding: 15px;
         background-color: white;
         margin-top: 25px;
         -webkit-box-shadow: 0px 0px 7px 0px @gray;
         -moz-box-shadow: 0px 0px 7px 0px @gray;
         box-shadow: 0px 0px 7px 0px @gray;
-        h1 {
-            color: #001489;
-            font-size: 21px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+        width: 350px;
+
+        .active {
+            h1 {
+                color: #001489;
+                font-size: 21px;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+            }
+
+            p:last-of-type {
+                margin-bottom: 13px;
+            }
+        
+            td {
+                padding: 10px 15px 10px 0px;
+            }
+        
+            a {
+                font-size: 13px;
+                color: @gray;
+            }
         }
-    
+        
         h4 {
             color: black;
             font-size: 18px;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 3px;
-            
-        }
-    
-        p:last-of-type {
-            margin-bottom: 13px;
-        }
-    
-        td {
-            padding: 10px 15px 10px 0px;
-        }
-    
-        a {
-            font-size: 13px;
-            color: @gray;
         }
     
         .close {
@@ -61,25 +62,83 @@
             height: 20px;
             opacity: 0.3;
             cursor: pointer;
-          }
-          .close:hover {
-            opacity: 1;
-          }
-          .close:before, .close:after {
-            position: absolute;
-            left: 15px;
-            content: ' ';
-            height: 17px;
-            width: 2px;
-            background-color: #333;
-          }
-          .close:before {
-            transform: rotate(45deg);
-          }
-          .close:after {
-            transform: rotate(-45deg);
-          }
-          
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &:before, &:after {
+                position: absolute;
+                left: 15px;
+                content: ' ';
+                height: 17px;
+                width: 2px;
+                background-color: #333;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+
+        #popup-search {
+            input {
+                margin-top: 10px;
+                margin-bottom: 8px;
+                border: none;
+                background-color: #F7F5F5;
+                height: 40px;
+    
+            }
+            .search-icon {
+                position: absolute;
+                right: 29px;
+                top: 55px;
+                background: url("@{baseDir}images/search.svg") no-repeat;
+                height: 20px;
+                width:20px;
+            }
+             
+            ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: @gray;
+                opacity: 1; /* Firefox */
+            }
+            
+            :-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color: @gray;
+            }
+            
+            ::-ms-input-placeholder { /* Microsoft Edge */
+                color: @gray;
+            }
+    
+            #current-location {
+                color: @gray;
+                cursor: pointer;
+                background: url("@{baseDir}images/cursor-target.svg") no-repeat;
+                padding-left: 24px;
+                padding-bottom: 5px;
+                padding-top: 2px;
+                background-size: 20px;
+            }
+
+            #popup-search-result {
+                .search-result {
+                    cursor: pointer;
+                    margin-top: 15px;
+                    h1 {
+                        margin-bottom: 5px;
+                    }
+                    p {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
     }
     
     .branch-container {

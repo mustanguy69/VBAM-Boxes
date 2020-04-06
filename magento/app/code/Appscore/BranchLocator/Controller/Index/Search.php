@@ -7,7 +7,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\View\Result\Page;
 
-class Index extends Action
+class Search extends Action
 {
     /** @var  \Magento\Framework\View\Result\Page */
     protected $resultPageFactory;
@@ -27,21 +27,29 @@ class Index extends Action
 
     public function execute()
     {
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__('Branch Locator'));
-
         if ($this->getRequest()->isAjax()) {
-            $id = $this->getRequest()->getPost('id');
-            $branchlist = $this->_branchlistFactory->create()->load($id);
-
-            $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-            $resultJson->setData($branchlist);
+            $query = $this->getRequest()->getPost('query');
+            $branchList = $this->_branchlistFactory->create();
+            $branchList = $branchList->getCollection();
+            $branchList->addFieldToSelect('*');
+            $branchList->addFieldToFilter('status', array('eq' => 1));
+            $branchList->addFieldToFilter(
+                array('postcode','city', 'address'),
+                array(
+                    array('like' => '%'.$query.'%'),
+                    array('like' => '%'.$query.'%'),
+                    array('like' => '%'.$query.'%')
+                )
+                            
+            );
             
+            $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
+            $resultJson->setData($branchList->getData());
+            
+
             return $resultJson;
         }
 
-
-        return $resultPage;
     }
 
 }
