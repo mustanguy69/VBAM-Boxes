@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+      <add id="Appscore_LatestNews::latestnews" title="Latest News" translate="title" module="Appscore_LatestNews" sortOrder="110" dependsOnModule="Appscore_LatestNews" resource="Magento_Backend::content"/>
+      <add id="Appscore_LatestNews::latestnews_list" title="News List" translate="title" module="Appscore_LatestNews" parent="Appscore_LatestNews::latestnews" sortOrder="10" dependsOnModule="Appscore_LatestNews" action="appscore_latestnews/newslist/index" resource="Magento_Backend::content"/>
+    </menu>
+</config>

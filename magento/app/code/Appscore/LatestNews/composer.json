@@ -1,0 +1,22 @@
+{
+    "name": "appscore/module-latestnews",
+    "description": "Module to add news and display them",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Tanguy BELIN",
+            "email": "tanguy.belin@appscore.com.au"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Appscore\\LatestNews\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
