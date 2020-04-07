@@ -24,7 +24,6 @@ class Save extends Branchlist
          $branchModel->setData($formData);
          
          try {
-            // Save news
             $branchModel->save();
 
             // Display success message
