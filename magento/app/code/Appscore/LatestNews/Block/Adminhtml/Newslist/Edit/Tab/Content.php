@@ -104,7 +104,7 @@ class Content extends Generic implements TabInterface
             'category_id',
             'select',
             [
-                'name'        => 'category',
+                'name'        => 'category_id',
                 'label'    => __('Category'),
                 'required'     => true,
                 'values'   => $this->_categories->toOptionArray(),
