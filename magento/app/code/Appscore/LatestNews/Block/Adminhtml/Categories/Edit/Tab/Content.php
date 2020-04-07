@@ -1,6 +1,6 @@
 <?php
 
-namespace Appscore\LatestNews\Block\Adminhtml\Newslist\Edit\Tab;
+namespace Appscore\LatestNews\Block\Adminhtml\Categories\Edit\Tab;
 
 use Magento\Backend\Block\Widget\Form\Generic;
 use Magento\Backend\Block\Widget\Tab\TabInterface;
@@ -9,7 +9,6 @@ use Magento\Framework\Registry;
 use Magento\Framework\Data\FormFactory;
 use Magento\Cms\Model\Wysiwyg\Config;
 use Appscore\LatestNews\Model\System\Config\Status;
-use Appscore\LatestNews\Model\System\Config\Categories;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Content extends Generic implements TabInterface
@@ -24,18 +23,12 @@ class Content extends Generic implements TabInterface
      */
     protected $_newslistStatus;
 
-    /**
-     * @var \LatestNews\Model\System\Config\Categories
-     */
-    protected $_categories;
-
    /**
      * @param Context $context
      * @param Registry $registry
      * @param FormFactory $formFactory
      * @param Config $wysiwygConfig
      * @param Status $newsStatus
-     * @param Categories $categories
      * @param array $data
      */
     public function __construct(
@@ -44,12 +37,10 @@ class Content extends Generic implements TabInterface
         FormFactory $formFactory,
         Config $wysiwygConfig,
         Status $newslistStatus,
-        Categories $categories,
         array $data = []
     ) {
         $this->_wysiwygConfig = $wysiwygConfig;
         $this->_newslistStatus = $newslistStatus;
-        $this->_categories = $categories;
         parent::__construct($context, $registry, $formFactory, $data);
     }
 
@@ -60,12 +51,12 @@ class Content extends Generic implements TabInterface
      */
     protected function _prepareForm()
     {
-        $model = $this->_coreRegistry->registry('latestnews_newslist');
+        $model = $this->_coreRegistry->registry('latestnews_categories');
     
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
-        $form->setHtmlIdPrefix('news_');
-        $form->setFieldNameSuffix('news');
+        $form->setHtmlIdPrefix('category_');
+        $form->setFieldNameSuffix('category');
 
         $fieldset = $form->addFieldset(
             'base_fieldset',
@@ -81,58 +72,14 @@ class Content extends Generic implements TabInterface
         }
 
         $fieldset->addField(
-            'status',
-            'select',
-            [
-                'name'      => 'status',
-                'label'     => __('Status'),
-                'options'   => $this->_newslistStatus->toOptionArray()
-            ]
-        );
-
-        $fieldset->addField(
-            'title',
+            'name',
             'text',
             [
-                'name'        => 'title',
-                'label'    => __('Title'),
+                'name'        => 'name',
+                'label'    => __('Category name'),
                 'required'     => true
             ]
         );
-        
-        $fieldset->addField(
-            'category_id',
-            'select',
-            [
-                'name'        => 'category',
-                'label'    => __('Category'),
-                'required'     => true,
-                'values'   => $this->_categories->toOptionArray(),
-            ]
-        );
-
-        $fieldset->addField(
-            'image',
-            'image',
-            [
-                'name'        => 'image',
-                'label'    => __('Image'),
-                'required'     => true
-            ]
-        );
-
-        $fieldset->addField(
-            'content',
-            'editor',
-            [
-                'name'        => 'content',
-                'label'    => __('Content'),
-                'required'     => true,
-                'config'    => $this->_wysiwygConfig->getConfig(),
-                'wysiwyg'   => true
-            ]
-        );
-
         
         $form->setValues($model->getData());
         $this->setForm($form);
@@ -147,7 +94,7 @@ class Content extends Generic implements TabInterface
      */
     public function getTabLabel()
     {
-        return __('News Content');
+        return __('Categories for Latest News');
     }
  
     /**
@@ -157,7 +104,7 @@ class Content extends Generic implements TabInterface
      */
     public function getTabTitle()
     {
-        return __('News Content');
+        return __('Categories for Latest News');
     }
  
     /**

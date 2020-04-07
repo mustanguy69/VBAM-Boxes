@@ -61,6 +61,16 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 					'News Image'
 				)
 				->addColumn(
+					'category_id',
+					\Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+					null,
+					[
+						'identity' => false,
+						'nullable' => false,
+					],
+					'News Category'
+				)
+				->addColumn(
 					'created_at',
 					\Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
 					null,
@@ -71,8 +81,33 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 					\Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
 					null,
 					['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
-					'Updated At')
-				->setComment('Post Table');
+					'Updated At');
+			$installer->getConnection()->createTable($table);
+		}
+
+		if (!$installer->tableExists('appscore_latestnews_categories')) {
+			$table = $installer->getConnection()->newTable(
+				$installer->getTable('appscore_latestnews_categories')
+			)
+				->addColumn(
+					'id',
+					\Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+					null,
+					[
+						'identity' => true,
+						'nullable' => false,
+						'primary'  => true,
+						'unsigned' => true,
+					],
+					'Category ID'
+				)
+				->addColumn(
+					'name',
+					\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+					255,
+					['nullable => false'],
+					'Category Name'
+				);
 			$installer->getConnection()->createTable($table);
 		}
 		$installer->endSetup();
