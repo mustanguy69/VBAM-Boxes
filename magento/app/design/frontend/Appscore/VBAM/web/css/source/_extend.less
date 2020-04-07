@@ -997,85 +997,8 @@ input.qty {
     padding: 20px;
 }
 
-
 .page-main .block {
     margin-bottom: 20px;
-}
-
-.block-dashboard-info,
-.block-dashboard-addresses,
-.block-dashboard-orders {
-    &:extend(.white-block-bg);
-
-    .action {
-        text-transform: uppercase;
-        font-size: 12px;
-        color: @gray;
-        &:extend(.regular);
-    }
-
-    .block-title {
-        strong {
-            &:extend(.black);
-            font-size: 16px;
-            color: @blue;
-            text-transform: uppercase;
-        }
-
-        .action {
-            float: right;
-        }
-    }
-
-    .block-content {
-        .box-content {
-            address, p {
-                font-size: 13px;
-                line-height: 1.9;
-                color: @black;
-            }
-        }
-
-        .box-billing-address,
-        .box-shipping-address {
-            width: 100% !important;
-        }
-
-        .box-billing-address {
-            margin-bottom: 30px;
-        }
-    }
-}
-
-.block-dashboard-addresses {
-    .block-content {
-        margin-top: 20px;
-    }
-}
-
-.block-dashboard-orders {
-    .recent-order {
-        margin-top: 20px;
-        margin-bottom: 0;
-        &:extend(p);
-        font-size: 13px;
-
-        strong {
-            font-size: 16px;
-        }
-
-        .order-info {
-            line-height: 1.9;
-            color: @black;
-        }
-
-        .actions {
-            margin-top: 20px;
-            button {
-                width: 100%;
-            }
-        }
-    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {

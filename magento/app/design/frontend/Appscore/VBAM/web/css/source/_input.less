@@ -24,6 +24,66 @@ select:-webkit-autofill:focus {
   transition: none;
 }
 
+.field.choice {
+  position: relative;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .label {
+    position: relative;
+    cursor: pointer;
+    padding-left: 35px;
+    padding-top: 3px;
+  }
+
+  .label:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: @gray;
+    content: '';
+  }
+
+  input:checked ~ .label:before {
+    background-color: @green;
+  }
+  
+  .label:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  input:checked ~ .label:after {
+    display: block;
+  }
+
+  input:checked ~ .label:before {
+    background-color: @green;
+  }
+
+  .label:after {
+    left: 7px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid @white-gray;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+
+
 ._keyfocus *:focus, input:not([disabled]):focus, textarea:not([disabled]):focus, select:not([disabled]):focus {
     box-shadow: none !important;
 }

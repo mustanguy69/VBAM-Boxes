@@ -1,0 +1,101 @@
+.account .page-main .page-title-wrapper .order-date {
+    margin-top: 25px;
+}
+
+.page-title-wrapper {
+    .order-status {
+        &:extend(.black);
+        font-size: 16px;
+        border-radius: 0;
+        margin-top: 20px;
+        border: 1px solid @gray;
+    }
+
+    .order-date {
+        &:extend(.black);
+        font-size: 16px;
+        margin-top: 25px;
+        display: inline-block;
+        margin-left: 20px !important;
+    }
+
+    .order-actions-toolbar {
+        margin-top: 10px;
+        a {
+            padding: 9px 20px;
+            height: 40px;
+            text-align: center;
+        }
+
+        a.action.order {
+            &:extend(button.green-button-full);
+            float:left;
+        }
+
+        a.action.print {
+            &:extend(button.green-button-empty);
+            float:right;
+        }
+    }
+}
+
+.order-details-items {
+    border: none;
+}
+
+.order-links {
+    display: none;
+}
+
+.table tfoot,
+.order-details-items tfoot td {
+    background: none;
+}
+
+.table-order-items {
+    .product-item-name {
+        font-weight: 900;
+    }
+
+    td {
+        &:extend(.regular);
+        span, p {
+            &:extend(.regular);
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .account .page-main .page-title-wrapper .order-date {
+        margin-top: 12px !important;
+    }
+
+    .account .page-main .page-title-wrapper .order-status {
+        margin-top: 10px !important;
+    }
+
+    .sales-order-view {
+        .page-title-wrapper {
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+
+    .page-title-wrapper {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .column.main {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}

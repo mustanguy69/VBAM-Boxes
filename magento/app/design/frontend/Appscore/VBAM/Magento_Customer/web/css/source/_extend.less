@@ -147,7 +147,9 @@
     }
 }
 
-.form-create-account {
+.form-create-account,
+.form-edit-account,
+.form-address-edit {
     .fieldset {
         .legend {
             border: none;
@@ -196,11 +198,123 @@
                 &:extend(.myButtonStyle);
                 height: 40px;
             }
+
+            button.save.primary {
+                padding: 10px 20px;
+            }
         }
     }
 
     .fieldset.create.account:after {
         display: none;
+    }
+}
+
+.block-addresses-default {
+    .block-title {
+        display: none;
+    }
+}
+
+.block-dashboard-info,
+.block-dashboard-addresses,
+.block-dashboard-orders,
+.box-address-billing,
+.box-address-shipping,
+.block-addresses-list,
+.block-order-details-view,
+.order-details-items,
+.orders-history {
+    &:extend(.white-block-bg);
+
+    .action {
+        text-transform: uppercase;
+        font-size: 12px;
+        color: @gray;
+        &:extend(.regular);
+    }
+
+    .block-title {
+        strong {
+            &:extend(.black);
+            font-size: 16px;
+            color: @blue;
+            text-transform: uppercase;
+        }
+
+        .action {
+            float: right;
+        }
+    }
+
+    .block-content {
+        .box-content {
+            address, p {
+                font-size: 13px;
+                line-height: 1.9;
+                color: @black;
+            }
+        }
+
+        .box-billing-address,
+        .box-shipping-address {
+            width: 100% !important;
+        }
+
+        .box-billing-address {
+            margin-bottom: 30px;
+        }
+    }
+}
+
+.box-address-billing,
+.box-address-shipping {
+    address, p {
+        font-size: 13px;
+        color: @black;
+    }
+}
+
+.account .column.main .block-addresses-default .block-content .box.box-address-billing,
+.account .column.main .block-addresses-default .block-content .box.box-address-shipping {
+    width: 49%;
+}
+
+.block-addresses-list {
+    .additional-addresses {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+}
+
+.block-dashboard-addresses {
+    .block-content {
+        margin-top: 20px;
+    }
+}
+
+.block-dashboard-orders {
+    .recent-order {
+        margin-top: 20px;
+        margin-bottom: 0;
+        &:extend(p);
+        font-size: 13px;
+
+        strong {
+            font-size: 16px;
+        }
+
+        .order-info {
+            line-height: 1.9;
+            color: @black;
+        }
+
+        .actions {
+            margin-top: 20px;
+            button {
+                width: 100%;
+            }
+        }
     }
 }
 
@@ -286,5 +400,9 @@
         .block-new-customer {
             margin-top: 60px;
         }
+    }
+
+    .account .table-wrapper {
+        border-top: none;
     }
 }
