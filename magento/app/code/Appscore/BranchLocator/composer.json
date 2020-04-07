@@ -1,0 +1,22 @@
+{
+    "name": "appscore/module-branchlocator",
+    "description": "Module to add a branch locator + back-office add/edit",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Tanguy BELIN",
+            "email": "tanguy.belin@appscore.com.au"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Appscore\\BranchLocator\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
