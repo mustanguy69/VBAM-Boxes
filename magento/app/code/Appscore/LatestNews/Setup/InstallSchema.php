@@ -40,6 +40,13 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 					'News URL Key'
 				)
 				->addColumn(
+					'short_content',
+					\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+					'64k',
+					[],
+					'News Short Content'
+				)
+				->addColumn(
 					'content',
 					\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
 					'64k',
@@ -62,12 +69,9 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 				)
 				->addColumn(
 					'category_id',
-					\Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-					null,
-					[
-						'identity' => false,
-						'nullable' => false,
-					],
+					\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+					255,
+					[],
 					'News Category'
 				)
 				->addColumn(

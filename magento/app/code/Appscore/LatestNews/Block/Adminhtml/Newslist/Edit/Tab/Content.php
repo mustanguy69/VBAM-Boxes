@@ -102,11 +102,12 @@ class Content extends Generic implements TabInterface
         
         $fieldset->addField(
             'category_id',
-            'select',
+            'multiselect',
             [
-                'name'        => 'category_id',
-                'label'    => __('Category'),
+                'name'        => 'category_id[]',
+                'label'    => __('Categories'),
                 'required'     => true,
+                'multiple' => true,
                 'values'   => $this->_categories->toOptionArray(),
             ]
         );
@@ -118,6 +119,19 @@ class Content extends Generic implements TabInterface
                 'name'        => 'image',
                 'label'    => __('Image'),
                 'required'     => true
+            ]
+        );
+
+        $fieldset->addField(
+            'short_content',
+            'textarea',
+            [
+                'name'        => 'short_content',
+                'label'    => __('Short Description'),
+                'required'     => true,
+                'config'    => $this->_wysiwygConfig->getConfig(),
+                'wysiwyg'   => true,
+                'maxlength' => 250,
             ]
         );
 

@@ -1,1 +1,21 @@
-<?php var_dump($block->getNewsList());  ?>
+<?php $news = $block->getNewsList($block->getData('categories')); ?>
+
+<div id="widget-latestnews" class="widget">
+    <div class="block-title">
+        <h1>LATEST NEWS</h1>
+        <a href="">VIEW ALL <img src="<?php echo $this->getViewFileUrl('images/chev_right2.svg'); ?>"/></a>
+    </div>
+    <div class="news-container">
+        <?php foreach($news as $new) { ?>
+            <a href="http://google.fr" class="news">
+                <div class="img" style='background-image: url("<?php echo $block->getMediaBaseUrl($new->getImage()); ?>")'></div>
+                <div class="news-content">
+                    <h4><?php echo $new->getTitle(); ?></h4>
+                    <p class="date"><?php echo $block->formatDateNews($new->getCreatedAt()); ?></p>
+                    <?php echo substr($new->getShortContent(), 0 , 250); ?>
+                    ...
+                </div>
+            </a>
+        <?php } ?>
+    </div>
+</div>

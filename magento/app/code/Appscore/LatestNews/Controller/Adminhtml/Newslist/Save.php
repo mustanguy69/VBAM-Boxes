@@ -22,6 +22,10 @@ class Save extends Newslist
          }
 
          $formData = $this->getRequest()->getParam('news');
+         $categoriesId = implode(',', $formData['category_id']);
+         $formData['category_id'] = $categoriesId;
+         $urlkey = $this->slugify($formData['title']);
+         $formData['url_key'] = $urlkey;
          $newsModel->setData($formData);
          if (isset($_FILES['image']) && isset($_FILES['image']['name']) && strlen($_FILES['image']['name'])) {
             try {
@@ -74,5 +78,9 @@ class Save extends Newslist
          $this->_getSession()->setFormData($formData);
          $this->_redirect('*/*/edit', ['id' => $newsModel->getId()]);
       }
+   }
+
+   function slugify($string){
+      return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string), '-'));
    }
 }
