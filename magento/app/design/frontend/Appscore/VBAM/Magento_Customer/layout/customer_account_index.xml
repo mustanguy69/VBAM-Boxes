@@ -19,4 +19,6 @@
         </referenceContainer>
     </body>
     <move element="page.main.title" destination="columns" before="-"/>
+    <referenceContainer name="main" htmlClass="column main col-md-7 col-12"/>
+    <referenceContainer name="div.sidebar.primary" htmlClass="sidebar-primary col-md-5 col-12"/>
 </page>

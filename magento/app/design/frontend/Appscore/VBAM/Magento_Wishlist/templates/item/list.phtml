@@ -1,0 +1,187 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var \Magento\Wishlist\Block\Customer\Wishlist\Items $block */
+$columns = $block->getColumns();
+$imageDisplayArea = 'wishlist_thumbnail';
+
+$image = $block->getLayout()->createBlock('Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Image');
+$cart = $block->getLayout()->createBlock('Magento\Wishlist\Block\Customer\Wishlist\Item\Column\Cart');
+$catalog = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+?>
+
+<div class="products-grid my-wishlist">
+    <?php if (count($block->getItems())) : ?>
+    <div class="products list items items-catalog displayFlex">
+        <?php foreach ($block->getItems() as $item) : ?>
+            <?php $_product = $item->getProduct() ?>
+            <?php foreach ($cart->getChildNames() as $childName) : ?>
+                <?= /* @noEscape */ $cart->getLayout()->renderElement($childName, false) ?>
+            <?php endforeach;?>
+            <div class="item-catalog col-md-3 col-s-6 col-12" data-row="product-item" id="item_<?= $block->escapeHtmlAttr($item->getId()) ?>">
+                <div class="product-item-info" data-container="product-grid">
+                    <div class="product-item-details">
+                        <div class="product-item-info-general">
+                            <strong class="product-item-name">
+                                <a class="product-item-link" title=" <?= $block->escapeHtml($_product->getName()) ?>"
+                                    href="<?= $block->escapeUrl($_product->getProductUrl()) ?>">
+                                    <?= $block->escapeHtml($_product->getName()) ?>
+                                </a>
+                            </strong>
+                            <p class="product-item-sku">
+                                SKU#: <?= $block->escapeHtmlAttr($_product->getSku()) ?>
+                            </p>
+                            <?php if ($_product->isAvailable()) :?>
+                                <?= $block->getProductDetailsHtml($_product) ?>
+                            <?php endif; ?>
+
+                            <?= /* @noEscape */ $catalog->getProductPrice($_product) ?>
+                        </div>
+                        <div class="product-item-info-inner">
+                            <div class="product-item-actions">
+                                <div class="actions-secondary" data-role="add-to-links">
+                                    <?php //phpcs:disable ?>
+                                    <?php if ($this->helper(\Magento\Wishlist\Helper\Data::class)->isAllow()) : ?>
+                                    <?php //phpcs:enable ?>
+                                    <a href="#" data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_product) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                        <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/heart_active.svg'); ?>" width="15"/>
+                                    </a>
+                                    <?php endif; ?>
+                                    <div class="action-tocompare">
+                                        <?php //phpcs:disable ?>
+                                        <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                                        <?php //phpcs:enable ?>
+                                        <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                            <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" class="product-item-photo">
+                        <?= $image->getImage($_product, $imageDisplayArea)->toHtml() ?>
+                    </a>
+                    <div class="product-item-cart desktop">
+                        <div class="actions-primary">
+                            <?php if ($_product->isSaleable()) : ?>
+                            <div class="displayFlexNoMargin box-tocart">
+                                <div class="qty-wrapper">
+                                    <div class="qty-controller qty-minus">
+                                        <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                    </div>
+                                    <input type="number" name="qty" data-role="qty" data-id="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]" maxlength="12" value="1" name="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                    <div class="qty-controller qty-plus">
+                                        <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                    </div>
+                                </div>
+                                <?php 
+                                    $postData = json_decode($cart->getItemAddToCartParams($item));
+                                ?>
+                                <button type="button" data-role="tocart" data-post='<?= /* @noEscape */ $cart->getItemAddToCartParams($item) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" data-item-id="<?= $block->escapeHtmlAttr($item->getId()) ?>" class="action tocart primary">
+                                    <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                </button>
+                            </div>                            
+                            <?php else : ?>
+                                <?php if ($_product->getIsSalable()) : ?>
+                                    <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                <?php else : ?>
+                                    <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="product-item-cart-mobile mobile">
+                        <div class="displayFlexNoMargin">
+                            <div class="qty-wrapper">
+                                <?= /* @noEscape */ $catalog->getProductPrice($_product) ?>
+                            </div>
+                            <div class="cart-wrapper">
+                                <div title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="opentocart" image-bind="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>">
+                                    <img src="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>" width="8" alt="plus"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-item-cart-quantity mobile">
+                        <div class="qty-close">
+                            <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
+                        </div>
+                        <div class="qty-container">
+                            <p><?php echo __('Place in cart')?></p>
+                            <div class="qty-wrapper">
+                                <div class="qty-controller qty-minus">
+                                    <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                </div>
+                                <input type="number" name="qty" data-role="qty" data-id="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" name="qty[<?= $block->escapeHtmlAttr($item->getId()) ?>]" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                <div class="qty-controller qty-plus">
+                                    <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                </div>
+                            </div>
+                            <strong><?php echo __('OR')?></strong>
+                            <div class="action-tocompare">
+                                <?php //phpcs:disable ?>
+                                <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                                <?php //phpcs:enable ?>
+                                <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                    <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php else : ?>
+        <div class="message info empty">
+            <span><?= $block->escapeHtml(__('This Wish List has no Items')) ?></span>
+        </div>
+    <?php endif; ?>
+</div>
+
+<?php foreach ($columns as $column) : ?>
+    <?= $column->getAdditionalHtml() ?>
+<?php endforeach; ?>
+
+<script type="text/javascript">
+	require([
+		'jquery'
+	], function ($) {
+		"use strict";
+        // hack to change quantity for wishlist add to cart
+		$(document).ready(function($){
+            $(document).on('click', '.qty-controller', function(e) {
+                var parent = $(this).parents('.box-tocart');
+                var addToCartBtn = parent.find('.tocart');
+                var qtyInput = parent.find('.input-text.qty');
+                var postData = JSON.parse(addToCartBtn.attr('data-post'));
+
+                setTimeout(function() {
+                    postData.data.qty = qtyInput.val();
+                    addToCartBtn.attr('data-post', JSON.stringify(postData));
+                }, 50)
+            });
+
+            $(document).on('blur', '.input-text.qty', function(e) {
+                var $this = $(this);
+                var parent = $this.parents('.box-tocart');
+                var addToCartBtn = parent.find('.tocart');
+                var postData = JSON.parse(addToCartBtn.attr('data-post'));
+
+                setTimeout(function() {
+                    postData.data.qty = $this.val();
+                    addToCartBtn.attr('data-post', JSON.stringify(postData));
+                }, 50)
+                
+                
+            });
+        });
+
+	});
+</script>

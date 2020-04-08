@@ -11,5 +11,8 @@
             <referenceBlock name="wishlist_sidebar" remove="true"/>
         </referenceContainer>
         <move element="catalog.compare.sidebar" destination="sidebar.main"/>
+
+        <referenceContainer name="main" htmlClass="column main col-md-9 col-12"/>
+        <referenceContainer name="div.sidebar.primary" htmlClass="sidebar-primary col-md-3 col-12"/>
     </body>
 </page>

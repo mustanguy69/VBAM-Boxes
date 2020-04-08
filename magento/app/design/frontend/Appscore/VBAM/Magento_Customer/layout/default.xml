@@ -10,9 +10,8 @@
         <referenceBlock name="page.main.title" htmlClass="page-title-wrapper col-md-12"/>
     </body>
 
-    <referenceContainer name="main" htmlClass="column main col-md-7 col-12"/>
+    
     <referenceContainer name="columns" htmlClass="columns displayFlex">
-        <referenceContainer name="div.sidebar.primary" htmlClass="sidebar-primary col-md-5 col-12"/>
         <referenceBlock name="div.sidebar.additional" remove="true"/>
         <referenceBlock name="catalog.compare.sidebar" remove="true"/>
         <referenceBlock name="customer_account_navigation" remove="true"/>

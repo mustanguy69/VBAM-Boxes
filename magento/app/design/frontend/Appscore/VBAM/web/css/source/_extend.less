@@ -1569,13 +1569,13 @@ input.qty {
         content: '';
     }
 
-    .col-12 {
+    .col-s-12 {
         width: 100%;
         padding-left: 15px;
         padding-right: 15px;
     }
 
-    .col-6 {
+    .col-s-6 {
         width: 50%;
         padding-left: 15px;
         padding-right: 15px;
@@ -1774,11 +1774,18 @@ input.qty {
                             color: #fff;
                             text-transform: uppercase;
                             border-radius: 0 !important;
-                            padding: 8px 12px;
+                            padding: 8px 13px;
                             text-transform: uppercase;
                             white-space: nowrap;
                             overflow: hidden;
                             width: 35px;
+                            cursor: pointer;
+                            display: inline-block;
+                            font-size: 1.4rem;
+                            line-height: 1.6rem;
+                            box-sizing: border-box;
+                            vertical-align: middle;
+                            text-align: center;
                         }
                     }
                 }
@@ -2139,5 +2146,19 @@ input.qty {
     .upsell,
     .product-relate {
         display: none;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    .col-12 {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .col-6 {
+        width: 50%;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
