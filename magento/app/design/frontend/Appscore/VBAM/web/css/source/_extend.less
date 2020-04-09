@@ -144,6 +144,18 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
     font-size: 13px !important;
 }
 
+.product-item-attributes {
+    .product-item-attribute {
+        span {
+            font-size: 13px;
+        }
+
+        .value {
+            float: right;
+        }
+    }
+}
+
 .toolbar-products {
     .modes {
         display: none;
@@ -1313,7 +1325,7 @@ input.qty {
 
     .sidebar-primary {
         .filter-options-title {
-            color: #00A261;
+            color: @green;
     
             &:after {
                 color: #9AA5AF;
@@ -1321,18 +1333,36 @@ input.qty {
         }
     
         .block-compare {
-            .block-compare-heading {
-                color: #00A261;
-            }
-    
+            .block-compare-heading,
             .counter.qty {
-                color: #00A261;
+                color: @green;
+            }
+
+            .actions-toolbar {
+                .primary,
+                .secondary {
+                    display: block;
+                }
+
+                a {
+                    color: @gray;
+                    &:extend(.regular);
+                    font-size: 13px;
+                    text-transform: uppercase;
+                    margin-top: 0;
+                    box-shadow: none !important;
+                }
+
+                a:hover {
+                    color: @gray !important;
+                    background: none !important;  
+                }
             }
         }
 
         .filter-current {
             .filter-current-subtitle {
-                color: #00A261;
+                color: @green;
             }
         }
 
@@ -1861,21 +1891,27 @@ input.qty {
 
     .toolbar-products {    
         .toolbar-sorter {
-            right: 60px;
+            right: 75px;
+
+            .sorter-action {
+                top: -3px;
+                left: 4px;
+            }
         }
     }
     
     .filter-title {
         display: block;
         strong {
-            right: -45px;
+            right: -60px;
             left: auto;
             background: #fff;
             box-shadow: none;
-            padding: 6px;
+            padding: 11px;
             border: none;
             border-radius: 0;
             cursor: pointer;
+            height: 40px;
         }
     }
 
@@ -1972,6 +2008,31 @@ input.qty {
 
         .block-compare {
             margin-top: 30px;
+
+            .actions-toolbar {
+                .primary,
+                .secondary {
+                    text-align: left;
+                    float: left;
+
+                    a {
+                        background: none;
+                        box-shadow: none;
+                        color: @white-gray;
+                        &:extend(.regular);
+                        text-transform: uppercase;
+                    }
+
+                    a:hover {
+                        background: none;
+                        color: @white-gray;
+                    }
+                }
+
+                .primary {
+                    margin-right: 20px;
+                }
+            }
 
             .block-title {
                 margin-bottom: 15px;

@@ -12,8 +12,6 @@
 
     
     <referenceContainer name="columns" htmlClass="columns displayFlex">
-        <referenceBlock name="div.sidebar.additional" remove="true"/>
-        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
         <referenceBlock name="customer_account_navigation" remove="true"/>
     </referenceContainer>
     <move element="customer_account_dashboard_top" destination="div.sidebar.primary" before="-"/>
