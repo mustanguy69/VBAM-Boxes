@@ -129,8 +129,6 @@ class Content extends Generic implements TabInterface
                 'name'        => 'short_content',
                 'label'    => __('Short Description'),
                 'required'     => true,
-                'config'    => $this->_wysiwygConfig->getConfig(),
-                'wysiwyg'   => true,
                 'maxlength' => 250,
             ]
         );

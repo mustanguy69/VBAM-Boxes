@@ -1,13 +1,10 @@
-<?php $news = $block->getNewsList($block->getData('categories'), $block->getData('id')); ?>
+<?php $news = $block->getAllNews(); ?>
 
-<div id="widget-latestnews" class="widget">
-    <div class="block-title">
-        <h1>LATEST NEWS</h1>
-        <a href="<?php echo $block->getUrl('latestnews/news/all'); ?>">VIEW ALL <img src="<?php echo $this->getViewFileUrl('images/chev_right2.svg'); ?>"/></a>
-    </div>
+<div id="all-news-container">
     <div class="news-container">
+    <?php $i = 0; ?>
         <?php foreach($news as $new) { ?>
-            <a href="<?php echo $block->getUrl('latestnews/news/view/').$new->getUrlKey(); ?>" class="news">
+            <a <?php if($i % 3 == 0 ) { ?>style="margin-left: 0"<?php } ?>href="<?php echo $block->getUrl('latestnews/news/view/').$new->getUrlKey(); ?>" class="news">
                 <div class="img" style='background-image: url("<?php echo $block->getMediaBaseUrl($new->getImage()); ?>")'></div>
                 <div class="news-content">
                     <h4><?php echo $new->getTitle(); ?></h4>
@@ -16,6 +13,12 @@
                     ...
                 </div>
             </a>
+            <?php 
+                $i++;
+            ?>
         <?php } ?>
     </div>
+     <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar-products toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
 </div>

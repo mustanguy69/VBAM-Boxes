@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/> 
+        <referenceBlock name="wishlist_sidebar" remove="true" />
+        <referenceContainer name="content">
+            <block class="Appscore\LatestNews\Block\News\View"
+                   name="appscore_latestnews_view"
+                   template="viewnews.phtml" />
+        </referenceContainer>
+    </body>
+</page>

@@ -12,4 +12,9 @@
             <argument name="resourceModel" xsi:type="string">Appscore\LatestNews\Model\ResourceModel\Newslist</argument>
         </arguments>
     </virtualType>
+    <type name="Magento\Ui\Component\Wysiwyg\ConfigInterface">
+        <plugin name="editor_plugin"
+                type="Appscore\LatestNews\Plugin\Config"
+                sortOrder="10"/>
+    </type>
 </config>

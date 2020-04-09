@@ -2,8 +2,34 @@
 
 namespace Appscore\LatestNews\Setup;
 
+use Magento\Cms\Api\BlockRepositoryInterface;
+use Magento\Cms\Api\Data\BlockInterface;
+use Magento\Cms\Api\Data\BlockInterfaceFactory;
+use Magento\Framework\App\State;
+use Magento\Framework\App\Area;
+use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Store\Model\Store;
+
 class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 {
+	/**
+     * InstallData constructor.
+     * @param BlockRepositoryInterface $blockRepository
+     * @param BlockInterfaceFactory $blockInterfaceFactory
+     */
+    public function __construct(
+        BlockRepositoryInterface $blockRepository,
+        BlockInterfaceFactory $blockInterfaceFactory,
+        State $state
+    ) {
+        $this->blockRepository = $blockRepository;
+        $this->blockInterfaceFactory = $blockInterfaceFactory;
+        $this->state = $state;
+
+    }
+  
 
 	public function install(\Magento\Framework\Setup\SchemaSetupInterface $setup, \Magento\Framework\Setup\ModuleContextInterface $context)
 	{
@@ -115,5 +141,23 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 			$installer->getConnection()->createTable($table);
 		}
 		$installer->endSetup();
+
+		$this->state->setAreaCode(Area::AREA_ADMINHTML);
+      
+		/** @var BlockInterface $cmsBlock */
+		$cmsBlock = $this->blockInterfaceFactory->create();
+
+		$content = <<<HTML
+		<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mauris tortor, 
+		rhoncus at diam ac, aliquet egestas elit. Integer varius, ipsum et imperdiet scelerisque, 
+		lorem magna feugiat arcu, sed rhoncus velit magna a velit.</div> 
+		HTML;
+
+		$cmsBlock->setIdentifier('about_us');
+		$cmsBlock->setTitle('About Us');
+		$cmsBlock->setContent($content);
+		$cmsBlock->setData('stores', [Store::DEFAULT_STORE_ID]);
+
+		$this->blockRepository->save($cmsBlock);
 	}
 }

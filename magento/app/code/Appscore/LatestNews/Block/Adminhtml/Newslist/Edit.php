@@ -86,10 +86,10 @@ class Edit extends Container
     {
         $this->_formScripts[] = "
             function toggleEditor() {
-                if (tinyMCE.getInstanceById('post_content') == null) {
-                    tinyMCE.execCommand('mceAddControl', false, 'post_content');
+                if (tinyMCE.getInstanceById('news_content') == null) {
+                    tinyMCE.execCommand('mceAddControl', false, 'news_content');
                 } else {
-                    tinyMCE.execCommand('mceRemoveControl', false, 'post_content');
+                    tinyMCE.execCommand('mceRemoveControl', false, 'news_content');
                 }
             };
         ";

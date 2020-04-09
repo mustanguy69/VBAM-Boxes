@@ -26,7 +26,7 @@ class Carousel extends Template implements BlockInterface
 		$this->_newslistFactory = $newslistFactory;
 	}
 
-	public function getNewsList($ids)
+	public function getNewsList($ids, $currentId = null)
 	{
         $newsList = $this->_newslistFactory->create();
         $newsList = $newsList->getCollection();
@@ -41,8 +41,14 @@ class Carousel extends Template implements BlockInterface
 			$idToFetch,
 			['eq' => [$ids]]
 		]);
-        $newsList->setOrder('created_at', 'ASC');
-		$newsList->setPageSize(3);
+		$newsList->setOrder('created_at', 'DESC');
+		if($currentId !== null) {
+			$newsList->addFieldToFilter('id', ['neq' => $currentId]);
+			$newsList->setPageSize(2);
+		} else  {
+			$newsList->setPageSize(3);
+		}
+		
 
 		return $newsList;
 	}
