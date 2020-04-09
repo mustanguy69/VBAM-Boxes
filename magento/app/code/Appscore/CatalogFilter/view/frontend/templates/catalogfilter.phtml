@@ -1,0 +1,54 @@
+<?php
+/**
+ * @var $block \Appscore\CatalogFilter\Block\CatalogFilter
+ */
+?>
+<div class="block filter" id="layered-filter-block" >
+	<div class="filter-close mobile">
+		<img src="<?php echo $this->getViewFileUrl('images/close.svg'); ?>" alt="close filter" width="15"/>
+	</div>
+	<div class="block-content filter-content">
+		<?php foreach ($block->getParentCategories() as $parentCategory) : ?>
+			<?php $wrapOptions = false; ?>
+			<?php if (!$wrapOptions) : ?>
+				<div class="filter-options" id="narrow-by-list" data-role="content" data-mage-init='
+				{
+					"accordion":
+					{
+						"openedState": "active",
+						"collapsible": true,
+						"active": false,
+						"multipleCollapsible": true
+					}
+				}'>
+				<?php $wrapOptions = true;
+				endif; ?>
+				<div data-role="collapsible" class="filter-options-item">
+					<div data-role="title" class="filter-options-title"><?= $block->escapeHtml(__($parentCategory->getName())) ?></div>
+						<div data-role="content" class="filter-options-content">
+							<ol class="items">
+								<?php foreach($block->getChildCategories($parentCategory) as $childCategory) : ?>
+									<li class="item">
+										<a href="<?= $block->escapeUrl($childCategory->getUrl()) ?>">
+											<?= $block->escapeHtml($childCategory->getName()) ?>
+										</a>
+									</li>
+								<?php endforeach ?>
+							</ol>
+						</div>
+					</div>
+				</div>
+		<?php endforeach; ?>
+		<?php if ($wrapOptions) : ?>
+			</div>
+		<?php else : ?>
+			<script>
+				require([
+					'jquery'
+				], function ($) {
+					$('#layered-filter-block').addClass('filter-no-options');
+				});
+			</script>
+		<?php endif; ?>
+	</div>
+</div>

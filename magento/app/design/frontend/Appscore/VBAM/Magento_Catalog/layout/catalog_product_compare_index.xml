@@ -18,10 +18,7 @@
         </referenceContainer>
 
         <referenceContainer name="sidebar.main">
-            <block class="Magento\LayeredNavigation\Block\Navigation\Category" name="catalog.leftnav" before="-" template="Magento_LayeredNavigation::layer/view.phtml">
-                <block class="Magento\LayeredNavigation\Block\Navigation\State" name="catalog.navigation.state" as="state" />
-                <block class="Magento\LayeredNavigation\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="Magento_LayeredNavigation::layer/filter.phtml"/>
-            </block>
+            <block class="Appscore\CatalogFilter\Block\CatalogFilter" name="my.catalog.leftnav" before="-" template="Appscore_CatalogFilter::catalogfilter.phtml"/>
         </referenceContainer>
     </body>
 </page>

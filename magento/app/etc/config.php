@@ -234,6 +234,7 @@ return [
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
         'Appscore_ABNCheck' => 1,
+        'Appscore_CatalogFilter' => 1,
         'Appscore_CatalogWidget' => 1,
         'Appscore_CategoryColour' => 1,
         'Appscore_Checkout' => 1,

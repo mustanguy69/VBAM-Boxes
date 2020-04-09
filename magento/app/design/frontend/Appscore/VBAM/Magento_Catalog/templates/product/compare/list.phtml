@@ -12,9 +12,6 @@
 ?>
 <?php $total = $block->getItems()->getSize() ?>
 <?php if ($total) :?>
-    <a href="#" class="action print hidden-print" title="<?= $block->escapeHtmlAttr(__('Print This Page')) ?>">
-        <span><?= $block->escapeHtml(__('Print This Page')) ?></span>
-    </a>
         <div class="products wrapper grid products-grid">
             <div class="products list items items-catalog displayFlex" id="product-comparison">
                 <?php $index = 0; ?>
