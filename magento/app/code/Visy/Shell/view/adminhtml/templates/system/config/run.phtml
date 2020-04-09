@@ -1,0 +1,42 @@
+<?php /* @var $block \Visy\Shell\Block\System\Config\Run */ ?>
+
+<script>
+    require(['prototype'], function(){
+//<![CDATA[
+        function queueIndex() {
+            var validationMessage = $('run_result');
+            var button = $('run_button');
+
+            new Ajax.Request('<?php /* @escapeNotVerified */ echo $block->getAjaxRunUrl() ?>', {
+                onSuccess: function(response) {
+                    var result = '<?php /* @escapeNotVerified */ echo __('Error on setting the Reindex queue.') ?>';
+                    try {
+                        if (response.responseText.isJSON()) {
+                            response = response.responseText.evalJSON();
+                            result = response.message;
+                        }
+                        if (response.error == 1) {
+                            validationMessage.removeClassName('hidden').addClassName('success');
+                            button.disabled = true;
+
+                        } else {
+                            validationMessage.removeClassName('hidden').addClassName('error')
+                        }
+                    } catch (e) {
+                        validationMessage.removeClassName('hidden').addClassName('error')
+                    }
+
+                    validationMessage.update(result);
+                }
+            });
+        }
+
+        window.queueIndex = queueIndex;
+//]]>
+
+    });
+</script>
+<div class="actions actions-queue-index-update-now">
+    <?php echo $block->getButtonHtml() ?>
+    <div id="run_result" class="message-validation hidden"></div>
+</div>

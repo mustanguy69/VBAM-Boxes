@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Visy_CustomerGroup::vcg"
+             resource="Visy_CustomerGroup::vcg"
+             title="Customer Groups"
+             module="Visy_CustomerGroup"
+             sortOrder="1"
+             parent="Visy_Core::main_menu"
+             dependsOnModule="Visy_CustomerGroup"/>
+        <add id="Visy_CustomerGroup::configuration"
+             title="Customer Group Mapping"
+             module="Visy_CustomerGroup"
+             sortOrder="10"
+             parent="Visy_CustomerGroup::vcg"
+             action="visy_customergroup/index/index"
+             resource="Visy_CustomerGroup::configuration"/>
+    </menu>
+</config>

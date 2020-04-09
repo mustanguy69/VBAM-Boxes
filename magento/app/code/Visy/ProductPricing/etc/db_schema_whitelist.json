@@ -1,0 +1,40 @@
+{
+    "visy_customer_product_pricing": {
+        "column": {
+            "customer_price_id": true,
+            "customer_code": true,
+            "product_sku": true,
+            "qty_1": true,
+            "price_1": true,
+            "qty_2": true,
+            "price_2": true,
+            "qty_3": true,
+            "price_3": true,
+            "qty_4": true,
+            "price_4": true,
+            "qty_5": true,
+            "price_5": true,
+            "qty_6": true,
+            "price_6": true,
+            "qty_7": true,
+            "price_7": true,
+            "qty_8": true,
+            "price_8": true,
+            "qty_9": true,
+            "price_9": true,
+            "qty_10": true,
+            "price_10": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "VISY_CUSTOMER_PRODUCT_PRICING_PRODUCT_SKU": true,
+            "VISY_CUSTOMER_PRODUCT_PRICING_CUSTOMER_CODE": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "VISY_CSTR_PRD_PRICING_PRD_SKU_CAT_PRD_ENTT_SKU": true,
+            "VISY_CUSTOMER_PRODUCT_PRICING_PRODUCT_SKU_CUSTOMER_CODE": true
+        }
+    }
+}

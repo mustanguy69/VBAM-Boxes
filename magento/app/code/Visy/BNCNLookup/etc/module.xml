@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     BNCNLookup
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Visy_BNCNLookup" setup_version="3.3.0"/>
+</config>

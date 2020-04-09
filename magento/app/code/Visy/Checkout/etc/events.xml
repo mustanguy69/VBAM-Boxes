@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * VISY IDT Ltd.
+ *
+ * @category    Visy
+ * @package     Checkout
+ * @author      VISY IDT Team <contact@visy.com>
+ * @copyright   Copyright (c) 2020 Visy IDT Ltd. (http://visy.com.au)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="visy_checkout" instance="Visy\Checkout\Observer\SalesModelServiceQuoteSubmitBefore"/>
+    </event>
+    <event name="email_order_set_template_vars_before">
+        <observer name="order-add-custom-variables" instance="Visy\Checkout\Observer\Email\CustomVariables"/>
+    </event>
+    <event name="sales_order_load_after">
+        <observer name="sales_order_load_with_custom_attributes" instance="Visy\Checkout\Observer\SalesOrderLoadAfter"/>
+    </event>
+</config>

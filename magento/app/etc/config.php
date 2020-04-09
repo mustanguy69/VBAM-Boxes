@@ -252,6 +252,13 @@ return [
         'Temando_Shipping' => 1,
         'Vertex_Tax' => 1,
         'Vertex_AddressValidation' => 1,
+        'Visy_BNCNLookup' => 1,
+        'Visy_Checkout' => 1,
+        'Visy_Core' => 1,
+        'Visy_Customer' => 1,
+        'Visy_CustomerGroup' => 1,
+        'Visy_ProductPricing' => 1,
+        'Visy_Shell' => 1,
         'Yotpo_Yotpo' => 1
     ]
 ];
