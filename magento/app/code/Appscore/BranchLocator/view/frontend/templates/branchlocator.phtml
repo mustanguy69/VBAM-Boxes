@@ -204,9 +204,10 @@
 <script>
 require([
     'jquery',
+    'mage/url',
     'accordion',
-    'https://maps.googleapis.com/maps/api/js?key=<?php echo $block->getApiKey(); ?>',
-], function ($) {
+    'https://maps.googleapis.com/maps/api/js?key=<?php echo $block->getApiKey(); ?>'
+], function ($, url) {
 
     var map;
         map = new google.maps.Map(document.getElementById('map'), {
@@ -241,22 +242,26 @@ require([
         
     }
 
-    $('#search-branch').on('input', function() {
+    $('#search-branch').on('input', async function() {
         var value = $(this).val();
+        var urlAjax = url.build('branchlocator/index/search');
+        var pos = await getPos(value);
         if(value.length > 2) {
             $.ajax({
-            url: 'search',
+            url: urlAjax,
             method: 'POST',
             dataType: 'json',
-            data: {query: value},
+            data: pos,
             }).done(function (branches) {
                 var html = "";
                 if (branches.length != 0) {
                     $.each(branches, function(key, value){
-                        html = html + '<div class="search-result">' +
-                        '<h1>'+value.name+'</h1>'+
-                        '<p>'+value.address+', '+value.city+', '+value.state+', '+value.postcode+'</p>'+
-                        '<a href="#" data-id="'+value.id+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'" id="see-infos">SEE INFOS</a></div>';
+                        if (value.distance < 200) {
+                            html = html + '<div class="search-result">' +
+                            '<h1>'+value.name+'</h1>'+
+                            '<p>'+value.address+', '+value.city+', '+value.state+', '+value.postcode+'</p>'+
+                            '<a href="#" data-id="'+value.id+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'" id="see-infos">SEE INFOS</a></div>';
+                        }
                     });
                 } else {
                     html = "<p style='margin-top: 10px; text-align:center'>No branch found</p>"
@@ -281,38 +286,59 @@ require([
         setPopupData($(this).attr('data-id'));
     });
 
-    $('#current-location').on('click', function() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-
-                geocoder = new google.maps.Geocoder();
-                geocoder.geocode({'latLng': pos}, function(results, status){
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        var searchAddressComponents = results[0].address_components;
-                        $.each(searchAddressComponents, function(){
-                            if(this.types[0]=="postal_code"){
-                                postcode = this.short_name;
-                                $('#search-branch').val(postcode).trigger("input");
-                                map.setCenter(pos);
-                                map.setZoom(10);
-                            }
-                        });
-                    }
-                });
-
-            });
-        }
-
+    $('#current-location').on('click', async function() {
+        getCurrentPos();
     });
 
-    function setPopupData(id) {
+    function getCurrentPos() {
+        var pos = {};
+        var geocoder= new google.maps.Geocoder();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                if(position.coords.latitude !== "undefined" && position.coords.longitude !== "undefined") {
+                    pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
 
+                    geocoder.geocode({'latLng': pos}, function(results, status){
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $('#search-branch').val(results[0].formatted_address).trigger("input");
+                            map.setCenter(pos);
+                            map.setZoom(10);
+                        }
+                    });
+
+                } 
+            }, function (error) {
+                alert('Please active your geolocation');
+            });
+        }
+    }
+
+    function getPos(address) {
+        return new Promise(resolve => {
+            var pos = {};
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'address': address, 'componentRestrictions':{'country':'au'}}, function(results, status){
+                if (status == google.maps.GeocoderStatus.OK) {
+                    pos = {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    }
+                    resolve(pos);
+                    
+                }
+            });
+        });
+        
+    }
+
+
+    function setPopupData(id) {
+        var urlAjax = url.build('branchlocator/index/index');
         $.ajax({
-            url: 'index',
+            url: urlAjax,
             method: 'POST',
             dataType: 'json',
             showLoader: true,

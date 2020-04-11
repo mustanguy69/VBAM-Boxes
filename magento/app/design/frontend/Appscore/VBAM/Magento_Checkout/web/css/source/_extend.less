@@ -253,6 +253,57 @@
         
                 .clickandcollect-container {
                     display: none;
+                    padding-top: 20px;
+                    position: relative;
+                    #search-branch {
+                        width: 90%;
+                        display: inline-block;
+                        height:40px;
+                        margin-bottom: 15px;
+                    }
+
+                    #search-branch-button {
+                        width: 9.5%;
+                        display: inline-block;
+                        height: 40px;
+                        margin-top: -3px;
+                        margin-left: -5px;
+                        min-width: inherit;
+                    }
+
+                    .search-icon {
+                        background: url("@{baseDir}images/cursor-target.svg") no-repeat;
+                        position: absolute;
+                        width: 25px;
+                        height: 25px;
+                        position: absolute;
+                        right: 80px;
+                        top: 28px;
+                    }
+
+                    .search-result-container {
+                        h1 {
+                            color: @blue;
+                            font-size: 19px;
+                            margin-bottom: 15px;
+                            margin-top: 10px;
+                        }
+                        .away {
+                            color: @gray;
+                        }
+
+                        .search-result {
+                            padding-bottom: 10px;
+                            &:not(:last-of-type) {
+                                border-bottom: 1px solid #ccc;
+                                margin-bottom: 20px;
+                            }
+                            .button {
+                                float: right;
+                            }
+                        }
+
+                    }
                 }
             }
     

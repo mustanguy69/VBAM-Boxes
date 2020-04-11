@@ -28,28 +28,41 @@ class Search extends Action
     public function execute()
     {
         if ($this->getRequest()->isAjax()) {
-            $query = $this->getRequest()->getPost('query');
+            $lat = $this->getRequest()->getPost('lat');
+            $lng = $this->getRequest()->getPost('lng');
             $branchList = $this->_branchlistFactory->create();
             $branchList = $branchList->getCollection();
             $branchList->addFieldToSelect('*');
             $branchList->addFieldToFilter('status', array('eq' => 1));
-            $branchList->addFieldToFilter(
-                array('postcode','city', 'address'),
-                array(
-                    array('like' => '%'.$query.'%'),
-                    array('like' => '%'.$query.'%'),
-                    array('like' => '%'.$query.'%')
-                )
-                            
-            );
+            
+            $array = [];
+            foreach($branchList as $branch) {
+                $branch['distance'] = $this->distance($lat, $lng, $branch->getLatitude(), $branch->getLongitude());
+                $array[] = $branch->getData();
+            }
+
             
             $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-            $resultJson->setData($branchList->getData());
-            
+            $resultJson->setData($array);
 
             return $resultJson;
         }
 
+    }
+
+    function distance($lat1, $lon1, $lat2, $lon2) {
+        if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+          return 0;
+        }
+        else {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+
+            return ($miles * 1.609344);
+        }
     }
 
 }

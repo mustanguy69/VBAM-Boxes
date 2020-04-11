@@ -1,9 +1,11 @@
 define(
     [
         'jquery',
+        'mage/url',
         'underscore',
         'Magento_Ui/js/form/form',
         'ko',
+        'loader',
         'Magento_Customer/js/model/customer',
         'Magento_Customer/js/model/address-list',
         'Magento_Checkout/js/model/address-converter',
@@ -26,9 +28,11 @@ define(
     ],
     function (
         $,
+        url,
         _,
         Component,
         ko,
+        loader,
         customer,
         addressList,
         addressConverter,
@@ -84,25 +88,148 @@ define(
                 );
 
                 $(document).ready(function() {
-                    $(document).on('click', '.delivery', function () {
-                        $('.table-checkout-shipping-method').css('display', 'block');
-                        $('.delivery').removeClass('green-button-empty').addClass('green-button-full');
-                        $('.clickandcollect').removeClass('green-button-full').addClass('green-button-empty');
-                        $('.clickandcollect-container').css('display', 'none');
-                    });
 
-                    $(document).on('click', '.clickandcollect', function () {
-                        $('.table-checkout-shipping-method').css('display', 'none');
-                        $('.delivery').removeClass('green-button-full').addClass('green-button-empty');
-                        $('.clickandcollect').removeClass('green-button-empty').addClass('green-button-full');
-                        $('.clickandcollect-container').css('display', 'block');
-                    });
+                    $(window).bind('hashchange', function () { 
+                        var hash = window.location.hash.slice(1); //hash to string (= "myanchor")
+                        if (hash == "shipping_methods") {
+                            $(document).on('click', '.delivery', function () {
+                                $('.table-checkout-shipping-method').css('display', 'block');
+                                $('.delivery').removeClass('green-button-empty').addClass('green-button-full');
+                                $('.clickandcollect').removeClass('green-button-full').addClass('green-button-empty');
+                                $('.clickandcollect-container').css('display', 'none');
+                            });
+        
+                            $(document).on('click', '.clickandcollect', function () {
+                                $('.table-checkout-shipping-method').css('display', 'none');
+                                $('.delivery').removeClass('green-button-full').addClass('green-button-empty');
+                                $('.clickandcollect').removeClass('green-button-empty').addClass('green-button-full');
+                                $('.clickandcollect-container').css('display', 'block');
+                            });
+        
+                            $(document).on('click', '#shipping-method-buttons-container', function() {
+                                $('#co-shipping-method-form').submit();
+                            });
+                            
+                            $(document).on('click', '#search-branch-button', async function() {
+                                showLoading();
+                                var value = $('#search-branch').val();
+                                var urlAjax = url.build('branchlocator/index/search');
+                                var apikey = await getApiKeyGmaps();
+                                var pos = await getPos(apikey, value);
+                                $.ajax({
+                                    url: urlAjax,
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: pos,
+                                }).done(function (branches) {
+                                    branches.sort(function(obj1, obj2) {
+                                        return obj1.distance - obj2.distance;
+                                    });
+                                    
+                                    var html = "";
+                                    if (branches.length != 0) {
+                                        $.each(branches, function(key, value) {
+                                            if (value.distance < 200) {
+                                                html = html + '<div class="search-result">' +
+                                                '<h1>'+value.name+'</h1>'+
+                                                '<button class="button action continue primary green-button-empty" data-id="'+value.id+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'" id="select-store">SELECT THIS STORE</button>' +
+                                                '<p>'+value.address+', '+value.city+', '+value.state+', '+value.postcode+'</p>'+
+                                                '<p class="away"><span class="km">'+ Math.floor(value.distance) +'</span> km away</p>'+
+                                                '</div>';
+                                            }
+                                        });
+                                    } else {
+                                        html = "<p style='margin-top: 10px; text-align:center'>No store found</p>"
+                                    }
+                                    
+                                    $('.search-result-container').html(html);
+                                    hideLoading();
+                                });
+                                
+                            });
 
-                    $(document).on('click', '#shipping-method-buttons-container', function() {
-                        $('#co-shipping-method-form').submit();
+                            $(document).on('click', '.search-icon', async function () {
+                                showLoading();
+                                var apikey = await getApiKeyGmaps();
+                                getCurrentPos(apikey);
+                                hideLoading();
+                            })
+
+                            function getApiKeyGmaps() {
+                                return new Promise(resolve => {
+                                    var urlAjaxApiKey = url.build('branchlocator/index/apikey');
+                                    $.ajax({
+                                        url: urlAjaxApiKey,
+                                        method: 'POST',
+                                        dataType: 'json',
+                                    }).done(function (apikey) {
+                                        resolve(apikey);
+                                    });
+                                });
+                            }
+                              
+                            function getPos(apikey, address) {
+                                return new Promise(resolve => {
+                                    require([ 'https://maps.googleapis.com/maps/api/js?key='+apikey ], function () {
+
+                                        var pos = {};
+                                        var geocoder= new google.maps.Geocoder();
+                                        geocoder.geocode({'address': address, 'componentRestrictions':{'country':'au'}}, function(results, status){
+                                            if (status == google.maps.GeocoderStatus.OK) {
+                                                pos = {
+                                                    lat: results[0].geometry.location.lat(),
+                                                    lng: results[0].geometry.location.lng()
+                                                }
+
+                                                resolve(pos);
+                                                
+                                            }
+                                        });
+                                    });  
+                                });
+                                
+                            }
+
+                            function getCurrentPos(apikey) {
+                                require([ 'https://maps.googleapis.com/maps/api/js?key='+apikey ], function () {
+                                    var pos = {};
+                                    var geocoder= new google.maps.Geocoder();
+                                    $('#example').loader({
+                                        icon: 'path to icon'
+                                    });
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition(function(position) {
+                                            if(position.coords.latitude !== "undefined" && position.coords.longitude !== "undefined") {
+                                                pos = {
+                                                    lat: position.coords.latitude,
+                                                    lng: position.coords.longitude
+                                                };
+
+                                                geocoder.geocode({'latLng': pos}, function(results, status){
+                                                    if (status == google.maps.GeocoderStatus.OK) {
+                                                        $('#search-branch').val(results[0].formatted_address);
+                                                    }
+                                                });
+
+                                            } 
+                                        }, function (error) {
+                                            alert('Please active your geolocation');
+                                        });
+                                    }
+                                });
+                            }
+
+                           function showLoading() {
+                                $('.clickandcollect-container').trigger('processStart');
+                           }
+
+                           function hideLoading() {
+                                $('.clickandcollect-container').trigger('processStop');
+                           }
+                        }
                     });
+                    
                 });
-    
     
                 return this;
             },
@@ -211,9 +338,7 @@ define(
                 }
     
                 return true;
-            }
-    
-    
+            },
         });
     }
     );
