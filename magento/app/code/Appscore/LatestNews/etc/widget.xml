@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+	<widget class="Appscore\LatestNews\Block\Widget\Carousel" id="mageplaza_helloworld_posts">
+		<label>Latest News</label>
+		<description>Latest News</description>
+		<parameters>
+			<parameter name="categories" sort_order="10" visible="true" xsi:type="multiselect" source_model="Appscore\LatestNews\Model\System\Config\Categories">
+				<label>Latest News Category</label>
+			</parameter>
+		</parameters>
+	</widget>
+</widgets>

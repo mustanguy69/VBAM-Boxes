@@ -244,6 +244,7 @@ return [
         'Appscore_CustomerCustomAttributes' => 1,
         'Appscore_Directory' => 1,
         'Appscore_HeaderBlock' => 1,
+        'Appscore_LatestNews' => 1,
         'Appscore_SliderWidget' => 1,
         'Dotdigitalgroup_Email' => 1,
         'Dotdigitalgroup_Chat' => 1,

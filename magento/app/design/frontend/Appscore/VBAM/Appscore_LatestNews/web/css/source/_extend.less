@@ -1,0 +1,164 @@
+// design for widget news
+#widget-latestnews, #all-news-container {
+    margin-top: 20px;
+    .block-title {
+        h1 {
+            font-size: 21px;
+            font-weight: 900;
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+            display: inline-block;
+        }
+        a {
+            margin-left: 5px;
+            color: @gray;
+            img {
+                width: 20px;
+                height: 16px;
+                padding-top: 6px;
+                margin-left: -5px;
+            }
+        }
+    }
+    .news-container {
+        .news {
+            background-color: white;
+            display: inline-block;
+            width: 32%;
+            color:black;
+            &:hover {
+                text-decoration: none;
+            }
+            .img {
+                width: 100%;
+                background-size: cover;
+                background-position: center center;
+                height: 200px;
+            }
+
+            &:not(:first-child) {
+                margin-left: 1.5%;
+            }
+
+            .news-content {
+                padding: 15px;
+                h4 {
+                    color: @green;
+                    font-size: 20px;
+                    margin-bottom: 6px;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                .date {
+                    font-size: 13px;
+                    color: @gray;
+                    margin-bottom: 6px;
+                }
+            }
+        }
+    }
+}
+
+// design for view news page
+#news-container {
+    width: 70%;
+    margin: 0 auto;
+    .img-header {
+        width: 100%;
+        background-position: center center;
+        height: 500px;
+        position: absolute;
+        left: 0;
+        top: 114px;
+        -webkit-background-size: cover;
+        -moz-background-size:  cover;
+        -o-background-size: cover;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .news-title {
+        position: relative;
+        z-index: 999;
+        margin-top: 300px;
+        color: white;
+        h1 {
+            margin-bottom: 15px;
+        }
+    }
+
+    .news-content {
+        padding-top: 100px;
+        color: black;
+        margin: 0 auto;
+        border-bottom: 1px solid #DBDBDB;
+        padding-bottom: 20px;
+    }
+
+    .about-us-block {
+        margin-bottom: 60px;
+
+        h1 {
+            font-weight: 900;
+            color: @blue;
+            font-size: 21px;
+            margin-bottom: 15px;
+            margin-top: 30px;
+        }
+    }
+
+    .widget-carousel {
+        .news {
+            width: 49%;
+        }
+    }
+
+}
+
+//design for news all view
+#all-news-container {
+    .toolbar-products .pages {
+        display: block;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #DBDBDB;
+        border-top: 1px solid #DBDBDB;
+        float: none;
+        
+    }
+
+    .news {
+        margin-bottom: 30px;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    #widget-latestnews, #all-news-container {
+        .block-title {
+            a {
+               float: right;
+            }
+        }
+
+        .news-container {
+            .news {
+                width: 100% !important;
+                margin-bottom: 25px;
+                margin-right: 0px;
+
+                &:not(:first-child) {
+                    margin-left: 0 !important;
+                }
+            }
+        }
+    }
+
+    #news-container {
+        width: 80% !important;
+    }
+}

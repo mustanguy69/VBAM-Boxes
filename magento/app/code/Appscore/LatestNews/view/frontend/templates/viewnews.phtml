@@ -1,0 +1,26 @@
+<?php $news = $block->getNews(); ?>
+
+<div id="news-container">
+    <div class="img-header" style='background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),  url("<?php echo $block->getMediaBaseUrl($news->getImage()); ?>")'></div>
+    <div class="news-title">
+        <h1><?php echo $news->getTitle(); ?></h1>
+        <p class="date"><?php echo $block->formatDateNews($news->getCreatedAt()); ?></p>
+    </div>
+    <div class="news-content">
+        <p><?php echo $news->getContent(); ?></p>
+    </div>
+
+    <div class="about-us-block">
+        <h1>ABOUT US</h1>
+        <?php
+            echo $this->getLayout()
+            ->createBlock('Magento\Cms\Block\Block')
+            ->setBlockId('about_us')
+            ->toHtml();
+        ?>
+    </div>
+    
+    <div class="widget-carousel">
+        <?php echo $this->getLayout()->createBlock("Appscore\LatestNews\Block\Widget\Carousel")->setTemplate("widget/carousel.phtml")->setCategories($news->getCategoryId())->setId($news->getId())->toHtml(); ?>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="appscore_latestnews_news_listing_data_source" xsi:type="string">Appscore\LatestNews\Model\ResourceModel\Newslist\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Appscore\LatestNews\Model\ResourceModel\Newslist\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">appscore_latestnews_news</argument>
+            <argument name="resourceModel" xsi:type="string">Appscore\LatestNews\Model\ResourceModel\Newslist</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Ui\Component\Wysiwyg\ConfigInterface">
+        <plugin name="editor_plugin"
+                type="Appscore\LatestNews\Plugin\Config"
+                sortOrder="10"/>
+    </type>
+</config>
