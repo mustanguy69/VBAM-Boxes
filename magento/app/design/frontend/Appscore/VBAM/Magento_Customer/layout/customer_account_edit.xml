@@ -11,7 +11,10 @@
         <referenceBlock name="head.components">
             <block class="Magento\Framework\View\Element\Js\Components" name="customer_account_edit_head_components" template="Magento_Customer::js/components.phtml"/>
         </referenceBlock>
-        <referenceBlock name="page.main.title" htmlClass="page-title-wrapper col-md-12">
+        <referenceBlock name="page.main.title">
+            <arguments>
+                <argument name="css_class" xsi:type="string">col-md-12</argument>
+            </arguments>
             <action method="setPageTitle">
                 <argument translate="true" name="title" xsi:type="string">Edit Information</argument>
             </action>

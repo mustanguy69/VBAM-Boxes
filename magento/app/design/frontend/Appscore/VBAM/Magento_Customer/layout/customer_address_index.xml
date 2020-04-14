@@ -11,7 +11,11 @@
         <referenceBlock name="head.components">
             <block class="Magento\Framework\View\Element\Js\Components" name="customer_address_head_components" template="Magento_Customer::js/components.phtml"/>
         </referenceBlock>
-        <referenceBlock name="page.main.title" htmlClass="page-title-wrapper col-md-12"/>
+        <referenceBlock name="page.main.title">
+            <arguments>
+                <argument name="css_class" xsi:type="string">col-md-12</argument>
+            </arguments>
+        </referenceBlock>
         <referenceContainer name="content">
             <block class="Magento\Customer\Block\Address\Book" name="address_book" template="Magento_Customer::address/book.phtml" cacheable="false"/>
             <block class="Magento\Customer\Block\Address\Grid" name="address_grid" template="Magento_Customer::address/grid.phtml" cacheable="false"/>

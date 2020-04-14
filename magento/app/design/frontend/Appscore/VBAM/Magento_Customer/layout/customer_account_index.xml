@@ -8,7 +8,10 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="customer_account"/>
     <body>
-        <referenceBlock name="page.main.title" htmlClass="page-title-wrapper col-md-12">
+        <referenceBlock name="page.main.title">
+            <arguments>
+                <argument name="css_class" xsi:type="string">col-md-12</argument>
+            </arguments>
             <action method="setPageTitle">
                 <argument translate="true" name="title" xsi:type="string">Account</argument>
             </action>

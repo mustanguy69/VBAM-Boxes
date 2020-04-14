@@ -6,11 +6,6 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>
-        <referenceBlock name="page.main.title" htmlClass="page-title-wrapper col-md-12"/>
-    </body>
-
-    
     <referenceContainer name="columns" htmlClass="columns displayFlex">
         <referenceBlock name="customer_account_navigation" remove="true"/>
     </referenceContainer>
