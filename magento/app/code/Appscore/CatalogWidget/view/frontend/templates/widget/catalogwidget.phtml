@@ -1,0 +1,28 @@
+<?php 
+	$categoryId = $block->getData('category_id');
+	$cateList = $block->getSubCateList($categoryId);
+	$backgroundColor = '#F7F5F5';
+?>
+
+<?php if($categoryId): ?>
+	<?php 
+		$html = '';
+		foreach ($cateList as $cate) {
+			$backgroundColor = $cate->colour;
+            $html .= '<div class="product-cate col-12 col-md-2 col-s-6">';
+                $html .= '<a href="'.$cate->url.'">';
+                    $html .= '<div class="product-cate-wrapper">';
+                        $html .= '<div class="product-slide-background" style="background: '.$backgroundColor.'"></div>';
+                        $html .= '<div class="product-info">';
+                            $html .= '<img class="product-cate-image" src="'.$cate->icon.'" width="30" alt="'.$cate->name.'" />';
+                            $html .= '<h3>'.$cate->name.'</h3>';
+                        $html .= '</div>';
+                    $html .= '</div>';
+                $html .= '</a>';
+			$html .= '</div>';
+        }
+	?>	
+	<div class="products-catalog displayFlex">
+		<?php echo $html ?>
+	</div>
+<?php endif; ?>

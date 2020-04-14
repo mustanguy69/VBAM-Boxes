@@ -237,6 +237,7 @@ return [
         'Appscore_CatalogFilter' => 1,
         'Appscore_CatalogWidget' => 1,
         'Appscore_CategoryColour' => 1,
+        'Appscore_CategoryIcon' => 1,
         'Appscore_Checkout' => 1,
         'Appscore_CompareProducts' => 1,
         'Appscore_CountryHelper' => 1,
