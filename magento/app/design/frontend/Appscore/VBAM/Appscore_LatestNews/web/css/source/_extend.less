@@ -72,12 +72,13 @@
         height: 500px;
         position: absolute;
         left: 0;
-        top: 114px;
+        top: 166px;
         -webkit-background-size: cover;
         -moz-background-size:  cover;
         -o-background-size: cover;
         background-size: cover;
         background-repeat: no-repeat;
+        z-index: -1;
     }
 
     .news-title {
@@ -91,7 +92,6 @@
     }
 
     .news-content {
-        padding-top: 100px;
         color: black;
         margin: 0 auto;
         border-bottom: 1px solid #DBDBDB;
@@ -137,6 +137,14 @@
     }
 }
 
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    #news-container {
+        .news-content {
+            padding-top: 100px;
+        }
+    }
+}
+
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     #widget-latestnews, #all-news-container {
         .block-title {
@@ -160,5 +168,9 @@
 
     #news-container {
         width: 80% !important;
+
+        .news-content {
+            padding-top: 140px;
+        }
     }
 }
