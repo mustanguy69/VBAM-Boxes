@@ -2229,3 +2229,40 @@ input.qty {
         padding-right: 15px;
     }
 }
+
+// search autocomplete design
+#searchsuite-autocomplete {
+    border-top: 5px solid @green;
+    margin-top: 9px;
+    width: 300px;
+    .product {
+        .title {
+            display: none;
+        }
+
+        ul {
+            margin-top: 10px;
+            padding: 10px;
+            li {
+                border-bottom: 1px solid #ccc;
+            }
+
+            .qs-option-info {
+                margin-bottom: 0;
+                .qs-option-price {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+        .qs-option-image {
+            width: 20%
+        }
+    }
+
+    .suggest {
+        display: none;
+    }
+    
+}

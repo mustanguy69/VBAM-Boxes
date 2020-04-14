@@ -35,6 +35,7 @@ define([
                         $(this).children('.submenu').stop(true, true).slideToggle('medium');
                     }
                 );
+                
             }
 
             function clickToCloseMobileMenu() {
@@ -49,13 +50,6 @@ define([
                     }
                 )
             }
-            
-            function hello() {
-                $('#member').on('click', function() {
-                    console.log('test');
-                });
-            }
-            
             
             // checking for window resize
             $(window).resize(function() {
