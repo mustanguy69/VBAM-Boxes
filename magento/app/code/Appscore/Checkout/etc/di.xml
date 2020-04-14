@@ -4,4 +4,7 @@
     <type name="Magento\Checkout\Block\Checkout\AttributeMerger">
         <plugin name="placeholders" type="Appscore\Checkout\Plugin\Checkout\Block\Checkout\AttributeMerger\Plugin"/>
     </type>
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="appscore_modified_checkout_layout_processor" type="Appscore\Checkout\Plugin\Checkout\Block\LayoutProcessor" sortOrder="1"/>
+    </type>
 </config>

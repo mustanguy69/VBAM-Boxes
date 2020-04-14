@@ -88,19 +88,18 @@ define(
                 );
 
                 $(document).ready(function() {
-
                     $(window).bind('hashchange', function () { 
                         var hash = window.location.hash.slice(1); //hash to string (= "myanchor")
                         if (hash == "shipping_methods") {
                             $(document).on('click', '.delivery', function () {
-                                $('.table-checkout-shipping-method').css('display', 'block');
+                                $('#checkout-shipping-method-load').css('display', 'block');
                                 $('.delivery').removeClass('green-button-empty').addClass('green-button-full');
                                 $('.clickandcollect').removeClass('green-button-full').addClass('green-button-empty');
                                 $('.clickandcollect-container').css('display', 'none');
                             });
         
                             $(document).on('click', '.clickandcollect', function () {
-                                $('.table-checkout-shipping-method').css('display', 'none');
+                                $('#checkout-shipping-method-load').css('display', 'none');
                                 $('.delivery').removeClass('green-button-full').addClass('green-button-empty');
                                 $('.clickandcollect').removeClass('green-button-empty').addClass('green-button-full');
                                 $('.clickandcollect-container').css('display', 'block');
@@ -234,13 +233,13 @@ define(
                 return this;
             },
     
-            /**
-            * The navigate() method is responsible for navigation between checkout step
-            * during checkout. You can add custom logic, for example some conditions
-            * for switching to your custom step 
-            */
-            navigate: function () {
-    
+                /**
+             * Navigator change hash handler.
+             *
+             * @param {Object} step - navigation step
+             */
+            navigate: function (step) {
+                step && step.isVisible(true);
             },
     
             /**
@@ -339,6 +338,22 @@ define(
     
                 return true;
             },
+
+            getShippingAddress: function () {
+                return quote.shippingAddress();
+            },
+
+            getCountryName: function () {
+                var country = "";
+                if(quote.shippingAddress().countryId == "AU") {
+                    country = "Australia";
+                } else if (quote.shippingAddress().countryId == "NZ") {
+                    country = "New Zealand"
+                }
+
+                return country;
+            }
+
         });
     }
     );

@@ -30,8 +30,22 @@
 
         <!-- Inline address form -->
         <render if="isFormInline" args="shippingFormTemplate" />
+        
+        <div id="billing-address-container">
+		    <div class="billing-address-same-as-shipping-block field choice">
+                <label class="checkbox-container" for="billing-same-as">
+                    <input id="new-billing-btn" type="checkbox"
+                       name="billing-address-same-as-shipping"
+		               data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping-shared'}"/>
+                    My Billing and Shipping address are the same
+                </label>
+		    </div>
+		    <div class="form-billing-address" data-bind="visible: isShowBillingForm">
+		        <each args="getRegion('billing-address')" render=""/>
+		    </div>
+        </div>
     </div>
-
+    
     <form id="co-shipping-form"
                   class="form shipping"
                   data-bind="submit: setShippingInformation">
