@@ -100,7 +100,14 @@ role="presentation">
             </form>
 
             <div class="clickandcollect-container">
-                <p>Here click and collect module</p>
+                <input type="text" id="search-branch" placeholder="Enter suburb, city or postcode">
+                <span class="search-icon"></span>
+                <button id="search-branch-button"  type="button" class="button action primary green-button-full">
+                    FIND
+                </button>
+                <div class="search-result-container">
+                    
+                </div>
             </div>
             <!-- /ko -->
             <!-- ko ifnot: rates().length > 0 --><div class="no-quotes-block"><!-- ko i18n: 'Sorry, no quotes are available for this order at this time'--><!-- /ko --></div><!-- /ko -->

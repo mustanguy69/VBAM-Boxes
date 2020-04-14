@@ -1,0 +1,13 @@
+.admin__menu .item-branchlocator.parent.level-0 > a:before {
+    content: url('../images/pin.svg');
+    height: 28px;
+    margin: 0 auto 5px auto;
+    width: 30px;
+}
+
+.admin__menu .item-branchlocator.parent.level-0.active > a:before, .admin__menu .item-branchlocator.parent.level-0:hover > a:before {
+    content: url('../images/pin2.svg');
+    height: 28px;
+    margin: 0 auto 5px auto;
+    width: 30px;
+}

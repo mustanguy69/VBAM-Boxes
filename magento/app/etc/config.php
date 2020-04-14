@@ -235,6 +235,7 @@ return [
         'Amazon_Payment' => 1,
         'Appscore_ABNCheck' => 1,
         'Appscore_CatalogFilter' => 1,
+        'Appscore_BranchLocator' => 1,
         'Appscore_CatalogWidget' => 1,
         'Appscore_CategoryColour' => 1,
         'Appscore_CategoryIcon' => 1,
