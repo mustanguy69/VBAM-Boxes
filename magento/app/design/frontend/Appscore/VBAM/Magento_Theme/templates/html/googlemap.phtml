@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Appscore\BranchLocator\Block\Index $block
+ */
+    $apikey = $block->getApiKey();
+?>
+<script type="text/javascript">
+    require([
+		'jquery'
+	], function ($) {
+		"use strict";
+
+		$(document).ready(function(){
+            console.log('<?= $apikey ?>');
+		});
+
+	});
+</script>
