@@ -10,7 +10,7 @@
     <body>
         <referenceBlock name="page.main.title">
             <arguments>
-                <argument name="css_class" xsi:type="string">col-md-12</argument>
+                <argument name="css_class" xsi:type="string">col-md-12 col-s-12</argument>
             </arguments>
             <action method="setPageTitle">
                 <argument translate="true" name="title" xsi:type="string">Account</argument>
@@ -24,5 +24,6 @@
     <move element="page.main.title" destination="columns" before="-"/>
     <referenceContainer name="main" htmlClass="column main col-md-7 col-12"/>
     <referenceContainer name="div.sidebar.primary" htmlClass="sidebar-primary col-md-5 col-12"/>
+    <referenceContainer name="div.sidebar.additional" remove="true"/>
     <referenceBlock name="catalog.compare.sidebar" remove="true"/>
 </page>

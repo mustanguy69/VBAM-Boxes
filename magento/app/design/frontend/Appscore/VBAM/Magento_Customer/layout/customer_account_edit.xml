@@ -13,7 +13,7 @@
         </referenceBlock>
         <referenceBlock name="page.main.title">
             <arguments>
-                <argument name="css_class" xsi:type="string">col-md-12</argument>
+                <argument name="css_class" xsi:type="string">col-md-12 col-s-12</argument>
             </arguments>
             <action method="setPageTitle">
                 <argument translate="true" name="title" xsi:type="string">Edit Information</argument>

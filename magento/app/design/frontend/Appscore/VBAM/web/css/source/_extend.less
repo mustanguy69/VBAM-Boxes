@@ -2236,6 +2236,20 @@ input.qty {
     }
 }
 
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    .col-12 {
+        width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .col-6 {
+        width: 50%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
 // search autocomplete design
 #searchsuite-autocomplete {
     border-top: 5px solid @green;

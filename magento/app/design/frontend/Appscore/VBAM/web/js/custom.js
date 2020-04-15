@@ -18,7 +18,7 @@ define([
 
             function parentHover() {
                 $(".navigation__item--parent").prop("onclick", null).off("click");
-                $(".navigation__item--parent").hover(
+                $(".navigation__item--parent").unbind().hover(
                     function() {
                         $(this).children('.submenu').stop(true, true).fadeIn('medium');
                     },
@@ -30,8 +30,9 @@ define([
 
             function parentClick() {
                 $(".navigation__item--parent").unbind('mouseenter mouseleave');
-                $(".navigation__item--parent").click(
-                    function() {
+                $(".navigation__item--parent").unbind().click(
+                    function(e) {
+                        e.stopPropagation();
                         $(this).children('.submenu').stop(true, true).slideToggle('medium');
                     }
                 );
@@ -54,7 +55,6 @@ define([
                         $(this).addClass('active');
                     }
                 });
-                
             }
 
             function clickToCloseMobileMenu() {
