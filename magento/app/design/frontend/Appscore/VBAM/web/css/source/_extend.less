@@ -1480,6 +1480,13 @@ input.qty {
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .nav-before-open {
+        .page-products {
+            .columns {
+                z-index: 0;
+            }
+        }
+    }
     strong {
         font-family: 'BrauerNeue';
         font-weight: bold;
@@ -2218,21 +2225,6 @@ input.qty {
     .product-relate {
         display: none;
     }
-}
-
-.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
-    .col-12 {
-        width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
-    .col-6 {
-        width: 50%;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
