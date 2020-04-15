@@ -2228,6 +2228,16 @@ input.qty {
         padding-left: 15px;
         padding-right: 15px;
     }
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    #searchsuite-autocomplete {
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;    
+    }
 }
 
 // search autocomplete design
