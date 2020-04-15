@@ -8,16 +8,90 @@
  * @var \Appscore\BranchLocator\Block\Index $block
  */
     $apikey = $block->getApiKey();
+    if($apikey != '') {
+    ?>
+        <script type="text/javascript">
+        require([
+            'jquery',
+            'https://maps.googleapis.com/maps/api/js?key=<?php echo $apikey ?>'
+        ], function ($) {
+            "use strict";
+
+            $(document).ready(function(){
+                function handleLocationError(browserHasGeolocation) {
+                    console.log('no support for geolocation');
+                }
+
+                function setCookie(cname, cvalue, exdays) {
+                    var d = new Date();
+                    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                    var expires = "expires="+ d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+                }
+
+                function getCookie(cname) {
+                    var name = cname + "=";
+                    var decodedCookie = decodeURIComponent(document.cookie);
+                    var ca = decodedCookie.split(';');
+                    for(var i = 0; i <ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                        }
+                    }
+                    return '';
+                }
+
+                if(getCookie('regionId') === '') {
+                    if (navigator.geolocation) {
+                        var state = '';
+                        var country = '';
+
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            var pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+
+                            var geocoder = new google.maps.Geocoder;
+
+                            geocoder.geocode({'location': pos}, function(results, status) {
+                                if (status === 'OK') {
+                                    if (results[0]) {
+                                        var address_components = results[0].address_components;
+                                        // loop throuhg address_componets to get state and country
+                                        address_components.forEach(address_component => {
+                                            if(typeof address_component.types[0] !== 'undefined') {
+                                                if(address_component.types[0] === 'administrative_area_level_1') {
+                                                    state = address_component.short_name;
+                                                } else if(address_component.types[0] === 'country') {
+                                                    country = address_component.short_name;
+                                                }
+                                            }
+                                        });
+
+                                        //set cookie
+                                        setCookie('regionId', state, 30);
+                                    }
+                                } else {
+                                    window.alert('Geocoder failed due to: ' + status);
+                                }
+                            });
+                        }, function() {
+                            handleLocationError(true);
+                        });
+                    } else {
+                        // Browser doesn't support Geolocation
+                        handleLocationError(false);
+                    }   
+                }
+            });
+        });
+    
+    </script>
+    <?php 
+    }
 ?>
-<script type="text/javascript">
-    require([
-		'jquery'
-	], function ($) {
-		"use strict";
-
-		$(document).ready(function(){
-            console.log('<?= $apikey ?>');
-		});
-
-	});
-</script>
