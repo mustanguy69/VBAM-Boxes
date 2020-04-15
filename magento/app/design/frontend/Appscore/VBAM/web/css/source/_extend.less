@@ -2232,4 +2232,51 @@ input.qty {
         padding-left: 15px;
         padding-right: 15px;
     }
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    #searchsuite-autocomplete {
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;    
+    }
+}
+
+// search autocomplete design
+#searchsuite-autocomplete {
+    border-top: 5px solid @green;
+    margin-top: 9px;
+    width: 300px;
+    .product {
+        .title {
+            display: none;
+        }
+
+        ul {
+            margin-top: 10px;
+            padding: 10px;
+            li {
+                border-bottom: 1px solid #ccc;
+            }
+
+            .qs-option-info {
+                margin-bottom: 0;
+                .qs-option-price {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+        .qs-option-image {
+            width: 20%
+        }
+    }
+
+    .suggest {
+        display: none;
+    }
+    
 }
