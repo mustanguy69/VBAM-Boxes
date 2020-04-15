@@ -11,6 +11,6 @@ class Branchlist extends AbstractModel
      */
     protected function _construct()
     {
-        $this->_init('Appscore\Branchlocator\Model\ResourceModel\Branchlist');
+        $this->_init('Appscore\BranchLocator\Model\ResourceModel\Branchlist');
     }
 }
