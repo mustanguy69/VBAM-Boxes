@@ -6,14 +6,17 @@
          class="step-content"
          data-role="content">
     
-        <div class="radio-choice">
+        <!-- <div class="radio-choice">
             <input type="radio" id="member" name="login" value="yes" />
             <label for="member">Checkout as member</label>
         </div>
         <div class="radio-choice">
             <input type="radio" id="guest" name="login" value="no" />
             <label for="guest">Checkout as guest</label>
-        </div>
+        </div> -->
+        <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
         <form data-role="login"
               data-bind="submit:login"
               method="post"
@@ -62,7 +65,7 @@
             </div>
         </form>
 
-        <div id="guest-form">
+        <!-- <div id="guest-form">
             <form data-bind="submit: navigateToNextStep" novalidate="novalidate">
                 <div class="actions-toolbar">
                     <div class="primary">
@@ -72,7 +75,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
     </div>
 </li>
 <!-- /ko -->

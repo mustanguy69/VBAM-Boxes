@@ -55,7 +55,7 @@ class SalesModelServiceQuoteSubmitBefore implements ObserverInterface
         }
         $order->setDeliveryDate($quote->getDeliveryDate());
         $order->setCustomerCode($quote->getCustomerCode());
-        //$order->setDeliveryComment($quote->getDeliveryComment());
+        $order->setDeliveryComment($quote->getDeliveryComment());
 
         return $this;
     }

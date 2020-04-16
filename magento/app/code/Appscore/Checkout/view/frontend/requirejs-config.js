@@ -12,6 +12,8 @@ var config = {
             'Magento_Checkout/template/shipping-address/address-renderer/default.html': 'Appscore_Checkout/template/shipping-address/address-renderer/default.html',
             'Magento_Checkout/template/payment-methods/list.html': 'Appscore_Checkout/template/payment-methods/list.html',
             'Magento_Checkout/template/estimation.html': 'Appscore_Checkout/template/estimation.html',
+            'Magento_Checkout/template/authentication.html': 'Appscore_Checkout/template/authentication.html',
+            'Magento_Checkout/js/model/checkout-data-resolver': 'Appscore_Checkout/js/model/checkout-data-resolver'
           }
   }
 };

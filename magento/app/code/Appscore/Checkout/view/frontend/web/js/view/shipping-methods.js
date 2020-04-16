@@ -6,6 +6,7 @@ define(
         'Magento_Ui/js/form/form',
         'ko',
         'loader',
+        'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Customer/js/model/customer',
         'Magento_Customer/js/model/address-list',
         'Magento_Checkout/js/model/address-converter',
@@ -33,6 +34,7 @@ define(
         Component,
         ko,
         loader,
+        fullScreenLoader,
         customer,
         addressList,
         addressConverter,
@@ -60,7 +62,7 @@ define(
             },
     
             //add here your logic to display step,
-            isVisible: ko.observable(true),
+            isVisible: ko.observable(quote.isVirtual()),
             visible: ko.observable(!quote.isVirtual()),
             errorValidationMessage: ko.observable(false),
             isFormInline: addressList().length == 0,
@@ -84,30 +86,39 @@ define(
     
                     _.bind(this.navigate, this),
     
-                    17
+                    15
                 );
 
-                $(document).ready(function() {
+                
 
+                $(document).ready(function() {
                     $(window).bind('hashchange', function () { 
                         var hash = window.location.hash.slice(1); //hash to string (= "myanchor")
+                        if (hash == "payment") {
+                            console.log(quote);
+                        }
                         if (hash == "shipping_methods") {
+                            var firstCharge = true;
+                            if(firstCharge) {
+                                $("body").one('processStop', function() {
+                                    $('.delivery').eq(0).click();
+                                    firstCharge = false;
+                                });
+                            }
                             $(document).on('click', '.delivery', function () {
-                                $('.table-checkout-shipping-method').css('display', 'block');
+                                quote.isDelivery = true;
+                                $('#checkout-shipping-method-load').css('display', 'block');
                                 $('.delivery').removeClass('green-button-empty').addClass('green-button-full');
                                 $('.clickandcollect').removeClass('green-button-full').addClass('green-button-empty');
                                 $('.clickandcollect-container').css('display', 'none');
                             });
         
                             $(document).on('click', '.clickandcollect', function () {
-                                $('.table-checkout-shipping-method').css('display', 'none');
+                                quote.isDelivery = false;
+                                $('#checkout-shipping-method-load').css('display', 'none');
                                 $('.delivery').removeClass('green-button-full').addClass('green-button-empty');
                                 $('.clickandcollect').removeClass('green-button-empty').addClass('green-button-full');
                                 $('.clickandcollect-container').css('display', 'block');
-                            });
-        
-                            $(document).on('click', '#shipping-method-buttons-container', function() {
-                                $('#co-shipping-method-form').submit();
                             });
                             
                             $(document).on('click', '#search-branch-button', async function() {
@@ -132,7 +143,7 @@ define(
                                             if (value.distance < 200) {
                                                 html = html + '<div class="search-result">' +
                                                 '<h1>'+value.name+'</h1>'+
-                                                '<button class="button action continue primary green-button-empty" data-id="'+value.id+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'" id="select-store">SELECT THIS STORE</button>' +
+                                                '<button data-id="'+ value.id +'" class="button select-store action continue primary green-button-empty" id="select-store">SELECT THIS STORE</button>' +
                                                 '<p>'+value.address+', '+value.city+', '+value.state+', '+value.postcode+'</p>'+
                                                 '<p class="away"><span class="km">'+ Math.floor(value.distance) +'</span> km away</p>'+
                                                 '</div>';
@@ -148,6 +159,13 @@ define(
                                 
                             });
 
+                            $(document).on('click', '.select-store', function () {
+                                $('.select-store').attr('id', '').removeClass('green-button-full').addClass('green-button-empty').text('SELECT THIS STORE')
+                                $(this).attr('id', 'selected-store').removeClass('green-button-empty').addClass('green-button-full').text('SELECTED')
+                                
+                            })
+                            
+                            
                             $(document).on('click', '.search-icon', async function () {
                                 showLoading();
                                 var apikey = await getApiKeyGmaps();
@@ -240,7 +258,8 @@ define(
             * for switching to your custom step 
             */
             navigate: function () {
-    
+                var self = this;
+                self.visible(true);
             },
     
             /**
@@ -253,7 +272,7 @@ define(
     
             rates: shippingService.getShippingRates(),
             isLoading: shippingService.isLoading,
-    
+            
             /**
              * Set shipping information handler
              */
@@ -339,6 +358,56 @@ define(
     
                 return true;
             },
+
+            getShippingAddress: function () {
+                return quote.shippingAddress();
+            },
+
+            getCountryName: function () {
+                var country = "";
+                if(quote.shippingAddress().countryId == "AU") {
+                    country = "Australia";
+                } else if (quote.shippingAddress().countryId == "NZ") {
+                    country = "New Zealand"
+                }
+
+                return country;
+            },
+
+            saveMethods: function () {
+                fullScreenLoader.startLoader();
+                setShippingInformationAction().done(
+                    function () {
+                        stepNavigator.next();
+                    }
+                );
+                fullScreenLoader.stopLoader();
+            },
+
+                /**
+             * Shipping Method View
+             */
+            rates: shippingService.getShippingRates(),
+            isLoading: shippingService.isLoading,
+            isSelected: ko.computed(function () {
+                return quote.shippingMethod() ?
+                    quote.shippingMethod()['carrier_code'] + '_' + quote.shippingMethod()['method_code'] :
+                    null;
+            }),
+
+            /**
+             * @param {Object} shippingMethod
+             * @return {Boolean}
+             */
+            selectShippingMethod: function (shippingMethod) {
+                
+                selectShippingMethodAction(shippingMethod);
+                checkoutData.setSelectedShippingRate(shippingMethod['carrier_code'] + '_' + shippingMethod['method_code']);
+
+                return true;
+            }
+
+            
         });
     }
     );

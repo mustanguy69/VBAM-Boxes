@@ -69,17 +69,17 @@ define(
                 }
                 
 
-                $(document).ready(function () {
-                    $(document).on('change','input[name="login"]', function(){
-                        if ($(this).val() == 'yes') {
-                            $('#login-form').css('display', 'block');
-                            $('#guest-form, #shipping, #opc-shipping_method').css('display', 'none');
-                        } else if($(this).val() == 'no') {
-                            $('#login-form').css('display', 'none');
-                            $('#guest-form').css('display', 'block');
-                        }
-                    });
-                });
+                // $(document).ready(function () {
+                //     $(document).on('change','input[name="login"]', function(){
+                //         if ($(this).val() == 'yes') {
+                //             $('#login-form').css('display', 'block');
+                //             $('#guest-form, #shipping, #opc-shipping_method').css('display', 'none');
+                //         } else if($(this).val() == 'no') {
+                //             $('#login-form').css('display', 'none');
+                //             $('#guest-form').css('display', 'block');
+                //         }
+                //     });
+                // });
 
 
                 return this;
@@ -87,6 +87,7 @@ define(
 
             navigate: function () {
 
+                this.isVisible(true);
             },
 
             /**

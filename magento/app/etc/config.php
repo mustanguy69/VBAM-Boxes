@@ -240,6 +240,7 @@ return [
         'Appscore_CategoryColour' => 1,
         'Appscore_CategoryIcon' => 1,
         'Appscore_Checkout' => 1,
+        'Appscore_ClickAndCollect' => 1,
         'Appscore_CompareProducts' => 1,
         'Appscore_CountryHelper' => 1,
         'Appscore_CustomerCustomAttributes' => 1,

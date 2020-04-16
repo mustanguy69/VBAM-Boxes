@@ -148,6 +148,50 @@ class UpgradeSchema implements UpgradeSchemaInterface
             ]
         );
 
+        if (version_compare($context->getVersion(), '3.3.3') < 0) {
+            $setup->getConnection()->addColumn(
+                $setup->getTable('quote'),
+                'delivery_comment',
+                [
+                    'type' => 'text',
+                    'nullable' => false,
+                    'comment' => 'Delivery Comment',
+                ]
+            );
+
+            $setup->getConnection()->addColumn(
+            $setup->getTable('sales_order'),
+            'delivery_comment',
+                [
+                    'type' => 'text',
+                    'nullable' => false,
+                    'comment' => 'Delivery Comment',
+                ]
+            );
+        }
+
+        if (version_compare($context->getVersion(), '3.3.4') < 0) {
+            $setup->getConnection()->addColumn(
+                $setup->getTable('quote'),
+                'click_and_collect_id',
+                [
+                    'type' => 'text',
+                    'nullable' => false,
+                    'comment' => 'click_and_collect store id',
+                ]
+            );
+
+            $setup->getConnection()->addColumn(
+            $setup->getTable('sales_order'),
+            'click_and_collect_id',
+                [
+                    'type' => 'text',
+                    'nullable' => false,
+                    'comment' => 'click_and_collect store id',
+                ]
+            );
+        }
+
         $setup->endSetup();
     }
 }

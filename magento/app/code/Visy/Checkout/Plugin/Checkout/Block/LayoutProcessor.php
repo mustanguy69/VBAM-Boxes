@@ -77,24 +77,24 @@ class LayoutProcessor
                                         ],
                                         'sortOrder' => 10,
                                         'id' => 'delivery_date'
-                                    ]/*,
-                                'delivery_comment' => [
-                                    'component' => 'Magento_Ui/js/form/element/textarea',
-                                    'config' => [
-                                        'customScope' => 'delivery_date',
-                                        'template' => 'ui/form/field',
-                                        'elementTmpl' => 'ui/form/element/textarea',
-                                        'options' => [],
-                                        'id' => 'delivery_comment'
                                     ],
-                                    'dataScope' => 'delivery_date.delivery_comment',
-                                    'label' => 'Comment',
-                                    'provider' => 'checkoutProvider',
-                                    'visible' => true,
-                                    'validation' => [],
-                                    'sortOrder' => 20,
-                                    'id' => 'delivery_comment'
-                                ]*/
+                                    'delivery_comment' => [
+                                        'component' => 'Magento_Ui/js/form/element/textarea',
+                                        'config' => [
+                                            'customScope' => 'delivery_date',
+                                            'template' => 'ui/form/field',
+                                            'elementTmpl' => 'ui/form/element/textarea',
+                                            'options' => [],
+                                            'id' => 'delivery_comment'
+                                        ],
+                                        'dataScope' => 'delivery_date.delivery_comment',
+                                        'label' => 'Comment',
+                                        'provider' => 'checkoutProvider',
+                                        'visible' => true,
+                                        'validation' => [],
+                                        'sortOrder' => 20,
+                                        'id' => 'delivery_comment'
+                                    ]
                                 ],
                             ],
                         ]

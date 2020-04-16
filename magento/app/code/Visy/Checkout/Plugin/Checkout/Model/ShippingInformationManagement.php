@@ -59,10 +59,12 @@ class ShippingInformationManagement
         }
         $extAttributes->setCustomerCode($customerCode);
         $addressInformation->setExtensionAttributes($extAttributes);
-        //$deliveryComment = $extAttributes->getDeliveryComment();
+        $deliveryComment = $extAttributes->getDeliveryComment();
+        $clickAndCollectId = $extAttributes->getClickAndCollectId();
         $quote = $this->quoteRepository->getActive($cartId);
         $quote->setDeliveryDate($deliveryDate);
         $quote->setCustomerCode($customerCode);
-        //$quote->setDeliveryComment($deliveryComment);
+        $quote->setDeliveryComment($deliveryComment);
+        $quote->setClickAndCollectId($clickAndCollectId);
     }
 }
