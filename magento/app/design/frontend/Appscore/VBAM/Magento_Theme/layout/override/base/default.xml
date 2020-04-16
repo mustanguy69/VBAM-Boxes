@@ -154,7 +154,7 @@
                 <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="Magento_Store::switch/stores.phtml"/>
 
                 <container name="footer-wrapper" label="Footer Wrapper" htmlTag="div" htmlClass="displayFlex">
-                    <container name="footer-logo-container" as="footer-logo-container" label="Logo Footer" htmlTag="div" htmlClass="col-md-3 col-12 marginBottom27px">
+                    <container name="footer-logo-container" as="footer-logo-container" label="Logo Footer" htmlTag="div" htmlClass="col-md-3 col-s-12 col-12 marginBottom27px">
                         <block class="Magento\Cms\Block\Block" name="footer-logo">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">footer_logo</argument>
@@ -162,7 +162,7 @@
                         </block>
                     </container>
 
-                    <container name="footer-about-container" as="footer-about-container" label="About Footer" htmlTag="div" htmlClass="col-md-3 col-12 mobile-marginBottom36px">
+                    <container name="footer-about-container" as="footer-about-container" label="About Footer" htmlTag="div" htmlClass="col-md-3 col-s-12 col-12 mobile-marginBottom36px">
                         <block class="Magento\Cms\Block\Block" name="footer-about">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">about_links</argument>
@@ -170,15 +170,14 @@
                         </block>
                     </container>
 
-                    <container name="footer-shopping-container" as="footer-shopping-container" label="Shopping Footer" htmlTag="div" htmlClass="col-md-3 col-12 mobile-marginBottom20px">
-                        <block class="Magento\Cms\Block\Block" name="footer-shopping">
+                    <container name="footer-shopping-container" as="footer-shopping-container" label="Shopping Footer" htmlTag="div" htmlClass="col-md-3 col-s-12 col-12 mobile-marginBottom20px">                        <block class="Magento\Cms\Block\Block" name="footer-shopping">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">shopping_online</argument>
                             </arguments>
                         </block>
                     </container>
 
-                    <container name="footer-info-container" as="footer-info-container" label="Info Footer" htmlTag="div" htmlClass="col-md-3 col-12 fontSize10 colorGray mobile-p-paddingTop30px mobile-p-borderTop1px">
+                    <container name="footer-info-container" as="footer-info-container" label="Info Footer" htmlTag="div" htmlClass="col-md-3 col-s-12 col-12 fontSize10 colorGray mobile-p-paddingTop30px mobile-p-borderTop1px">
                         <block class="Magento\Cms\Block\Block" name="footer-info">
                             <arguments>
                                 <argument name="block_id" xsi:type="string">footer_info</argument>
