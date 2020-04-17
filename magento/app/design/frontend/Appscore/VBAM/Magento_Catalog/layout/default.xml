@@ -14,5 +14,6 @@
 
         <referenceContainer name="main" htmlClass="column main col-md-9 col-12"/>
         <referenceContainer name="div.sidebar.primary" htmlClass="sidebar-primary col-md-3 col-12"/>
+        <referenceContainer name="div.sidebar.additional" remove="true"/>
     </body>
 </page>

@@ -63,6 +63,7 @@ class Session extends \Magento\Customer\Model\Session
         VisyCustomerGroup $visyCustomerGroup,
         AccountConfirmation $accountConfirmation = null
     ) {
+        $this->_visyCustomerGroup = $visyCustomerGroup;
         parent::__construct(
             $request,
             $sidResolver,
@@ -87,7 +88,6 @@ class Session extends \Magento\Customer\Model\Session
             $response,
             $accountConfirmation
         );
-        $this->_visyCustomerGroup = $visyCustomerGroup;
 
     }
     /**

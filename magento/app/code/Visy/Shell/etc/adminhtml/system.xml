@@ -38,7 +38,22 @@
                     <label>Access Token Secret</label>
                 </field>
             </group>
-            <group id="pricing" type="text"  sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+            <group id="aws" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>AWS</label>
+                <field id="s3_bucket" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>S3 Bucket</label>
+                </field>
+                <field id="s3_region" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>S3 Region</label>
+                </field>
+                <field id="s3_key" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>S3 Key</label>
+                </field>
+                <field id="s3_secret" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>S3 Secret</label>
+                </field>
+            </group>
+            <group id="pricing" type="text"  sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Custom Product Pricing</label>
                 <field id="indexer" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Run Indexer Type</label>

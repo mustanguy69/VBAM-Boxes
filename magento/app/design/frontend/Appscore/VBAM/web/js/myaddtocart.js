@@ -50,6 +50,7 @@ require([
             var windowsize = $window.width();
             var parent = $(this).parents('.product-item-info');
             var mobileContainer = parent.find('.product-item-cart-quantity');
+            var closeBtn = parent.find('.qty-close');
             var realAddToCartBtn = parent.find('.actions-primary .tocart');
 
             if (windowsize <= 768) {
@@ -60,7 +61,8 @@ require([
                         $(this).text('ADD TO CART');
                     });
 
-                    mobileContainer.fadeIn('fast');
+                    mobileContainer.css("display", "flex").hide().fadeIn('fast');
+                    closeBtn.fadeIn('fast');
                 } else {
                     realAddToCartBtn.trigger('click');
                 }
@@ -72,6 +74,7 @@ require([
             var parent = $(this).parents('.product-item-info');
             var cartContainer = parent.find('.product-item-cart-mobile');
             var mobileContainer = parent.find('.product-item-cart-quantity');
+            var closeBtn = parent.find('.qty-close');
 
             var openToCart = parent.find('.opentocart');
             var cartWrapper = cartContainer.find('.cart-wrapper');
@@ -85,6 +88,7 @@ require([
                         openToCart.html('<img src="'+image+'" width="8" alt="plus"/>');
                     });
                     mobileContainer.fadeOut('fast');
+                    closeBtn.fadeOut('fast');
                 }
             } 
         });

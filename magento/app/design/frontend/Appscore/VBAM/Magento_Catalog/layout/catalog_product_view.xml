@@ -111,48 +111,12 @@
                         <argument name="sort_order" xsi:type="string">10</argument>
                     </arguments>
                 </block>
-
+                
                 <container name="product.info.custom.attribute" as="custom.attribute" label="Product custom attribute" after="product.info.description" htmlTag="div" htmlClass="product-custom-attribute">
-                    <block class="Magento\Framework\View\Element\Text" name="custom.attribute.main.label">
+                    <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.attributes" as="additional" template="Magento_Catalog::product/view/attributes.phtml">
                         <arguments>
-                            <argument translate="true" name="text" xsi:type="string"><![CDATA[<div class="custom-attribute-label"><h3>SPEC</h3></div>]]></argument>
-                        </arguments>
-                    </block>
-                    
-                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.product.length" template="Magento_Catalog::product/view/attribute.phtml" >
-                        <arguments>
-                            <argument name="at_call" xsi:type="string">getLength</argument>
-                            <argument name="at_code" xsi:type="string">length</argument>
-                            <argument name="css_class" xsi:type="string">length</argument>
-                            <argument name="at_label" xsi:type="string">Length: </argument>
-                            <argument name="add_attribute" xsi:type="string">itemprop="length"</argument>
-                        </arguments>
-                    </block>
-                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.product.width" template="Magento_Catalog::product/view/attribute.phtml" >
-                        <arguments>
-                            <argument name="at_call" xsi:type="string">getWidth</argument>
-                            <argument name="at_code" xsi:type="string">width</argument>
-                            <argument name="css_class" xsi:type="string">width</argument>
-                            <argument name="at_label" xsi:type="string">Width: </argument>
-                            <argument name="add_attribute" xsi:type="string">itemprop="width"</argument>
-                        </arguments>
-                    </block>
-                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.product.height" template="Magento_Catalog::product/view/attribute.phtml" >
-                        <arguments>
-                            <argument name="at_call" xsi:type="string">getHeight</argument>
-                            <argument name="at_code" xsi:type="string">height</argument>
-                            <argument name="css_class" xsi:type="string">height</argument>
-                            <argument name="at_label" xsi:type="string">Height: </argument>
-                            <argument name="add_attribute" xsi:type="string">itemprop="height"</argument>
-                        </arguments>
-                    </block>
-                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.product.code" template="Magento_Catalog::product/view/attribute.phtml" >
-                        <arguments>
-                            <argument name="at_call" xsi:type="string">getProductCode</argument>
-                            <argument name="at_code" xsi:type="string">product_code</argument>
-                            <argument name="css_class" xsi:type="string">product-code</argument>
-                            <argument name="at_label" xsi:type="string">Product Code: </argument>
-                            <argument name="add_attribute" xsi:type="string">itemprop="product_code"</argument>
+                            <argument translate="true" name="title" xsi:type="string">SPEC</argument>
+                            <argument name="sort_order" xsi:type="string">20</argument>
                         </arguments>
                     </block>
                 </container>
@@ -251,6 +215,6 @@
         </referenceContainer>
         <move element="product.info.stock.sku" destination="page.main.title"/>
         <move element="product.info.addto" destination="page.main.title"/>
-        
+        <move element="product.info.description" destination="product.info.main" after="my.product.cartinfo.wrapper"/>
     </body>
 </page>

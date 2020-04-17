@@ -21,6 +21,9 @@
                     <?php $_product = $item; ?>
                     <div class="item-catalog col-md-4 col-s-6 col-12">
                         <div class="product-item-info">
+                            <div class="qty-close">
+                                <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
+                            </div>
                             <div class="product-item-details">
                                 <div class="product-item-info-general">
                                     <strong class="product-item-name">
@@ -52,9 +55,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" class="product-item-photo">
-                                <?= $block->getImage($_product, 'product_comparison_list')->toHtml() ?>
-                            </a>
+                            <div class="product-item-image-wrapper">
+                                <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" class="product-item-photo">
+                                    <?= $block->getImage($_product, 'product_comparison_list')->toHtml() ?>
+                                </a>
+                                <div class="product-item-cart-quantity mobile">
+                                    <div class="qty-container">
+                                        <p><?php echo __('Place in cart')?></p>
+                                        <div class="qty-wrapper">
+                                            <div class="qty-controller qty-minus">
+                                                <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                            </div>
+                                            <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                            <div class="qty-controller qty-plus">
+                                                <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="product-item-cart desktop">
                                 <div class="actions-primary">
                                     <?php if ($_product->isSaleable()) : ?>
@@ -100,23 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="product-item-cart-quantity mobile">
-                                <div class="qty-close">
-                                    <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
-                                </div>
-                                <div class="qty-container">
-                                    <p><?php echo __('Place in cart')?></p>
-                                    <div class="qty-wrapper">
-                                        <div class="qty-controller qty-minus">
-                                            <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
-                                        </div>
-                                        <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
-                                        <div class="qty-controller qty-plus">
-                                            <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <hr/>
                             <div class="product-item-attributes">
                             <?php foreach ($block->getAttributes() as $attribute) :?>

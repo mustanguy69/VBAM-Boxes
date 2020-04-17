@@ -1,0 +1,217 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+use Magento\Framework\App\Action\Action;
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var \Magento\Catalog\Block\Product\ListProduct $block
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper(\Magento\Catalog\Helper\Output::class);
+?>
+<?php if (!$_productCollection->getSize()) : ?>
+    <div class="message info empty"><div><?php echo $block->escapeHtml(__('We can\'t find products matching the selection.')) ?></div></div>
+<?php else : ?>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="products wrapper <?php echo $block->escapeHtml($viewMode) ?> products-<?php echo $block->escapeHtml($viewMode) ?>">
+        <div class="products list items items-catalog displayFlex">
+            <?php /** @var \Magento\Catalog\Model\Product $_product */ ?>
+            <?php foreach ($_productCollection as $_product) : ?>
+                <div class="item-catalog col-md-4 col-s-6 col-12">
+                    <div class="product-item-info">
+                        <?php
+                        $productImage = $block->getImage($_product, $image);
+                        if ($pos != null) {
+                            $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                                . 'top:' . $productImage->getHeight() . 'px;"';
+                        }
+                        ?>
+                        <div class="qty-close mobile">
+                            <img alt="<?= $block->escapeHtml(__('Close')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
+                        </div>
+                        <div class="product-item-details">
+                            <div class="product-item-info-general">
+                                <strong class="product-item-name">
+                                    <a class="product-item-link" title=" <?= $block->escapeHtml($_product->getName()) ?>"
+                                        href="<?= $block->escapeUrl($_product->getProductUrl()) ?>">
+                                        <?= $block->escapeHtml($_product->getName()) ?>
+                                    </a>
+                                </strong>
+                                <p class="product-item-sku">
+                                    SKU#: <?= $block->escapeHtmlAttr($_product->getSku()) ?>
+                                </p>
+                                <?php if ($_product->isAvailable()) :?>
+                                    <?= $block->getProductDetailsHtml($_product) ?>
+                                <?php endif; ?>
+
+                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            </div>
+                            <div class="product-item-info-inner">
+                                <div class="product-item-actions">
+                                    <div class="actions-secondary" data-role="add-to-links">
+                                        <?php //phpcs:disable ?>
+                                        <?php if ($this->helper(\Magento\Wishlist\Helper\Data::class)->isAllow()) : ?>
+                                        <?php //phpcs:enable ?>
+                                        <a href="#" data-post='<?= /* @noEscape */ $block->getAddToWishlistParams($_product) ?>' class="action towishlist" data-action="add-to-wishlist" title="<?= $block->escapeHtmlAttr(__('Add to Wish List')) ?>">
+                                            <?php 
+                                                $inWishlist = $block->isInWishlist($_product->getId());
+                                                
+                                                if($inWishlist) {
+                                                    // has wishlist
+                                                ?>
+                                                    <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/heart_active.svg'); ?>" width="15"/>
+                                                <?php                                                        
+                                                } else {
+                                                ?>
+                                                    <img alt="<?= $block->escapeHtml(__('Add to Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/heart_defualt.svg'); ?>" width="15"/>
+                                            <?php } ?>
+                                        </a>
+                                        <?php endif; ?>
+                                        <div class="action-tocompare">
+                                        <?php if ($block->getAddToCompareUrl()) : ?>
+                                            <?php //phpcs:disable ?>
+                                            <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                                            <?php //phpcs:enable ?>
+                                            <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                                <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                            </a>
+                                        <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php /* Product Image */ ?>
+                        <div class="product-item-image-wrapper">
+                            <a href="<?php echo $block->escapeHtml($_product->getProductUrl()) ?>" class="product-item-photo" tabindex="-1">
+                                <?php echo $productImage->toHtml() ?>
+                            </a>
+                            <div class="product-item-cart-quantity mobile">
+                                <div class="qty-container">
+                                    <p><?php echo __('Place in cart')?></p>
+                                    <div class="qty-wrapper">
+                                        <div class="qty-controller qty-minus">
+                                            <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                        </div>
+                                        <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                        <div class="qty-controller qty-plus">
+                                            <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                        </div>
+                                    </div>
+                                    <strong><?php echo __('OR')?></strong>
+                                    <div class="action-tocompare">
+                                    <?php if ($block->getAddToCompareUrl()) : ?>
+                                        <?php //phpcs:disable ?>
+                                        <?php $compareHelper = $this->helper(\Magento\Catalog\Helper\Product\Compare::class);?>
+                                        <?php //phpcs:enable ?>
+                                        <a href="#" class="action tocompare" data-post='<?= /* @noEscape */ $compareHelper->getPostDataParams($_product) ?>' title="<?= $block->escapeHtmlAttr(__('Add to Compare')) ?>">
+                                            <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
+                                        </a>
+                                    <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-item-cart desktop">
+                            <div class="actions-primary">
+                                <?php if ($_product->isSaleable()) : ?>
+                                    <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                                    <form data-role="tocart-form" data-product-sku="<?= $block->escapeHtmlAttr($_product->getSku()) ?>" action="<?= $block->escapeUrl($postParams['action']) ?>" method="post">
+                                        <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
+                                        <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                        <?= $block->getBlockHtml('formkey') ?>
+                                        
+                                        <div class="displayFlexNoMargin">
+                                            <div class="qty-wrapper">
+                                                <div class="qty-controller qty-minus">
+                                                    <img src="<?php echo $this->getViewFileUrl('images/minus.svg'); ?>" width="9" alt="substract"/>
+                                                </div>
+                                                <input type="number" name="qty" maxlength="12" value="<?php /* @escapeNotVerified */ echo '1' ?>" title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty" />
+                                                <div class="qty-controller qty-plus">
+                                                    <img src="<?php echo $this->getViewFileUrl('images/plus.svg'); ?>" width="9" alt="add"/>
+                                                </div>
+                                            </div>
+                                            <button type="submit"
+                                                    title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                                    class="action tocart primary">
+                                                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                <?php else : ?>
+                                    <?php if ($_product->getIsSalable()) : ?>
+                                        <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                    <?php else : ?>
+                                        <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="product-item-cart-mobile mobile">
+                            <div class="displayFlexNoMargin">
+                                <div class="qty-wrapper">
+                                    <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                                </div>
+                                <div class="cart-wrapper">
+                                    <button title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>" class="action opentocart" image-bind="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>">
+                                        <img src="<?php echo $this->getViewFileUrl('images/plus_white.svg'); ?>" width="8" alt="plus"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {
+                    "product_sku": "<?php echo $block->escapeHtml($_product->getSku()) ?>"
+                }
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "js/myaddtocart":{}
+        }
+    }        
+</script>
+
