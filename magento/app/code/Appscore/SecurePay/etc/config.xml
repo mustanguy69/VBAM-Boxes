@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <appscore_securepay>
+              <title>Secure Pay</title>
+              <model>Appscore\SecurePay\Model\SecurePay</model>
+              <active>1</active>
+              <cctypes>AE,VI,MC</cctypes>
+            </appscore_securepay>
+        </payment>
+    </default>
+</config>

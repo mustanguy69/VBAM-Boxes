@@ -68,6 +68,16 @@
                                             </item>
                                             <item name="billing-step" xsi:type="array">
                                                 <item name="sortOrder" xsi:type="string">2</item>
+                                                <item name="children" xsi:type="array">
+                                                    <item name="securepay-payments" xsi:type="array">
+                                                        <item name="component" xsi:type="string">Appscore_SecurePay/js/view/payment/securepay</item>
+                                                        <item name="methods" xsi:type="array">
+                                                            <item name="appscore_securepay" xsi:type="array">
+                                                                <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
                                             </item>
                                         </item>
                                     </item>

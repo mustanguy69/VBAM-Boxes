@@ -93,10 +93,7 @@ define(
 
                 $(document).ready(function() {
                     $(window).bind('hashchange', function () { 
-                        var hash = window.location.hash.slice(1); //hash to string (= "myanchor")
-                        if (hash == "payment") {
-                            console.log(quote);
-                        }
+                        var hash = window.location.hash.slice(1);
                         if (hash == "shipping_methods") {
                             var firstCharge = true;
                             if(firstCharge) {

@@ -247,6 +247,7 @@ return [
         'Appscore_Directory' => 1,
         'Appscore_HeaderBlock' => 1,
         'Appscore_LatestNews' => 1,
+        'Appscore_SecurePay' => 1,
         'Appscore_SliderWidget' => 1,
         'Dotdigitalgroup_Email' => 1,
         'Dotdigitalgroup_Chat' => 1,
