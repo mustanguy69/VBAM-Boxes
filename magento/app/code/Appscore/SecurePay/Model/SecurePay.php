@@ -1,6 +1,7 @@
 <?php
 namespace Appscore\SecurePay\Model;
  
+
 class SecurePay extends \Magento\Payment\Model\Method\Cc
 {
     const CODE = 'appscore_securepay';
@@ -9,7 +10,62 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
  
     protected $_canAuthorize = true;
     protected $_canCapture = true;
- 
+
+    protected $_curl;
+    protected $_scopeConfig;
+    protected $_request;
+    protected $_messageManager;
+    protected $_resultRedirect;
+
+    public function __construct( 
+        \Magento\Framework\Model\Context $context, 
+        \Magento\Framework\Registry $registry, 
+        \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory, 
+        \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory, 
+        \Magento\Payment\Helper\Data $paymentData, 
+        \Magento\Payment\Model\Method\Logger $logger, 
+        \Magento\Framework\Module\ModuleListInterface $moduleList,
+        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
+        \Magento\Directory\Model\CountryFactory $countryFactory, 
+        \Magento\Framework\HTTP\Client\Curl $curl,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig, 
+        \Magento\Framework\App\RequestInterface $request,
+        \Magento\Framework\Message\ManagerInterface $messageManager,
+        \Magento\Framework\Controller\ResultFactory $resultRedirect,
+        array $data = array() 
+        ) { 
+        parent::__construct( $context, $registry, $extensionFactory, $customAttributeFactory, $paymentData, $scopeConfig, $logger, $moduleList, $localeDate, null, null, $data ); 
+        $this->_countryFactory = $countryFactory;
+        $this->_curl = $curl;
+        $this->_scopeConfig = $scopeConfig;
+        $this->_request = $request;
+        $this->_messageManager = $messageManager;
+        $this->_resultRedirect = $resultRedirect;
+    } 
+
+    public function validate()
+    {
+        /*
+         * calling parent validate function
+         */
+
+        
+        return $this;
+    }
+
+    /**
+     * Set value after save payment from post data to use in case capture or authorize
+     * @param \Magento\Framework\DataObject $data
+     * @return $this
+     */
+    public function assignData(\Magento\Framework\DataObject $data)
+    {
+        parent::assignData($data);
+        $this->getInfoInstance()->setAdditionalInformation('post_data_value', $data->getData());
+
+        return $this;
+    }
+
     /**
      * Capture Payment.
      *
@@ -19,71 +75,108 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
      */
     public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
-        try {
-            //check if payment has been authorized
-            if(is_null($payment->getParentTransactionId())) {
-                $this->authorize($payment, $amount);
+
+        try{
+            $order = $payment->getOrder()->getData();
+            $info = $this->getInfoInstance();
+            $token = $info->getAdditionalInformation()['post_data_value']['additional_data']['token'];
+            $merchantCode = $this->_scopeConfig->getValue(
+                'payment/appscore_securepay/merchant_code',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            );
+    
+            $clientId = $this->_scopeConfig->getValue(
+                'payment/appscore_securepay/client_id',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            );
+    
+            $clientSecret = $this->_scopeConfig->getValue(
+                'payment/appscore_securepay/client_secret',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            );
+
+            // auth to securepay api -> return access_token
+            $auth = $this->authentificationSecurePayApi($merchantCode, $clientId, $clientSecret);
+            
+            if($auth['access_token']) {
+                $request = [
+                    "amount" => bcmul($amount, 100),
+                    "merchant_code" => $merchantCode,
+                    "token" => $token,
+                    "auth_token" => $auth['access_token'],
+                    "order_id" => $this->genUuid(),
+                    "user_ip" => $order['remote_ip'],
+                ];
+                
+                // make preauth of payment
+                $preauth = $this->makeAuthRequest($request);
             }
- 
-            //build array of payment data for API request.
-            $request = [
-                'capture_amount' => $amount,
-                //any other fields, api key, etc.
-            ];
- 
-            //make API request to credit card processor.
-            $response = $this->makeCaptureRequest($request);
- 
-            //todo handle response
- 
-            //transaction is done.
-            $payment->setIsTransactionClosed(1);
- 
-        } catch (\Exception $e) {
-            $this->debug($payment->getData(), $e->getMessage());
+
+            if($preauth['status'] == "paid") {
+                $payment->setTransactionId($preauth['bankTransactionId']);
+                $payment->setParentTransactionId($preauth['bankTransactionId']);
+                $payment->setIsTransactionClosed(0);
+
+                $capture = $this->makeCaptureRequest($request);
+                
+            } else {
+                $this->cancelAuthRequest($request);
+                $payment->setTransactionId($preauth['bankTransactionId'] . '-' . \Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND)
+                    ->setParentTransactionId($preauth['bankTransactionId'])
+                    ->setIsTransactionClosed(1)
+                    ->setShouldCloseParentTransaction(1);
+
+                $this->_messageManager->addErrorMessage('The payment failed after authorize.');
+                throw new \Magento\Framework\Validator\Exception(__('The payment failed after authorize.'));
+                
+                return $this;
+            }
+            
+           if(!$capture['status'] == "paid") {
+                $this->cancelCaptureRequest($request);
+                $payment->setTransactionId($capture['bankTransactionId'] . '-' . \Magento\Sales\Model\Order\Payment\Transaction::TYPE_REFUND)
+                    ->setParentTransactionId($capture['bankTransactionId'])
+                    ->setIsTransactionClosed(1)
+                    ->setShouldCloseParentTransaction(1);
+
+                $this->_messageManager->addErrorMessage('The payment capture failed.');
+                throw new \Magento\Framework\Validator\Exception(__('The payment capture failed.'));
+
+                return $this;
+           } else {
+                $payment->setTransactionId($capture['bankTransactionId']) ->setIsTransactionClosed(1);
+
+                return $this;
+           }
+            
         }
- 
-        return $this;
+        catch (\Exception $e) {
+            $this->_messageManager->addErrorMessage('The payment failed.');
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
+            throw new \Magento\Framework\Validator\Exception(__('The payment failed.'));
+        }
     }
- 
-    /**
-     * Authorize a payment.
-     *
-     * @param \Magento\Payment\Model\InfoInterface $payment
-     * @param float $amount
-     * @return $this
-     */
-    public function authorize(\Magento\Payment\Model\InfoInterface $payment, $amount)
+
+    public function authentificationSecurePayApi($merchantCode, $clientId, $clientSecret) 
     {
         try {
- 
-            ///build array of payment data for API request.
-            $request = [
-                'cc_type' => $payment->getCcType(),
-                'cc_exp_month' => $payment->getCcExpMonth(),
-                'cc_exp_year' => $payment->getCcExpYear(),
-                'cc_number' => $payment->getCcNumberEnc(),
-                'amount' => $amount
-            ];
- 
-            //check if payment has been authorized
-            $response = $this->makeAuthRequest($request);
- 
+            
+            $url = "https://hello.auspost.com.au/oauth2/ausrkwxtmx9Jtwp4s356/v1/token";
+            $this->_curl->addHeader("Content-Type", "application/x-www-form-urlencoded");
+            $this->_curl->addHeader("Authorization", "Basic " . base64_encode($clientId . ":" . $clientSecret));
+            $params = "grant_type=client_credentials&scope=https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayments%2Fread%20https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayments%2Fwrite%20https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayment-instruments%2Fread%20https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayment-instruments%2Fwrite";
+    
+            $this->_curl->post($url, $params);
+            $response = $this->_curl->getBody();
+            $response = json_decode($response, true);
+
+            return $response;
+
         } catch (\Exception $e) {
-            $this->debug($payment->getData(), $e->getMessage());
+            throw new \Magento\Framework\Validator\Exception(__('Failed authentification SecurePay.'));
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
         }
- 
-        if(isset($response['transactionID'])) {
-            // Successful auth request.
-            // Set the transaction id on the payment so the capture request knows auth has happened.
-            $payment->setTransactionId($response['transactionID']);
-            $payment->setParentTransactionId($response['transactionID']);
-        }
- 
-        //processing is not done yet.
-        $payment->setIsTransactionClosed(0);
- 
-        return $this;
+        
     }
  
     /**
@@ -96,39 +189,97 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
         return self::ACTION_AUTHORIZE_CAPTURE;
     }
  
-    /**
-     * Test method to handle an API call for authorization request.
-     *
-     * @param $request
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
     public function makeAuthRequest($request)
     {
-        $response = ['transactionId' => 123]; //todo implement API call for auth request.
- 
-        if(!$response) {
-            throw new \Magento\Framework\Exception\LocalizedException(__('Failed auth request.'));
+        try {
+    
+            $url = "https://payments.auspost.net.au/v2/payments/preauths";
+            $this->_curl->addHeader("Content-Type", "application/json");
+            $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
+            $params = '{"amount": "'.$request['amount'].'", "preAuthType": "INITIAL_AUTH", "merchantCode": "'. $request['merchant_code'] .'", "token": "'. $request['token'] .'", "ip": "'. $request['user_ip'] .'", "orderId": "'. $request['order_id'] .'"}';
+            
+            $this->_curl->post($url, $params);
+            $response = $this->_curl->getBody();
+            $response = json_decode($response, true);
+
+            return $response;
+
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Validator\Exception(__('Failed authorize request.'));
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
         }
- 
-        return $response;
+    }
+
+    public function cancelAuthRequest($request)
+    {
+        try {
+    
+            $url = "https://payments.auspost.net.au/v2/payments/preauths/".$request['order_id']."/cancel";
+            $this->_curl->addHeader("Content-Type", "application/json");
+            $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
+            $params = '{"merchantCode": "'. $request['merchant_code'] .'", "ip": "'. $request['user_ip'] .'"}';
+            
+            $this->_curl->post($url, $params);
+            $response = $this->_curl->getBody();
+            $response = json_decode($response, true);
+
+            return $response;
+
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Validator\Exception(__('Failed canceling authorize request.'));
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
+        }
     }
  
-    /**
-     * Test method to handle an API call for capture request.
-     *
-     * @param $request
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
     public function makeCaptureRequest($request)
     {
-        $response = ['success']; //todo implement API call for capture request.
- 
-        if(!$response) {
-            throw new \Magento\Framework\Exception\LocalizedException(__('Failed capture request.'));
+        try {
+    
+            $url = "https://payments.auspost.net.au/v2/payments/preauths/".$request['order_id']."/capture";
+            $this->_curl->addHeader("Content-Type", "application/json");
+            $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
+            $params = '{"amount": "'.$request['amount'].'", "merchantCode": "'. $request['merchant_code'] .'", "token": "'. $request['token'] .'", "ip": "'.$request['user_ip'].'", "orderId": "'. $request['order_id'] .'"}';
+
+            $this->_curl->post($url, $params);
+            $response = $this->_curl->getBody();
+            $response = json_decode($response, true);
+
+            return $response;
+
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Validator\Exception(__('Failed capture payment.'));
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
         }
- 
-        return $response;
+    }
+
+    public function cancelCaptureRequest($request)
+    {
+        try {
+    
+            $url = "https://payments.auspost.net.au/v2/orders/".$request['order_id']."/refunds";
+            $this->_curl->addHeader("Content-Type", "application/json");
+            $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
+            $params = '{"merchantCode": "'. $request['merchant_code'] .'", "ip": "'. $request['user_ip'] .'"}';
+
+            $this->_curl->post($url, $params);
+            $response = $this->_curl->getBody();
+            $response = json_decode($response, true);
+
+            return $response;
+
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Validator\Exception(__('Failed cancel capture payment.'));
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
+        }
+    }
+
+    function genUuid() {
+        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0x0fff ) | 0x4000,
+            mt_rand( 0, 0x3fff ) | 0x8000,
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
     }
 }

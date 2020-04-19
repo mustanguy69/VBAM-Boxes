@@ -89,19 +89,19 @@ define(
                     15
                 );
 
-                
-
                 $(document).ready(function() {
                     $(window).bind('hashchange', function () { 
                         var hash = window.location.hash.slice(1);
                         if (hash == "shipping_methods") {
-                            var firstCharge = true;
-                            if(firstCharge) {
-                                $("body").one('processStop', function() {
+                            var firstChargeMethods = true;
+                            
+                            $("body").on('processStop', function() {
+                                if(firstChargeMethods == true) {
                                     $('.delivery').eq(0).click();
-                                    firstCharge = false;
-                                });
-                            }
+                                    firstChargeMethods = false;
+                                }
+                            });
+                            
                             $(document).on('click', '.delivery', function () {
                                 quote.isDelivery = true;
                                 $('#checkout-shipping-method-load').css('display', 'block');
@@ -119,6 +119,7 @@ define(
                             });
                             
                             $(document).on('click', '#search-branch-button', async function() {
+                                $('.clickandcollect-container .error').css('display', 'none');
                                 showLoading();
                                 var value = $('#search-branch').val();
                                 var urlAjax = url.build('branchlocator/index/search');
@@ -133,9 +134,10 @@ define(
                                     branches.sort(function(obj1, obj2) {
                                         return obj1.distance - obj2.distance;
                                     });
-                                    
+                                    var i = 0;
                                     var html = "";
                                     if (branches.length != 0) {
+                                        
                                         $.each(branches, function(key, value) {
                                             if (value.distance < 200) {
                                                 html = html + '<div class="search-result">' +
@@ -144,8 +146,13 @@ define(
                                                 '<p>'+value.address+', '+value.city+', '+value.state+', '+value.postcode+'</p>'+
                                                 '<p class="away"><span class="km">'+ Math.floor(value.distance) +'</span> km away</p>'+
                                                 '</div>';
+
+                                                i = i + 1;
                                             }
                                         });
+                                        if (i == 0) {
+                                            html = "<p style='margin-top: 10px; text-align:center'>No store found near that location</p>"
+                                        }
                                     } else {
                                         html = "<p style='margin-top: 10px; text-align:center'>No store found</p>"
                                     }
@@ -159,7 +166,7 @@ define(
                             $(document).on('click', '.select-store', function () {
                                 $('.select-store').attr('id', '').removeClass('green-button-full').addClass('green-button-empty').text('SELECT THIS STORE')
                                 $(this).attr('id', 'selected-store').removeClass('green-button-empty').addClass('green-button-full').text('SELECTED')
-                                
+                                $('.clickandcollect-container .error').css('display', 'none');
                             })
                             
                             
@@ -196,9 +203,9 @@ define(
                                                     lng: results[0].geometry.location.lng()
                                                 }
 
-                                                resolve(pos);
-                                                
-                                            }
+                                            } 
+
+                                            resolve(pos);
                                         });
                                     });  
                                 });
@@ -372,13 +379,17 @@ define(
             },
 
             saveMethods: function () {
-                fullScreenLoader.startLoader();
-                setShippingInformationAction().done(
-                    function () {
-                        stepNavigator.next();
-                    }
-                );
-                fullScreenLoader.stopLoader();
+                if(!quote.isDelivery && $('#selected-store').length == 0) {
+                    $('.clickandcollect-container .error').css('display', 'block');
+                } else {
+                    fullScreenLoader.startLoader();
+                    setShippingInformationAction().done(
+                        function () {
+                            stepNavigator.next();
+                        }
+                    );
+                    fullScreenLoader.stopLoader();
+                }
             },
 
                 /**

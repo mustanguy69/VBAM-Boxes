@@ -97,6 +97,11 @@ define(
                                 }
                                 
                             })
+
+                            $(document).on('click', '#datepicker', function() {
+                                $('#delivery-date .error').css('display', 'none');
+                                $('#datepicker').css('border', 'none');
+                            });
                         }
                     });
                     
@@ -118,13 +123,18 @@ define(
             },
 
             saveDeliveryDate: function () {
-                fullScreenLoader.startLoader();
-                setShippingInformationAction().done(
-                    function () {
-                        stepNavigator.next();
-                    }
-                );
-                fullScreenLoader.stopLoader();
+                if(quote.isDelivery && $('#datepicker').val() == '') {
+                    $('#delivery-date .error').css('display', 'block');
+                    $('#datepicker').css('border', '1px solid red');
+                } else {
+                    fullScreenLoader.startLoader();
+                    setShippingInformationAction().done(
+                        function () {
+                            stepNavigator.next();
+                        }
+                    );
+                    fullScreenLoader.stopLoader();
+                }
             }
         });
     }

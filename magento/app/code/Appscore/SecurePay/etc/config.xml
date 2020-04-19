@@ -3,10 +3,12 @@
     <default>
         <payment>
             <appscore_securepay>
+              <active>1</active>
               <title>Secure Pay</title>
               <model>Appscore\SecurePay\Model\SecurePay</model>
-              <active>1</active>
+              <payment_action>capture</payment_action>
               <cctypes>AE,VI,MC</cctypes>
+              <order_status>pending</order_status>
             </appscore_securepay>
         </payment>
     </default>

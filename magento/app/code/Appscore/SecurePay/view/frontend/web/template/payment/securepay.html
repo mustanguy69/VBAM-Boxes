@@ -8,31 +8,42 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
- 
+
+        <div id="securepay-ui-container"></div>
+        <input name="token" type="hidden"/>
         <!-- Render the native credit card form. -->
-        <form class="form" data-bind="attr: {'id': getCode() + '-form'}">
+        <form class="form" style="display:none" data-bind="attr: {'id': getCode() + '-form'}">
             <!-- ko template: 'Magento_Payment/payment/cc-form' --><!-- /ko -->
         </form>
- 
+        
         <div class="checkout-agreements-block">
             <!-- ko foreach: $parent.getRegion('before-place-order') -->
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+
+        
  
         <div class="actions-toolbar">
             <div class="primary">
                 <button data-role="review-save"
-                        type="submit"
+                        type="button"
                         data-bind="
                         attr: {title: $t('Place Order')},
                         enable: (getCode() == isChecked()),
-                        click: placeOrder,
+                        click: placeOrderOverrided,
                         css: {disabled: !isPlaceOrderActionAllowed()}
                         "
-                        class="action primary checkout"
+                        class="action primary checkout green-button-full tokenize-btn"
                         disabled>
                     <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+
+                <button data-role="review-save"
+                        type="button"
+                        style="display: none;"
+                        data-bind="click: placeOrder"
+                        class="action primary checkout green-button-full place-order">
                 </button>
             </div>
         </div>
