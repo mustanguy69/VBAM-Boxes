@@ -220,7 +220,7 @@ require([
 </script>
 
 <script type="text/x-magento-init">
-    {
+{
         "#country": {
             "regionUpdater": {
                 "optionalRegionAllowed": <?= /* @noEscape */ $block->getConfig('general/region/display_all') ? 'true' : 'false' ?>,
@@ -249,57 +249,3 @@ require([
         }
     }
 </script>
-
-<script>
-
-    require([
-        'jquery',
-        'prototype',
-    ], function(jQuery){
-        
-        function refresh_token() {
-            $formKey = jQuery.cookie('form_key');
-            params = {
-            };
-            var tokenMessage = jQuery('#test_result');
-
-            jQuery.ajax( {
-                url: '<?php /* @escapeNotVerified */ echo $abnCheck->getAjaxTestUrl() ?>',
-                data: {form_key: $formKey},
-                type: 'POST'
-            }).done(function(a) { 
-                console.log(a); // log: {a: "b"}
-            });
-
-            /*console.log(params);
-            new Ajax.Request('<?php /* @escapeNotVerified */ echo $abnCheck->getAjaxTestUrl() ?>', {
-                loaderArea:     false,
-                asynchronous:   true,
-                parameters:     params,
-                data: {
-                    form_key: $formKey
-                },
-                onSuccess: function(transport) {
-                    var response = JSON.parse(transport.responseText);
-                    if(response.success == 'OK') {
-                        tokenMessage.removeClass('hidden').addClass('success');
-                    } else {
-                        tokenMessage.removeClass('hidden').addClass('error');
-                    }
-                    tokenMessage.text(response.message);
-
-                }, onFailure: function( transport )
-                {
-                    var response = transport.responseText;
-                    tokenMessage.removeClass('hidden').addClass('error');
-                    tokenMessage.text(response.message);
-                }
-            });*/
-        }
-
-        jQuery('#test_button').click(function () {
-            refresh_token();
-        });
-    });
-</script>
-
