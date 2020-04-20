@@ -117,7 +117,7 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
 
 .widget {
     .block-title {
-        color: #001489;
+        color: @blue;
         border-bottom: 1px solid #DBDBDB;
         padding-bottom: 20px;
 
@@ -404,7 +404,6 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
 .page-main {
     padding-left: 30px;
     padding-right: 30px;
-    padding-top: 44px;
 }
 
 .qty-controller {
@@ -483,7 +482,7 @@ input.qty,
 
         div > h3 {
             font-size: 16px;
-            color: #001489;
+            color: @blue;
         }
 
         div > ul > li {
@@ -524,6 +523,14 @@ input.qty,
             padding: 30px;
             position: relative;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .price-box {
+                .old-price {
+                    display: none;
+                }
+            }
 
             .product-item-name {
                 &:extend(.black);
@@ -531,13 +538,15 @@ input.qty,
                 margin: 0;
                 
                 a {
-                    color: #001489;
+                    color: @blue;
                     text-transform: uppercase;
                 }
             }
 
             .product-item-image-wrapper {
                 position: relative;
+                margin-top: auto;
+                margin-bottom: auto;
             }
 
             .product-item-details {
@@ -609,6 +618,7 @@ input.qty,
             }
 
             .product-item-cart {
+                margin-top: auto;
                 button {
                     &:extend(button);
                     font-size: 14px;
@@ -790,7 +800,7 @@ input.qty,
     .account-link {
         a {
             &:extend(.black);
-            color: #001489;
+            color: @blue;
         }
     }
 }
@@ -880,12 +890,16 @@ input.qty,
             .price {
                 &:extend(.black);
             }
+
+            .old-price {
+                display: none;
+            }
         }
     }
 
     .custom-attribute-label {
         font-size: 16px;
-        color: #001489;
+        color: @blue;
     }
 
     .product-asking-form {
@@ -930,7 +944,7 @@ input.qty,
             font-size: 16px;
             &:extend(.black);
             text-transform: uppercase;
-            color: #001489;
+            color: @blue;
         }
     }
 
@@ -981,7 +995,7 @@ input.qty,
     .block-title {
         strong {
             &:extend(.black);
-            color: #001489;
+            color: @blue;
             font-size: 21px;
             text-transform: uppercase;
         }
@@ -1221,7 +1235,7 @@ input.qty,
                 }
 
                 a:hover {
-                    color: #001489;
+                    color: @blue;
                     text-decoration: initial;
                 }
 
@@ -1265,7 +1279,7 @@ input.qty,
                             }
 
                             a:hover {
-                                color: #001489;
+                                color: @blue;
                             }
                         }
                     }
@@ -1663,14 +1677,14 @@ input.qty,
     }
 
     .nav-sections {
-        background-color: #001489;
+        background-color: @blue;
         padding-top: 30px;
         padding-bottom: 30px;
 
         .nav-sections-item-title.active,
         .nav-sections-item-title {
             &:extend(.black);
-            background-color: #001489;
+            background-color: @blue;
             border: none;
             width: auto;
             height: auto;

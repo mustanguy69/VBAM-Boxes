@@ -24,7 +24,7 @@ $catalog = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListP
             <?php endforeach;?>
             <div class="item-catalog col-md-3 col-s-6 col-12" data-row="product-item" id="item_<?= $block->escapeHtmlAttr($item->getId()) ?>">
                 <div class="product-item-info" data-container="product-grid">
-                    <div class="qty-close">
+                    <div class="qty-close mobile">
                         <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
                     </div>
                     <div class="product-item-details">

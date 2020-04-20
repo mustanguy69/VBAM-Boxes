@@ -36,7 +36,7 @@ use Magento\Framework\App\Action\Action;
                     <?php foreach ($items as $_item) : ?>
                         <?= /* @noEscape */ ($iterator++ == 1) ? '<div class="item-catalog col-md-3 col-s-6 col-12">' : '</div><div class="item-catalog col-md-3 col-s-6 col-12">' ?>
                         <div class="product-item-info">
-                            <div class="qty-close">
+                            <div class="qty-close mobile">
                                 <img alt="<?= $block->escapeHtml(__('In Wish List')) ?>" src="<?php echo $this->getViewFileUrl('images/close_gray.png'); ?>" height="14"/>
                             </div>
                             <div class="product-item-details">
