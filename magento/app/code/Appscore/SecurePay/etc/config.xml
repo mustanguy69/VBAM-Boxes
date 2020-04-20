@@ -9,6 +9,7 @@
               <payment_action>capture</payment_action>
               <cctypes>AE,VI,MC</cctypes>
               <order_status>pending</order_status>
+              <fraud_detection>0</fraud_detection>
             </appscore_securepay>
         </payment>
     </default>

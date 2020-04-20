@@ -1,4 +1,13 @@
 <div class="payment-method _active">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod"/>
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
     <div class="payment-method-content">
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
@@ -8,9 +17,11 @@
             <!-- ko template: getTemplate() --><!-- /ko -->
             <!--/ko-->
         </div>
+        <div data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod">
+            <div id="securepay-ui-container" ></div>
+            <input name="token" type="hidden"/>
+        </div>
 
-        <div id="securepay-ui-container"></div>
-        <input name="token" type="hidden"/>
         <!-- Render the native credit card form. -->
         <form class="form" style="display:none" data-bind="attr: {'id': getCode() + '-form'}">
             <!-- ko template: 'Magento_Payment/payment/cc-form' --><!-- /ko -->
@@ -22,20 +33,15 @@
             <!--/ko-->
         </div>
 
-        
- 
-        <div class="actions-toolbar">
+        <div class="actions-toolbar" data-bind="visible: (getCode() == isChecked())">
             <div class="primary">
                 <button data-role="review-save"
                         type="button"
                         data-bind="
                         attr: {title: $t('Place Order')},
-                        enable: (getCode() == isChecked()),
                         click: placeOrderOverrided,
-                        css: {disabled: !isPlaceOrderActionAllowed()}
                         "
-                        class="action primary checkout green-button-full tokenize-btn"
-                        disabled>
+                        class="action primary checkout green-button-full tokenize-btn">
                     <span data-bind="i18n: 'Place Order'"></span>
                 </button>
 

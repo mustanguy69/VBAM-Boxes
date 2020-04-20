@@ -26,7 +26,7 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
         \Magento\Payment\Model\Method\Logger $logger, 
         \Magento\Framework\Module\ModuleListInterface $moduleList,
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
-        \Magento\Directory\Model\CountryFactory $countryFactory, 
+        \Magento\Directory\Model\CountryFactory $countryFactory,
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig, 
         \Magento\Framework\App\RequestInterface $request,
@@ -77,9 +77,10 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
     {
 
         try{
-            $order = $payment->getOrder()->getData();
+            $order = $payment->getOrder();
             $info = $this->getInfoInstance();
             $token = $info->getAdditionalInformation()['post_data_value']['additional_data']['token'];
+
             $merchantCode = $this->_scopeConfig->getValue(
                 'payment/appscore_securepay/merchant_code',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE
@@ -95,9 +96,20 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE
             );
 
+            $sandbox = $this->_scopeConfig->getValue(
+                'payment/appscore_securepay/sandbox',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            );
+
+            $fraudDetection = $this->_scopeConfig->getValue(
+                'payment/appscore_securepay/fraud_detection',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            );
+
             // auth to securepay api -> return access_token
-            $auth = $this->authentificationSecurePayApi($merchantCode, $clientId, $clientSecret);
+            $auth = $this->authentificationSecurePayApi($merchantCode, $clientId, $clientSecret, $sandbox);
             
+
             if($auth['access_token']) {
                 $request = [
                     "amount" => bcmul($amount, 100),
@@ -105,13 +117,33 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
                     "token" => $token,
                     "auth_token" => $auth['access_token'],
                     "order_id" => $this->genUuid(),
-                    "user_ip" => $order['remote_ip'],
+                    "user_ip" => $order->getRemoteIp(),
+                    "sandbox" => $sandbox,
+                    "shipping_country_code" => $this->getIso3CountryCode($order->getShippingAddress()->getCountryId()),
+                    "shipping_city" => $order->getShippingAddress()->getCity(),
+                    "shipping_postcode" => $order->getShippingAddress()->getPostcode(),
+                    "billing_country_code" => $this->getIso3CountryCode($order->getBillingAddress()->getCountryId())
                 ];
                 
-                // make preauth of payment
-                $preauth = $this->makeAuthRequest($request);
-            }
+                if($fraudDetection == 1) {
+                    //make fraud detection
+                    $fraud = $this->makeFraudDetectionSystem($request);
 
+                    //todo test with client account
+                    if($fraud['fraudCheckResult']['score'] < 30) {
+                        // make preauth of payment
+                        $preauth = $this->makeAuthRequest($request);
+                    } else {
+                        $this->_messageManager->addErrorMessage('A fraud have been detected on this credit card, payment aborted');
+                        throw new \Magento\Framework\Validator\Exception(__('A fraud have been detected on this credit card, payment aborted'));
+                        
+                        return $this;
+                    }
+                } else {
+                    $preauth = $this->makeAuthRequest($request);
+                }
+            }
+            
             if($preauth['status'] == "paid") {
                 $payment->setTransactionId($preauth['bankTransactionId']);
                 $payment->setParentTransactionId($preauth['bankTransactionId']);
@@ -157,11 +189,23 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
         }
     }
 
-    public function authentificationSecurePayApi($merchantCode, $clientId, $clientSecret) 
+    public function getIso3CountryCode($countryId) {
+        $country = $this->_countryFactory->create()->loadByCode($countryId);
+        
+        $iso3Code = $country->getData('iso3_code');
+        
+        return $iso3Code;
+    }
+
+    public function authentificationSecurePayApi($merchantCode, $clientId, $clientSecret, $sandbox) 
     {
         try {
+            if($sandbox == 1) {
+                $url = "https://hello.sandbox.auspost.com.au/oauth2/ausujjr7T0v0TTilk3l5/v1/token";
+            } else {
+                $url = "https://hello.auspost.com.au/oauth2/ausrkwxtmx9Jtwp4s356/v1/token";
+            }
             
-            $url = "https://hello.auspost.com.au/oauth2/ausrkwxtmx9Jtwp4s356/v1/token";
             $this->_curl->addHeader("Content-Type", "application/x-www-form-urlencoded");
             $this->_curl->addHeader("Authorization", "Basic " . base64_encode($clientId . ":" . $clientSecret));
             $params = "grant_type=client_credentials&scope=https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayments%2Fread%20https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayments%2Fwrite%20https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayment-instruments%2Fread%20https%3A%2F%2Fapi.payments.auspost.com.au%2Fpayhive%2Fpayment-instruments%2Fwrite";
@@ -189,11 +233,60 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
         return self::ACTION_AUTHORIZE_CAPTURE;
     }
  
+    public function makeFraudDetectionSystem($request)
+    {
+        try {
+
+            if($request['sandbox'] == 1) {
+                $url = "https://payments-stest.npe.auspost.zone/v2/antifraud/check";
+            } else {
+                $url = "https://payments.auspost.net.au/v2/antifraud/check";
+            }
+    
+            $this->_curl->addHeader("Content-Type", "application/json");
+            $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
+            $params = '{
+                "fraudCheckType": "FRAUD_GUARD",
+                "ip": "'.$request['user_ip'].'",
+                "merchantCode": "'. $request['merchant_code'] .'",
+                "orderId": "'. $request['order_id'] .'",
+                "paymentDetails": {
+                    "amount": "'.$request['amount'].'",
+                    "token": "'. $request['token'] .'",
+                    "paymentMethod": "PAYMENT_CARD"
+                },
+                "shippingAddress": {
+                    "city": "'.$request['shipping_city'].'",
+                    "postcode": "'.$request['shipping_postcode'].'",
+                    "countryCode": "'.$request['shipping_country_code'].'"
+                },
+                "billingAddress": {
+                    "countryCode": "'.$request['billing_country_code'].'"
+                }
+            }';
+            
+            $this->_curl->post($url, $params);
+            $response = $this->_curl->getBody();
+            $response = json_decode($response, true);
+
+            return $response;
+
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Validator\Exception(__('Failed fraud detect request.'));
+            $this->_logger->critical('Error Curl', ['exception' => $e]);
+        }
+    }
+
     public function makeAuthRequest($request)
     {
         try {
+
+            if($request['sandbox'] == 1) {
+                $url = "https://payments-stest.npe.auspost.zone/v2/payments/preauths";
+            } else {
+                $url = "https://payments.auspost.net.au/v2/payments/preauths";
+            }
     
-            $url = "https://payments.auspost.net.au/v2/payments/preauths";
             $this->_curl->addHeader("Content-Type", "application/json");
             $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
             $params = '{"amount": "'.$request['amount'].'", "preAuthType": "INITIAL_AUTH", "merchantCode": "'. $request['merchant_code'] .'", "token": "'. $request['token'] .'", "ip": "'. $request['user_ip'] .'", "orderId": "'. $request['order_id'] .'"}';
@@ -213,8 +306,13 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
     public function cancelAuthRequest($request)
     {
         try {
-    
-            $url = "https://payments.auspost.net.au/v2/payments/preauths/".$request['order_id']."/cancel";
+
+            if($request['sandbox'] == 1) {
+                $url = "https://payments-stest.npe.auspost.zone/v2/payments/preauths/".$request['order_id']."/cancel";
+            } else {
+                $url = "https://payments.auspost.net.au/v2/payments/preauths/".$request['order_id']."/cancel";
+            }
+
             $this->_curl->addHeader("Content-Type", "application/json");
             $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
             $params = '{"merchantCode": "'. $request['merchant_code'] .'", "ip": "'. $request['user_ip'] .'"}';
@@ -234,8 +332,13 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
     public function makeCaptureRequest($request)
     {
         try {
-    
-            $url = "https://payments.auspost.net.au/v2/payments/preauths/".$request['order_id']."/capture";
+
+            if($request['sandbox'] == 1) {
+                $url = "https://payments-stest.npe.auspost.zone/v2/payments/preauths/".$request['order_id']."/capture";
+            } else {
+                $url = "https://payments.auspost.net.au/v2/payments/preauths/".$request['order_id']."/capture";
+            }
+
             $this->_curl->addHeader("Content-Type", "application/json");
             $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);
             $params = '{"amount": "'.$request['amount'].'", "merchantCode": "'. $request['merchant_code'] .'", "token": "'. $request['token'] .'", "ip": "'.$request['user_ip'].'", "orderId": "'. $request['order_id'] .'"}';
@@ -256,6 +359,12 @@ class SecurePay extends \Magento\Payment\Model\Method\Cc
     {
         try {
     
+            if($request['sandbox'] == 1) {
+                $url = "https://payments-stest.npe.auspost.zone/v2/orders/".$request['order_id']."/refunds";
+            } else {
+                $url = "https://payments.auspost.net.au/v2/orders/".$request['order_id']."/refunds";
+            }
+
             $url = "https://payments.auspost.net.au/v2/orders/".$request['order_id']."/refunds";
             $this->_curl->addHeader("Content-Type", "application/json");
             $this->_curl->addHeader("Authorization", "Bearer ".  $request['auth_token']);

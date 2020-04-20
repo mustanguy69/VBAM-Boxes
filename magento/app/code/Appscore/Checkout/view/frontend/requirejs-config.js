@@ -16,6 +16,7 @@ var config = {
             'Magento_Checkout/js/model/checkout-data-resolver': 'Appscore_Checkout/js/model/checkout-data-resolver',
             'Magento_Checkout/template/payment.html': 'Appscore_Checkout/template/payment.html',
             'Magento_Payment/template/payment/cc-form.html': 'Appscore_Checkout/template/payment/cc-form.html',
+            'Magento_OfflinePayments/template/payment/purchaseorder-form.html': 'Appscore_Checkout/template/payment/purchaseorder-form.html',
           }
   }
 };

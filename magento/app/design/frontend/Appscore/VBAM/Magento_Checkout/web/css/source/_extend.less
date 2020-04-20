@@ -811,8 +811,13 @@
 
         #co-payment-form {
             .payment-method {
+
+                .payment-method-title {
+                    border-top: 0;
+                }
                 .payment-method-content {
                     padding:0;
+
                 }
         
                 input[name="payment[cc_number]"] {
@@ -856,6 +861,38 @@
                     position: absolute;
                     font-weight: 600;
                     margin-top: 10px;
+                }
+
+                button.tokenize-btn {
+                    margin-top: 215px;
+                }
+
+                .separator-container {
+                    width: 100%;
+                    margin-bottom: 15px;
+                    .separator {
+                        border-bottom: 1px solid #ccc;
+                        width:45%;
+                        height: 10px;
+                        display: inline-block;
+
+                        &:first-of-type {
+                            float: left;
+                        }
+
+                        &:last-of-type {
+                            float: right;
+                        }
+                    }
+
+                    .or {
+                        color: #ccc;
+                        width: 10%;
+                        text-align: center;
+                        height: 10px;
+                        font-size: 16px;
+                        display: inline-block;
+                    }
                 }
             }
             

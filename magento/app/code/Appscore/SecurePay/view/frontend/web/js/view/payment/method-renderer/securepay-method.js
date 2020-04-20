@@ -2,9 +2,10 @@ define([
     'jquery',
     'Magento_Checkout/js/action/place-order',
     'Magento_Payment/js/view/payment/cc-form',
-    'Magento_Checkout/js/action/redirect-on-success'
+    'Magento_Checkout/js/action/redirect-on-success',
+    'Magento_Checkout/js/checkout-data'
 ],
-function ($, placeOrderAction, Component, redirectOnSuccessAction) {
+function ($, placeOrderAction, Component, redirectOnSuccessAction, checkoutData) {
     'use strict';
 
     var mySecurePayUI;
@@ -65,7 +66,7 @@ function ($, placeOrderAction, Component, redirectOnSuccessAction) {
                                 }, 
                             });
                         }
-                        
+                                        
                     }
                 });
             });
