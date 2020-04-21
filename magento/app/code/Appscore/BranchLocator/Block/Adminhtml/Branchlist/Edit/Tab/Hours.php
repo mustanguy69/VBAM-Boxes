@@ -63,7 +63,6 @@ class Hours extends Generic implements TabInterface
             );
         }
 
-
         $fieldset->addField(
             'monday',
             'text',

@@ -14,11 +14,6 @@ use Magento\Store\Model\Store;
 
 class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 {
-	/**
-     * InstallData constructor.
-     * @param BlockRepositoryInterface $blockRepository
-     * @param BlockInterfaceFactory $blockInterfaceFactory
-     */
     public function __construct(
         BlockRepositoryInterface $blockRepository,
         BlockInterfaceFactory $blockInterfaceFactory,
@@ -30,7 +25,6 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 
     }
   
-
 	public function install(\Magento\Framework\Setup\SchemaSetupInterface $setup, \Magento\Framework\Setup\ModuleContextInterface $context)
 	{
 		$installer = $setup;
@@ -147,11 +141,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 		/** @var BlockInterface $cmsBlock */
 		$cmsBlock = $this->blockInterfaceFactory->create();
 
-		$content = <<<HTML
-		<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mauris tortor, 
-		rhoncus at diam ac, aliquet egestas elit. Integer varius, ipsum et imperdiet scelerisque, 
-		lorem magna feugiat arcu, sed rhoncus velit magna a velit.</div> 
-		HTML;
+		$content = "";
 
 		$cmsBlock->setIdentifier('about_us');
 		$cmsBlock->setTitle('About Us');

@@ -13,5 +13,5 @@ var config = {
             'Magento_Checkout/template/payment-methods/list.html': 'Appscore_Checkout/template/payment-methods/list.html',
             'Magento_Checkout/template/estimation.html': 'Appscore_Checkout/template/estimation.html',
           }
-  }
+    }
 };

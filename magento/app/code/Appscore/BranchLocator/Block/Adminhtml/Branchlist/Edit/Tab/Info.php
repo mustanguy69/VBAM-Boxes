@@ -346,7 +346,6 @@ class Info extends Generic implements TabInterface
         <div id="map" style="width:500px; height:400px; margin-top:40px;">
         ');
 
-        
         $form->setValues($model->getData());
         $this->setForm($form);
 

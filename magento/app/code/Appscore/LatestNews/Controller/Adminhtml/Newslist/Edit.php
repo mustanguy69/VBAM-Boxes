@@ -29,7 +29,6 @@ class Edit extends Newslist
         }
         $this->_coreRegistry->register('latestnews_newslist', $model);
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_resultPageFactory->create();
         $resultPage->setActiveMenu('Appscore_LatestNews::latestnews');
         $resultPage->getConfig()->getTitle()->prepend(__('Latest News'));

@@ -15,9 +15,10 @@ class Index extends Action
     protected $_branchlistFactory;
     
     /**      * @param \Magento\Framework\App\Action\Context $context      */
-    public function __construct(\Magento\Framework\App\Action\Context $context,
-     \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-     BranchListFactory $branchlistFactory)
+    public function __construct(
+    \Magento\Framework\App\Action\Context $context,
+    \Magento\Framework\View\Result\PageFactory $resultPageFactory,
+    BranchListFactory $branchlistFactory)
     {
         $this->resultPageFactory = $resultPageFactory;
         $this->_branchlistFactory = $branchlistFactory;
@@ -39,7 +40,6 @@ class Index extends Action
             
             return $resultJson;
         }
-
 
         return $resultPage;
     }

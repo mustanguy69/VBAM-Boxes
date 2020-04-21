@@ -14,20 +14,16 @@ class Delete extends Branchlist
       $branchId = (int) $this->getRequest()->getParam('id');
 
       if ($branchId) {
-         /** @var $newsModel \Mageworld\SimpleNews\Model\News */
          $branchModel = $this->_branchlistFactory->create();
          $branchModel->load($branchId);
 
-         // Check this news exists or not
          if (!$branchModel->getId()) {
             $this->messageManager->addError(__('This branch no longer exists.'));
          } else {
                try {
-                  // Delete news
                   $branchModel->delete();
                   $this->messageManager->addSuccess(__('The branch has been deleted.'));
 
-                  // Redirect to grid page
                   $this->_redirect('*/*/');
                   return;
                } catch (\Exception $e) {

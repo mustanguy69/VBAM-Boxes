@@ -93,7 +93,7 @@ define([
             checkoutDataResolver.resolveShippingAddress();
 
             hasNewAddress = addressList.some(function (address) {
-                return address.getType() == 'new-customer-address'; //eslint-disable-line eqeqeq
+                return address.getType() == 'new-customer-address';
             });
 
             this.isNewAddressAdded(hasNewAddress);
@@ -126,11 +126,6 @@ define([
             return this;
         },
 
-        /**
-         * Navigator change hash handler.
-         *
-         * @param {Object} step - navigation step
-         */
         navigate: function () {
             stepNavigator.next()
         },

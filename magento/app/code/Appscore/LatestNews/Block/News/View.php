@@ -37,18 +37,15 @@ class View extends \Magento\Framework\View\Element\Template
 	}
 
 	function getMediaBaseUrl($url) {
-		/** @var \Magento\Framework\ObjectManagerInterface $om */
 		$om = \Magento\Framework\App\ObjectManager::getInstance();
-		/** @var \Magento\Store\Model\StoreManagerInterface $storeManager */
 		$storeManager = $om->get('Magento\Store\Model\StoreManagerInterface');
-		/** @var \Magento\Store\Api\Data\StoreInterface|\Magento\Store\Model\Store $currentStore */
 		$currentStore = $storeManager->getStore();
+
 		return $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA). $url;
 	}
 
 	function formatDateNews($date) {
 		$timestamp = strtotime($date);
-
 		$day = date('d F Y', $timestamp);
 
 		return $day;
