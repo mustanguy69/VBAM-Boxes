@@ -25,4 +25,5 @@
     <preference for="Magento\Catalog\Pricing\Price\TierPrice" type="Visy\ProductPricing\Pricing\Price\TierPrice" />
     <!-- Magento Bug MAG-141191-23618 (Temporary added - Remove this preference once Magento fixed the specified issue)-->
     <preference for="Magento\Quote\Model\QuoteAddressValidator" type="Visy\ProductPricing\Model\QuoteAddressValidator" />
+    <preference for="Magento\Framework\App\PageCache\Identifier" type="Visy\ProductPricing\PageCache\Identifier" />
 </config>

@@ -55,8 +55,8 @@
     position: relative;
     left: 50%;
     right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
+    margin-left: -50vw !important;
+    margin-right: -50vw !important;
 }
 
 * {
@@ -101,6 +101,12 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
 }
 
+.pagebuilder-slider {
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 20px;
+    }
+}
+
 input[type="text"], input[type="password"], input[type="url"], input[type="tel"], input[type="search"], input[type="number"], input[type="datetime"], input[type="email"] {
     &:extend(.regular);
     caret-color: @green;
@@ -113,6 +119,10 @@ input[type="text"], input[type="password"], input[type="url"], input[type="tel"]
 
 .block.widget {
     margin-top: 60px;
+}
+
+button.pagebuilder-button-primary {
+    &:extend(.myButtonStyle);
 }
 
 .widget {
@@ -1300,6 +1310,12 @@ input.qty,
 
     .page-main {
         padding-top: 30px;
+    }
+
+    .cms-home {
+        .page-main {
+            padding-top: 0;
+        }
     }
 
     .copyright-wrapper {

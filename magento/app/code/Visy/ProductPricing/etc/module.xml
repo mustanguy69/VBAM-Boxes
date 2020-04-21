@@ -12,8 +12,8 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Visy_ProductPricing" setup_version="3.3.0">
-        <!--<sequence>
-            <module name="Magento_Customer"/>
-        </sequence>-->
+        <sequence>
+            <module name="Visy_CustomerGroup"/>
+        </sequence>
     </module>
 </config>

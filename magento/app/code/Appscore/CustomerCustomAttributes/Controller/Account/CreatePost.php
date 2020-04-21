@@ -369,4 +369,69 @@ class CreatePost extends \Magento\Customer\Controller\Account\CreatePost
         $defaultUrl = $this->urlModel->getUrl('*/*/create', ['_secure' => true]);
         return $resultRedirect->setUrl($this->_redirect->error($defaultUrl));
     }
+
+    /**
+     * Retrieve success message manager message
+     *
+     * @return MessageInterface
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    private function getMessageManagerSuccessMessage(): MessageInterface
+    {
+        if ($this->addressHelper->isVatValidationEnabled()) {
+            if ($this->addressHelper->getTaxCalculationAddressType() == Address::TYPE_SHIPPING) {
+                $identifier = 'customerVatShippingAddressSuccessMessage';
+            } else {
+                $identifier = 'customerVatBillingAddressSuccessMessage';
+            }
+
+            $message = $this->messageManager
+                ->createMessage(MessageInterface::TYPE_SUCCESS, $identifier)
+                ->setData(
+                    [
+                        'url' => $this->urlModel->getUrl('customer/address/edit'),
+                    ]
+                );
+        } else {
+            $message = $this->messageManager
+                ->createMessage(MessageInterface::TYPE_SUCCESS)
+                ->setText(
+                    __('Thank you for registering with %1.', $this->storeManager->getStore()->getFrontendName())
+                );
+        }
+
+        return $message;
+    }
+
+    /**
+     * Retrieve cookie manager
+     *
+     * @deprecated 100.1.0
+     * @return \Magento\Framework\Stdlib\Cookie\PhpCookieManager
+     */
+    private function getCookieManager()
+    {
+        if (!$this->cookieMetadataManager) {
+            $this->cookieMetadataManager = ObjectManager::getInstance()->get(
+                \Magento\Framework\Stdlib\Cookie\PhpCookieManager::class
+            );
+        }
+        return $this->cookieMetadataManager;
+    }
+
+    /**
+     * Retrieve cookie metadata factory
+     *
+     * @deprecated 100.1.0
+     * @return \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory
+     */
+    private function getCookieMetadataFactory()
+    {
+        if (!$this->cookieMetadataFactory) {
+            $this->cookieMetadataFactory = ObjectManager::getInstance()->get(
+                \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory::class
+            );
+        }
+        return $this->cookieMetadataFactory;
+    }
 }

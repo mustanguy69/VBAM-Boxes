@@ -8,6 +8,7 @@
  * @var \Appscore\BranchLocator\Block\Index $block
  */
     $apikey = $block->getApiKey();
+    $regionArray = $block->getRegions();
     if($apikey != '') {
     ?>
         <script type="text/javascript">
@@ -49,7 +50,7 @@
                     if (navigator.geolocation) {
                         var state = '';
                         var country = '';
-
+                        var regionArray = <?php echo json_encode($regionArray); ?>;
                         navigator.geolocation.getCurrentPosition(function(position) {
                             var pos = {
                                 lat: position.coords.latitude,
@@ -72,9 +73,9 @@
                                                 }
                                             }
                                         });
-
+                                        
                                         //set cookie
-                                        setCookie('regionId', state, 30);
+                                        setCookie('regionId', regionArray[state], 30);
                                     }
                                 } else {
                                     window.alert('Geocoder failed due to: ' + status);

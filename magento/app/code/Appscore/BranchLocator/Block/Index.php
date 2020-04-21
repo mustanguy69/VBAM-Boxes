@@ -5,6 +5,7 @@ use Appscore\BranchLocator\Model\BranchlistFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Theme\Block\Html\Header\Logo;
+use Visy\CustomerGroup\Model\Block\Source\RegionData;
 
 class Index extends \Magento\Framework\View\Element\Template
 {
@@ -13,16 +14,19 @@ class Index extends \Magento\Framework\View\Element\Template
 	
 	protected $_logo;
 
+	protected $_regionData;
+
     public function _prepareLayout()
     {
         return parent::_prepareLayout();
     }
 
 
-	public function __construct(Context $context, BranchlistFactory $branchlistFactory, Logo $logo)
+	public function __construct(Context $context, BranchlistFactory $branchlistFactory, Logo $logo, RegionData $regionData)
 	{
 		$this->_branchlistFactory = $branchlistFactory;
 		$this->_logo = $logo;
+		$this->_regionData = $regionData;
 		parent::__construct($context);
 	}
 
@@ -167,5 +171,45 @@ class Index extends \Magento\Framework\View\Element\Template
     public function getLogoSrc()
     {    
         return $this->_logo->getLogoSrc();
-    }
+	}
+	
+	/**
+     * Get custom region id value
+     *
+     * @return string
+     */
+	public function getCustomRegionByCode($regionCode = null) {
+		$region = '';
+
+		if($regionCode) {
+			$customRegionArray = $this->_regionData->getRegions();
+
+            foreach ($customRegionArray as $key => $regionLabel) {
+                if(isset($regionLabel['label']) && strtolower($regionLabel['label']) == strtolower($regionCode)) {
+                    $region = $regionLabel['value'];
+                    break;
+                }
+            }
+		}
+
+		return $region;
+	}
+
+	/**
+     * Get custom region id array
+     *
+     * @return array
+     */
+	public function getRegions() {
+		$customRegionArray = $this->_regionData->getRegions();
+		$resultArray = [];
+
+		foreach ($customRegionArray as $key => $regionLabel) {
+			if(isset($regionLabel['label']) && trim($regionLabel['label']) != '') {
+				$resultArray[$regionLabel['label']] = $regionLabel['value'];
+			}
+		}
+
+		return $resultArray;
+	}
 }

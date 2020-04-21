@@ -58,28 +58,34 @@ class Group
     public function fetchRegionGroupId($existingCustomerGroupId)
     {
         try {
-            if ($this->getRegionGroupId() == null) {
-                $storeId = $this->getStoreId(); //1
-                $regionId = 5443; //has to be taken from the session
-                $groupMappingCollection = $this->groupMappingCollectionFactory->create();
-                $groupMappingCollection->addFieldToFilter('store_id', ['eq' => $storeId]);
-                $groupMappingCollection->addFieldToFilter('region_id', ['eq' => $regionId]);
-
-                if ($groupMappingCollection->count() == 1) {
-                    $data = $groupMappingCollection->getData()[0];
-                    $groupId = $data['customer_group_id'];
-                    $customerCode = $data['customer_code'];
-                    $this->setRegionGroupId($groupId);
-                    $this->setCustomerCode($customerCode);
-                    return $groupId;
-                } else {
-                    $this->unsetRegionGroupId();
-                    $this->unsetCustomerCode();
-                    return $existingCustomerGroupId;
-                }
-            } else {
-                return $this->getRegionGroupId();
+            $cookieName = 'regionId';
+            //TODO: Temp patch - This needs to be optimized before pushing LIVE
+            //if ($this->getRegionGroupId() == null) {
+            $storeId = $this->getStoreId(); //1
+            $regionIdCookie = 5443;
+            if(isset($_COOKIE[$cookieName])) {
+                $regionIdCookie = $_COOKIE[$cookieName];
             }
+            $regionId = $regionIdCookie;
+            $groupMappingCollection = $this->groupMappingCollectionFactory->create();
+            $groupMappingCollection->addFieldToFilter('store_id', ['eq' => $storeId]);
+            $groupMappingCollection->addFieldToFilter('region_id', ['eq' => $regionId]);
+
+            if ($groupMappingCollection->count() == 1) {
+                $data = $groupMappingCollection->getData()[0];
+                $groupId = $data['customer_group_id'];
+                $customerCode = $data['customer_code'];
+                $this->setRegionGroupId($groupId);
+                $this->setCustomerCode($customerCode);
+                return $groupId;
+            } else {
+                $this->unsetRegionGroupId();
+                $this->unsetCustomerCode();
+                return $existingCustomerGroupId;
+            }
+            /*} else {
+                return $this->getRegionGroupId();
+            }*/
         } catch (Exception $e) {
             $this->logger->error($e);
             return $existingCustomerGroupId;
@@ -144,6 +150,36 @@ class Group
     {
         $this->_coreSession->start();
         return $this->_coreSession->unsRegionGroupId();
+    }
+
+    /**
+     * Set DefaultGroupId
+     * @param $defaultGroupId
+     */
+    public function setDefaultGroupId($defaultGroupId)
+    {
+        $this->_coreSession->start();
+        $this->_coreSession->setDefaultGroupId($defaultGroupId);
+    }
+
+    /**
+     * Get DefaultGroupId
+     * @return mixed
+     */
+    public function getDefaultGroupId()
+    {
+        $this->_coreSession->start();
+        return $this->_coreSession->getDefaultGroupId();
+    }
+
+    /**
+     * Unset DefaultGroupId
+     * @return mixed
+     */
+    public function unsetDefaultGroupId()
+    {
+        $this->_coreSession->start();
+        return $this->_coreSession->unsDefaultGroupId();
     }
 
     /**
