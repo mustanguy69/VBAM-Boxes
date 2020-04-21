@@ -363,13 +363,13 @@
 .minicart-wrapper {
     .block-minicart {
         margin-top: 15px;
-        border-top: 5px solid #00A261;
+        border-top: 5px solid @green;
         padding: 30px;
 
         &:before,
         &:after {
             border: 6px solid;
-            border-color: transparent transparent #00a261 transparent;
+            border-color: transparent transparent @green transparent;
             z-index: 99;
         }
 
@@ -402,7 +402,7 @@
                 margin: 0;
 
                 p {
-                    color: #9AA5AF;
+                    color: @gray;
                     font-size: 15px;
                 }
             }
@@ -421,12 +421,12 @@
                 padding: 12px 15px 10px 15px;
                 font-size: 14px;
                 text-align: center;
-                border: 1px solid #00A261 !important;
+                border: 1px solid @green !important;
             }
 
             .action.viewcart {
                 background: none;
-                color: #00A261;
+                color: @green;
             }
 
             .cart-item-qty {
