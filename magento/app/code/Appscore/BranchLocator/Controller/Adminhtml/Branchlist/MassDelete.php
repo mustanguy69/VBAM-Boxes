@@ -11,7 +11,6 @@ class MassDelete extends Branchlist
     */
    public function execute()
    {
-      // Get IDs of the selected branchs
       $branchIds = $this->getRequest()->getParam('branch');
 
         foreach ($branchIds as $branchId) {

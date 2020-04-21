@@ -85,9 +85,6 @@ define(
                 return this;
             },
 
-            navigate: function () {
-
-            },
 
             /**
              * @returns void

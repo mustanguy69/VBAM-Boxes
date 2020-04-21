@@ -235,28 +235,15 @@ define(
             },
     
             /**
-            * The navigate() method is responsible for navigation between checkout step
-            * during checkout. You can add custom logic, for example some conditions
-            * for switching to your custom step 
-            */
-            navigate: function () {
-    
-            },
-    
-            /**
             * @returns void
             */
             navigateToNextStep: function () {
                 stepNavigator.next();
             },
     
-    
             rates: shippingService.getShippingRates(),
             isLoading: shippingService.isLoading,
     
-            /**
-             * Set shipping information handler
-             */
             setShippingInformation: function () {
                 if (this.validateShippingInformation()) {
                     setShippingInformationAction().done(
@@ -309,7 +296,6 @@ define(
                         this.source.get('shippingAddress')
                     );
     
-                    //Copy form data to quote shipping address object
                     for (var field in addressData) {
     
                         if (addressData.hasOwnProperty(field) &&

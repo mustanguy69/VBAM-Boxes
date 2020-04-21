@@ -9,12 +9,11 @@ use Magento\Framework\View\Result\Page;
 
 class All extends Action
 {
-    /** @var  \Magento\Framework\View\Result\Page */
+
     protected $resultPageFactory;
 
     protected $_newslistFactory;
     
-    /**      * @param \Magento\Framework\App\Action\Context $context      */
     public function __construct(\Magento\Framework\App\Action\Context $context,
      \Magento\Framework\View\Result\PageFactory $resultPageFactory,
      NewslistFactory $newslistFactory)

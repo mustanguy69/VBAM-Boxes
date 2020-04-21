@@ -23,14 +23,12 @@ class Edit extends Branchlist
             }
         }
 
-        // Restore previously entered form data from session
         $data = $this->_session->getBranchData(true);
         if (!empty($data)) {
             $model->setData($data);
         }
         $this->_coreRegistry->register('branchlocator_branchlist', $model);
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_resultPageFactory->create();
         $resultPage->setActiveMenu('Appscore_BranchLocator::branchlocator');
         $resultPage->getConfig()->getTitle()->prepend(__('Branch'));
