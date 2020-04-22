@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Theme\Model\Design\Config\MetadataProvider">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="color1" xsi:type="array">
+                    <item name="path" xsi:type="string">design/colors/color1</item>
+                    <item name="fieldset" xsi:type="string">other_settings/colors</item>
+                </item>
+                <item name="color2" xsi:type="array">
+                    <item name="path" xsi:type="string">design/colors/color2</item>
+                    <item name="fieldset" xsi:type="string">other_settings/colors</item>
+                </item>
+                <item name="color3" xsi:type="array">
+                    <item name="path" xsi:type="string">design/colors/color3</item>
+                    <item name="fieldset" xsi:type="string">other_settings/colors</item>
+                </item>
+                <item name="color4" xsi:type="array">
+                    <item name="path" xsi:type="string">design/colors/color4</item>
+                    <item name="fieldset" xsi:type="string">other_settings/colors</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
+
