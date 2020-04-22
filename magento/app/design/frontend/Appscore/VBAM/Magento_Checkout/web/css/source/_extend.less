@@ -797,3 +797,117 @@
     }
     
 }
+
+//magento payment form
+#payment {
+    .step-title {
+        border-bottom: 1px solid #ccc;
+    }
+    .discount-code {
+        display: none;
+    }
+    #checkout-step-payment {
+        margin-top: 55px;
+
+        #co-payment-form {
+            .payment-method {
+
+                .payment-method-title {
+                    border-top: 0;
+                }
+                .payment-method-content {
+                    padding:0;
+
+                }
+        
+                input[name="payment[cc_number]"] {
+                    width: 100%;
+                }
+                #appscore_securepay_cc_type_exp_div {
+                    width: 65%;
+                    display: inline-table;
+                }
+                .exp-container {
+                    width: 100%;
+
+                    .month {
+                        width: 65% !important;
+    
+                        select {
+                            width: 100%;
+                        }
+                    }
+    
+                    .year {
+                        width: 33% !important;
+    
+                        select {
+                            width: 100%;
+                        }
+                    }
+                }
+            
+                .field.cvv {
+                    width: 35%;
+                    display: inline-table;
+                    .cvv, .control {
+                        width: 100%;
+                        padding-right: 0;
+                    }
+                }
+
+                button.checkout {
+                    left: 0;
+                    position: absolute;
+                    font-weight: 600;
+                    margin-top: 10px;
+                }
+
+                button.tokenize-btn {
+                    margin-top: 215px;
+                }
+
+                .separator-container {
+                    width: 100%;
+                    margin-bottom: 15px;
+                    .separator {
+                        border-bottom: 1px solid #ccc;
+                        width:45%;
+                        height: 10px;
+                        display: inline-block;
+
+                        &:first-of-type {
+                            float: left;
+                        }
+
+                        &:last-of-type {
+                            float: right;
+                        }
+                    }
+
+                    .or {
+                        color: #ccc;
+                        width: 10%;
+                        text-align: center;
+                        height: 10px;
+                        font-size: 16px;
+                        display: inline-block;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+// secure pay iframe
+.securepay-ui-iframe {
+    border:none;
+    width: 100%;
+    margin-top: 15px;
+}
+
+span.error {
+    color: red;
+    display: none;
+}

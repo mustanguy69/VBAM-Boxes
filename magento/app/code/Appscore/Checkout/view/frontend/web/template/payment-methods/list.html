@@ -2,7 +2,6 @@
      class="items payment-methods">
     <div repeat="foreach: paymentGroupsList, item: '$group'"
          class="payment-group">
-        <div class="step-title" data-role="title">PAYMENT</div>
         <each args="data: getRegion($group().displayArea), as: 'method'" render=""/>
     </div>
 </div>

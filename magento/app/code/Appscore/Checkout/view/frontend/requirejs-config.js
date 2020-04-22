@@ -13,7 +13,10 @@ var config = {
             'Magento_Checkout/template/payment-methods/list.html': 'Appscore_Checkout/template/payment-methods/list.html',
             'Magento_Checkout/template/estimation.html': 'Appscore_Checkout/template/estimation.html',
             'Magento_Checkout/template/authentication.html': 'Appscore_Checkout/template/authentication.html',
-            'Magento_Checkout/js/model/checkout-data-resolver': 'Appscore_Checkout/js/model/checkout-data-resolver'
+            'Magento_Checkout/js/model/checkout-data-resolver': 'Appscore_Checkout/js/model/checkout-data-resolver',
+            'Magento_Checkout/template/payment.html': 'Appscore_Checkout/template/payment.html',
+            'Magento_Payment/template/payment/cc-form.html': 'Appscore_Checkout/template/payment/cc-form.html',
+            'Magento_OfflinePayments/template/payment/purchaseorder-form.html': 'Appscore_Checkout/template/payment/purchaseorder-form.html',
           }
     }
 };
