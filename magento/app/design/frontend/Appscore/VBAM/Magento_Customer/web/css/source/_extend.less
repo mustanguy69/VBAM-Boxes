@@ -318,6 +318,44 @@
     }
 }
 
+.current_region {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    position: relative;
+
+    select {
+        &:extend(strong);
+        background: none;
+        color: #fff;
+        font-size: 14px;
+        text-transform: uppercase;
+        height: auto;
+        padding: 0 0 0 10px;
+        cursor: pointer;
+
+        &:focus {
+            color: #fff !important;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        option {
+            color: #000;
+        }
+    }
+
+    &:before {
+        background: url('@{baseDir}images/chev-down.svg') no-repeat;
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-size: contain;
+        top: 7px;
+        right: 0;
+    }
+}
+
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
     .login-container {
         .block-customer-login,

@@ -46,7 +46,16 @@
                     return '';
                 }
 
-                if(getCookie('regionId') === '') {
+                function setState(cookieValue) {
+                    var regionSelectors = $('header').find('select[name="current_region"]');
+                    for (let index = 0; index < regionSelectors.length; index++) {
+                        const regionSelector = regionSelectors[index];
+                        regionSelector.value = cookieValue;
+                    }
+                }
+                
+                var cookieValue = getCookie('regionId');
+                if(cookieValue == '') {
                     if (navigator.geolocation) {
                         var state = '';
                         var country = '';
@@ -76,6 +85,8 @@
                                         
                                         //set cookie
                                         setCookie('regionId', regionArray[state], 30);
+
+                                        setState(regionArray[state]);
                                     }
                                 } else {
                                     window.alert('Geocoder failed due to: ' + status);
@@ -88,7 +99,14 @@
                         // Browser doesn't support Geolocation
                         handleLocationError(false);
                     }   
+                } else {
+                    setState(cookieValue);
                 }
+
+                $(document).on('change', 'select[name="current_region"]', function(e){
+                    setCookie('regionId', $(this).val(), 30);
+                    location.reload();
+                });
             });
         });
     
