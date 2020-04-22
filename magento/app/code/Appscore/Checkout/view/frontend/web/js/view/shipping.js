@@ -14,6 +14,8 @@ define([
     'Magento_Checkout/js/model/quote',
     'Magento_Checkout/js/action/create-shipping-address',
     'Magento_Checkout/js/action/select-shipping-address',
+    'Magento_Checkout/js/action/create-billing-address',
+    'Magento_Checkout/js/action/select-billing-address',
     'Magento_Checkout/js/model/shipping-rates-validator',
     'Magento_Checkout/js/model/shipping-address/form-popup-state',
     'Magento_Checkout/js/model/shipping-service',
@@ -38,6 +40,8 @@ define([
     quote,
     createShippingAddress,
     selectShippingAddress,
+    createBillingAddress,
+    selectBillingAddress,
     shippingRatesValidator,
     formPopUpState,
     shippingService,
@@ -70,6 +74,8 @@ define([
         isNewAddressAdded: ko.observable(false),
         saveInAddressBook: 1,
         quoteIsVirtual: quote.isVirtual(),
+        isAddressSameAsShipping: ko.observable(true),
+        isShowBillingForm: ko.observable(false),
 
         /**
          * @return {exports}
@@ -131,8 +137,15 @@ define([
          *
          * @param {Object} step - navigation step
          */
-        navigate: function () {
-            stepNavigator.next()
+        navigate: function (step) {
+            step && step.isVisible(true);
+        },
+
+        /**
+        * @returns void
+        */
+        navigateToNextStep: function () {
+            stepNavigator.next();
         },
 
         /**
@@ -220,71 +233,45 @@ define([
             }
         },
 
-        /**
-         * Shipping Method View
-         */
-        rates: shippingService.getShippingRates(),
-        isLoading: shippingService.isLoading,
-        isSelected: ko.computed(function () {
-            return quote.shippingMethod() ?
-                quote.shippingMethod()['carrier_code'] + '_' + quote.shippingMethod()['method_code'] :
-                null;
-        }),
+        // /**
+        //  * Shipping Method View
+        //  */
+        // rates: shippingService.getShippingRates(),
+        // isLoading: shippingService.isLoading,
+        // isSelected: ko.computed(function () {
+        //     return quote.shippingMethod() ?
+        //         quote.shippingMethod()['carrier_code'] + '_' + quote.shippingMethod()['method_code'] :
+        //         null;
+        // }),
 
-        /**
-         * @param {Object} shippingMethod
-         * @return {Boolean}
-         */
-        selectShippingMethod: function (shippingMethod) {
-            selectShippingMethodAction(shippingMethod);
-            checkoutData.setSelectedShippingRate(shippingMethod['carrier_code'] + '_' + shippingMethod['method_code']);
+        // /**
+        //  * @param {Object} shippingMethod
+        //  * @return {Boolean}
+        //  */
+        // selectShippingMethod: function (shippingMethod) {
+        //     selectShippingMethodAction(shippingMethod);
+        //     checkoutData.setSelectedShippingRate(shippingMethod['carrier_code'] + '_' + shippingMethod['method_code']);
 
-            return true;
-        },
+        //     return true;
+        // },
 
-        /**
-         * Set shipping information handler
-         */
         setShippingInformation: function () {
             if (this.validateShippingInformation()) {
-                quote.billingAddress(null);
-                checkoutDataResolver.resolveBillingAddress();
-                registry.async('checkoutProvider')(function (checkoutProvider) {
-                    var shippingAddressData = checkoutData.getShippingAddressFromData();
-
-                    if (shippingAddressData) {
-                        checkoutProvider.set(
-                            'shippingAddress',
-                            $.extend(true, {}, checkoutProvider.get('shippingAddress'), shippingAddressData)
-                        );
-                    }
+                setShippingInformationAction().done(function () {
+                    stepNavigator.next();
                 });
-                setShippingInformationAction().done(
-                    function () {
-                        stepNavigator.next();
-                    }
-                );
             }
         },
 
-        /**
-         * @return {Boolean}
-         */
         validateShippingInformation: function () {
             var shippingAddress,
                 addressData,
                 loginFormSelector = 'form[data-role=email-with-possible-login]',
                 emailValidationResult = customer.isLoggedIn(),
-                field,
-                country = registry.get(this.parentName + '.shippingAddress.shipping-address-fieldset.country_id'),
-                countryIndexedOptions = country.indexedOptions,
-                option = countryIndexedOptions[quote.shippingAddress().countryId],
-                messageContainer = registry.get('checkout.errors').messageContainer;
+                field;
 
             if (!quote.shippingMethod()) {
-                this.errorValidationMessage(
-                    $t('The shipping method is missing. Select the shipping method and try again.')
-                );
+                this.errorValidationMessage($t('Please specify a shipping method.'));
 
                 return false;
             }
@@ -332,16 +319,6 @@ define([
                     shippingAddress['save_in_address_book'] = 1;
                 }
                 selectShippingAddress(shippingAddress);
-            } else if (customer.isLoggedIn() &&
-                option &&
-                option['is_region_required'] &&
-                !quote.shippingAddress().region
-            ) {
-                messageContainer.addErrorMessage({
-                    message: $t('Please specify a regionId in shipping address.')
-                });
-
-                return false;
             }
 
             if (!emailValidationResult) {
@@ -353,15 +330,91 @@ define([
             return true;
         },
 
-        /**
-         * Trigger Shipping data Validate Event.
-         */
-        triggerShippingDataValidateEvent: function () {
-            this.source.trigger('shippingAddress.data.validate');
+        validateBillingInformation: function () {
+            var addressData, newBillingAddress;
 
-            if (this.source.get('shippingAddress.custom_attributes')) {
-                this.source.trigger('shippingAddress.custom_attributes.data.validate');
+            if ($('[name="billing-address-same-as-shipping"]').is(":checked")) {
+                if (this.isFormInline) {
+                    var shippingAddress = quote.shippingAddress();
+                    addressData = addressConverter.formAddressDataToQuoteAddress(
+                        this.source.get('shippingAddress')
+                    );
+                    //Copy form data to quote shipping address object
+                    for (var field in addressData) {
+                        if (addressData.hasOwnProperty(field) &&
+                            shippingAddress.hasOwnProperty(field) &&
+                            typeof addressData[field] !== 'function' &&
+                            _.isEqual(shippingAddress[field], addressData[field])
+                        ) {
+                            shippingAddress[field] = addressData[field];
+                        } else if (typeof addressData[field] !== 'function' &&
+                            !_.isEqual(shippingAddress[field], addressData[field])) {
+                            shippingAddress = addressData;
+                            break;
+                        }
+                    }
+
+                    if (customer.isLoggedIn()) {
+                        shippingAddress.save_in_address_book = 1;
+                    }
+                    newBillingAddress = createBillingAddress(shippingAddress);
+                    selectBillingAddress(newBillingAddress);
+                } else {
+                    var billingAddress = quote.shippingAddress();
+                    selectBillingAddress(billingAddress);
+                }
+
+                return true;
             }
+
+            var selectedAddress = quote.billingAddress();
+            if (selectedAddress) {
+                if (selectedAddress.customerAddressId) {
+                    return addressList.some(function (address) {
+                        if (selectedAddress.customerAddressId === address.customerAddressId) {
+                            selectBillingAddress(address);
+                            return true;
+                        }
+                        return false;
+                    });
+                } else if (selectedAddress.getType() === 'new-customer-address' || selectedAddress.getType() === 'new-billing-address') {
+                    return true;
+                }
+            }
+
+            this.source.set('params.invalid', false);
+            this.source.trigger('billingAddress.data.validate');
+
+            if (this.source.get('billingAddress.custom_attributes')) {
+                this.source.trigger('billingAddress.custom_attributes.data.validate');
+            }
+
+            if (this.source.get('params.invalid')) {
+                return false;
+            }
+
+            addressData = this.source.get('billingAddress');
+
+            if ($('#billing-save-in-address-book').is(":checked")) {
+                addressData.save_in_address_book = 1;
+            }
+            newBillingAddress = createBillingAddress(addressData);
+
+            selectBillingAddress(newBillingAddress);
+
+            return true;
+        },
+
+        /**
+         * @return {Boolean}
+         */
+        useShippingAddress: function () {
+            if (this.isAddressSameAsShipping()) {
+                this.isShowBillingForm(false);
+            } else {
+                this.isShowBillingForm(true);
+            }
+            return true;
         },
     });
 });

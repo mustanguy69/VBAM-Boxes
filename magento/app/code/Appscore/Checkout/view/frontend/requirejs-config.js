@@ -1,4 +1,11 @@
 var config = {
+  config: {
+		mixins: {
+		    'Magento_Checkout/js/view/shipping': {
+		        'Appscore_Checkout/js/view/shipping': true
+		    },
+		  }
+	  },
     map: {
         '*': {
             'Magento_Checkout/template/onepage.html': 'Appscore_Checkout/template/onepage.html',
@@ -12,6 +19,7 @@ var config = {
             'Magento_Checkout/template/shipping-address/address-renderer/default.html': 'Appscore_Checkout/template/shipping-address/address-renderer/default.html',
             'Magento_Checkout/template/payment-methods/list.html': 'Appscore_Checkout/template/payment-methods/list.html',
             'Magento_Checkout/template/estimation.html': 'Appscore_Checkout/template/estimation.html',
+            'Magento_Checkout/js/view/billing': 'Appscore_Checkout/js/view/billing',
           }
   }
 };
