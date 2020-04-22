@@ -29,7 +29,6 @@ class Edit extends Categories
         }
         $this->_coreRegistry->register('latestnews_categories', $model);
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->_resultPageFactory->create();
         $resultPage->setActiveMenu('Appscore_LatestNews::latestnews');
         $resultPage->getConfig()->getTitle()->prepend(__('Category Latest News'));

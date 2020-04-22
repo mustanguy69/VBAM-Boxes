@@ -13,11 +13,6 @@ use Magento\Store\Model\Store;
 
 class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 {
-	/**
-     * InstallData constructor.
-     * @param BlockRepositoryInterface $blockRepository
-     * @param BlockInterfaceFactory $blockInterfaceFactory
-     */
     public function __construct(
         BlockRepositoryInterface $blockRepository,
         BlockInterfaceFactory $blockInterfaceFactory,

@@ -135,4 +135,3 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
         $setup->endSetup();
     }
 }
- ?>

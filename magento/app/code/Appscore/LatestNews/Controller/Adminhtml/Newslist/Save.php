@@ -27,6 +27,7 @@ class Save extends Newslist
          $urlkey = $this->slugify($formData['title']);
          $formData['url_key'] = $urlkey;
          $newsModel->setData($formData);
+
          if (isset($_FILES['image']) && isset($_FILES['image']['name']) && strlen($_FILES['image']['name'])) {
             try {
                $base_media_path = 'appscore/latestnews/images';
@@ -58,19 +59,17 @@ class Save extends Newslist
       
          try {
             $newsModel->save();
-
-            // Display success message
             $this->messageManager->addSuccess(__('The news has been saved.'));
 
-            // Check if 'Save and Continue'
             if ($this->getRequest()->getParam('back')) {
                $this->_redirect('*/*/edit', ['id' => $newsModel->getId(), '_current' => true]);
                return;
             }
 
-            // Go to grid page
             $this->_redirect('*/*/');
+
             return;
+            
          } catch (\Exception $e) {
             $this->messageManager->addError($e->getMessage());
          }

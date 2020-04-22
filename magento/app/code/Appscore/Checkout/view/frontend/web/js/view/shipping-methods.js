@@ -269,13 +269,13 @@ define(
                 stepNavigator.next();
             },
     
-    
             rates: shippingService.getShippingRates(),
             isLoading: shippingService.isLoading,
             
             /**
              * Set shipping information handler
              */
+    
             setShippingInformation: function () {
                 if (this.validateShippingInformation()) {
                     setShippingInformationAction().done(
@@ -328,7 +328,6 @@ define(
                         this.source.get('shippingAddress')
                     );
     
-                    //Copy form data to quote shipping address object
                     for (var field in addressData) {
     
                         if (addressData.hasOwnProperty(field) &&

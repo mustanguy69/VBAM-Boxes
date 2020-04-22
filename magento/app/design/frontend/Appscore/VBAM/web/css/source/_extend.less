@@ -10,12 +10,12 @@
 @screen__xl: 1440px;
 
 @white-gray: #F7F5F5;
-@green: #00A261;
-@blue: #001489;
-@black-blue: #0C2340;
+@green: var(--green);
+@blue: var(--blue);;
+@black-blue: var(--black-blue);
 @black: #000000;
 @aqua: #5CB8B2;
-@gray: #9AA5AF;
+@gray: var(--gray);
 @red: #F8485E;
 
 .lib-font-face(
@@ -93,7 +93,7 @@ body, p {
 }
 
 body {
-    background: #F7F5F5;
+    background: @white-gray;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -172,7 +172,7 @@ button.pagebuilder-button-primary {
     }
 
     .toolbar-amount {
-        color:#9AA5AF;
+        color:@gray;
         font-size: 15px;
     }
 
@@ -259,7 +259,7 @@ button.pagebuilder-button-primary {
 
             span {
                 font-size: 12px;
-                color: #9AA5AF;
+                color: @gray;
             }
         }
 
@@ -385,7 +385,7 @@ button.pagebuilder-button-primary {
     background: #fff;
 
     .panel.wrapper {
-        background-color: #0C2340;
+        background-color: @black-blue;
 
         .panel.header {
             padding-top: 15px;
@@ -418,7 +418,7 @@ button.pagebuilder-button-primary {
 
 .qty-controller {
     &:extend(button);
-    background: #F7F5F5;
+    background: @white-gray;
     padding: 13px 13px;
     border: none !important;
 }
@@ -430,7 +430,7 @@ input.qty,
     padding: 0;
     height: 100%;
     border: none;
-    background: #F7F5F5;
+    background: @white-gray;
     text-align: center;
     font-size: 18px;
 }
@@ -441,7 +441,7 @@ input.qty,
 
         input {
             border: none;
-            background: #F7F5F5 0% 0% no-repeat padding-box;
+            background: @white-gray 0% 0% no-repeat padding-box;
             border-radius: 20px;
             font-size: 13px;
             padding-left: 20px;
@@ -470,7 +470,7 @@ input.qty,
             width: 20px;
             height: 20px;
             font-size: 9px;
-            background: #F8485E;
+            background: @red;
             margin: 0;
             position: absolute;
             right: -10px;
@@ -498,7 +498,7 @@ input.qty,
         div > ul > li {
             font-size: 13px;
             margin-bottom: 10px;
-            color: #0C2340;
+            color: @black-blue;
         }
     }
 }
@@ -508,7 +508,7 @@ input.qty,
 }
 
 .colorGray {
-    color: #9AA5AF;
+    color: @gray;
 }
 
 .displayFlex {
@@ -597,7 +597,7 @@ input.qty,
 
                             .tocompare {
                                 &:extend(.regular);
-                                color: #0C2340;
+                                color: @black-blue;
                                 font-size: 12px;
                                 text-align: right;
                                 text-transform: initial;
@@ -610,7 +610,7 @@ input.qty,
             
             .product-item-sku {
                 &:extend(.regular);
-                color: #9AA5AF;
+                color: @gray;
                 font-size: 12px; 
                 text-transform: uppercase;
                 margin-bottom: 0;
@@ -648,7 +648,7 @@ input.qty,
 
                     .qty-controller {
                         &:extend(button);
-                        background: #F7F5F5;
+                        background: @white-gray;
                         padding: 13px 13px;
                     }
 
@@ -658,7 +658,7 @@ input.qty,
                         padding: 0;
                         height: 100%;
                         border: none;
-                        background: #F7F5F5;
+                        background: @white-gray;
                         text-align: center;
                         font-size: 18px;
                     }
@@ -699,7 +699,7 @@ input.qty,
     .copyright {
         background: none;
         text-align: initial;
-        color: #9AA5AF;
+        color: @gray;
         max-width: 1280px;
         width: 100%;
         margin: 0 auto;
@@ -854,7 +854,7 @@ input.qty,
 
                 span {
                     font-size: 12px;
-                    color: #0C2340;
+                    color: @black-blue;
                     &:extend(.regular);
                 }
             }
@@ -862,7 +862,7 @@ input.qty,
     }
 
     .product.attribute.sku {
-        color: #9AA5AF;
+        color: @gray;
         margin-top: 10px;
 
         .value {
@@ -895,7 +895,7 @@ input.qty,
     .product-info-price {
         .price-box {
             &:extend(.black);
-            color: #000000;
+            color: @black;
 
             .price {
                 &:extend(.black);
@@ -917,8 +917,8 @@ input.qty,
             .contactform {
                 width: 100%;
                 background: none;
-                border: 1px solid #00A261 !important;
-                color: #00A261 !important;
+                border: 1px solid @green !important;
+                color: @green !important;
                 text-align: center;
                 padding: 11px;
                 margin-top: 30px;
@@ -1109,7 +1109,7 @@ input.qty,
     
             input {
                 border: none;
-                background: #F7F5F5 0% 0% no-repeat padding-box;
+                background: @white-gray 0% 0% no-repeat padding-box;
                 border-radius: 20px;
                 font-size: 13px;
                 padding-left: 20px;
@@ -1239,7 +1239,7 @@ input.qty,
                 padding-bottom: 46px;
 
                 a {
-                    color: #0C2340;
+                    color: @black-blue;
                     padding-top: 46px;
                     padding-bottom: 46px;
                 }
@@ -1254,7 +1254,7 @@ input.qty,
                     height: 0; 
                     border-left: 7px solid transparent;
                     border-right: 7px solid transparent;
-                    border-bottom: 10px solid #00A261;
+                    border-bottom: 10px solid @green;
                     content: '';
                     display: block;
                     position: absolute;
@@ -1268,7 +1268,7 @@ input.qty,
                     top: 114px;
                     padding: 25px 20px;
                     background: #fff;
-                    border-top: 5px solid #00A261;
+                    border-top: 5px solid @green;
 
                     .submenu-inner {
                         width: 390px;
@@ -1285,7 +1285,7 @@ input.qty,
                                 font-weight: normal;
                                 font-size: 13px;
                                 padding: 0;
-                                color: #0C2340;
+                                color: @black-blue;
                             }
 
                             a:hover {
@@ -1338,7 +1338,7 @@ input.qty,
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid #9AA5AF;
+            border: 1px solid @gray;
             margin-right: 10px;
     
             .account-icon {
@@ -1349,7 +1349,7 @@ input.qty,
 
         .greet {
             font-size: 13px;
-            color: #000000;
+            color: @black;
         }
 
         .account-link {
@@ -1374,7 +1374,7 @@ input.qty,
             color: @green;
     
             &:after {
-                color: #9AA5AF;
+                color: @gray;
             }
         }
     
@@ -1860,7 +1860,7 @@ input.qty,
 
                         .opentocart {
                             &:extend(.black);
-                            background: #00A261;
+                            background: @green;
                             box-shadow: none !important;
                             border: none !important;
                             color: #fff;
@@ -1900,14 +1900,14 @@ input.qty,
                         text-align: center;
 
                         p {
-                            color: #9AA5AF;
+                            color: @gray;
                             font-size: 12px;
                             margin-bottom: 10px;
                         }
 
                         strong {
                             font-size: 12px;
-                            color: #000000;
+                            color: @black;
                         }
 
                         .action-tocompare {
@@ -1917,7 +1917,7 @@ input.qty,
                             font-weight: normal;
 
                             a {
-                                color: #0C2340;
+                                color: @black-blue;
                             }
                         }
 
@@ -1979,7 +1979,7 @@ input.qty,
         position: fixed;
         top: 0;
         left: -100%;
-        background: #00A261;
+        background: @green;
         z-index: 9999;
         height: 100%;
         width: 90%;
@@ -2233,7 +2233,7 @@ input.qty,
                 margin-bottom: 0;
 
                 .qty-wrapper {
-                    background: #F7F5F5;
+                    background: @white-gray;
                     input {
                         font-size: 18px;
                     }

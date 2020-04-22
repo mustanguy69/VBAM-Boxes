@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="other_settings" sortOrder="30">
+        <fieldset name="colors">
+            <settings>
+                <level>1</level>
+                <collapsible>true</collapsible>
+                <label translate="true">Colors</label>
+            </settings>
+            <colorPicker name="color1" class="Magento\Ui\Component\Form\Element\ColorPicker" component="Magento_Ui/js/form/element/color-picker">
+                <settings>
+                    <label translate="true">Color 1</label>
+                    <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                    <colorFormat>hex</colorFormat>
+                    <colorPickerMode>full</colorPickerMode>
+                    <dataScope>color1</dataScope>
+                </settings>
+            </colorPicker>
+            <colorPicker name="color2" class="Magento\Ui\Component\Form\Element\ColorPicker" component="Magento_Ui/js/form/element/color-picker">
+                <settings>
+                    <label translate="true">Color 2</label>
+                    <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                    <colorFormat>hex</colorFormat>
+                    <colorPickerMode>full</colorPickerMode>
+                    <dataScope>color2</dataScope>
+                </settings>
+            </colorPicker>
+            <colorPicker name="color3" class="Magento\Ui\Component\Form\Element\ColorPicker" component="Magento_Ui/js/form/element/color-picker">
+                <settings>
+                    <label translate="true">Color 3</label>
+                    <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                    <colorFormat>hex</colorFormat>
+                    <colorPickerMode>full</colorPickerMode>
+                    <dataScope>color3</dataScope>
+                </settings>
+            </colorPicker>
+            <colorPicker name="color4" class="Magento\Ui\Component\Form\Element\ColorPicker" component="Magento_Ui/js/form/element/color-picker">
+                <settings>
+                    <label translate="true">Color 4</label>
+                    <elementTmpl>ui/form/element/color-picker</elementTmpl>
+                    <colorFormat>hex</colorFormat>
+                    <colorPickerMode>full</colorPickerMode>
+                    <dataScope>color4</dataScope>
+                </settings>
+            </colorPicker>
+        </fieldset>
+    </fieldset>
+</form>

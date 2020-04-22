@@ -45,7 +45,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'VIC'));
 		
-		
 		return $branchList;
 	}
 
@@ -56,7 +55,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToSelect('*');
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'NSW'));
-		
 		
 		return $branchList;
 	}
@@ -70,7 +68,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'QLD'));
 		
-		
 		return $branchList;
 	}
 
@@ -83,7 +80,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'SA'));
 		
-		
 		return $branchList;
 	}
 
@@ -94,7 +90,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToSelect('*');
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'TAS'));
-		
 		
 		return $branchList;
 	}
@@ -107,7 +102,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'ACT'));
 		
-		
 		return $branchList;
 	}
 
@@ -119,7 +113,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('state', array('eq' => 'WA'));
 		
-		
 		return $branchList;
 	}
 
@@ -130,7 +123,6 @@ class Index extends \Magento\Framework\View\Element\Template
 		$branchList->addFieldToSelect('*');
 		$branchList->addFieldToFilter('status', array('eq' => 1));
 		$branchList->addFieldToFilter('city', array('eq' => 'Auckland'));
-		
 		
 		return $branchList;
 	}

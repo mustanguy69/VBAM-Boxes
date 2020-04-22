@@ -48,5 +48,4 @@ abstract class Branchlist extends Action
         parent::__construct($context);
     }
 
-    
 }

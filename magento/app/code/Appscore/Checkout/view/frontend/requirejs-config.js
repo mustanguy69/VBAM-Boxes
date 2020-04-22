@@ -15,5 +15,5 @@ var config = {
             'Magento_Checkout/template/authentication.html': 'Appscore_Checkout/template/authentication.html',
             'Magento_Checkout/js/model/checkout-data-resolver': 'Appscore_Checkout/js/model/checkout-data-resolver'
           }
-  }
+    }
 };

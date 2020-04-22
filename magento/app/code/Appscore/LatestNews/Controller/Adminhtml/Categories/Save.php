@@ -26,19 +26,17 @@ class Save extends Categories
       
          try {
             $categoryModel->save();
-
-            // Display success message
             $this->messageManager->addSuccess(__('The category has been saved.'));
 
-            // Check if 'Save and Continue'
             if ($this->getRequest()->getParam('back')) {
                $this->_redirect('*/*/edit', ['id' => $categoryModel->getId(), '_current' => true]);
                return;
             }
 
-            // Go to grid page
             $this->_redirect('*/*/');
+
             return;
+            
          } catch (\Exception $e) {
             $this->messageManager->addError($e->getMessage());
          }

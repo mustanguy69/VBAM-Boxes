@@ -46,7 +46,6 @@ class All extends \Magento\Framework\View\Element\Template
 	public function getAllNews()
 	{
         $page = ($this->getRequest()->getParam('p'))? $this->getRequest()->getParam('p') : 1;
-        //get values of current limit
         $pageSize = ($this->getRequest()->getParam('limit'))? $this->getRequest()->getParam('limit') : 9;
         $newsCollection = $this->_newslistCollection->getCollection();
         $newsCollection->addFieldToFilter('status', '1');
@@ -58,18 +57,14 @@ class All extends \Magento\Framework\View\Element\Template
 	}
 
 	function getMediaBaseUrl($url) {
-		/** @var \Magento\Framework\ObjectManagerInterface $om */
 		$om = \Magento\Framework\App\ObjectManager::getInstance();
-		/** @var \Magento\Store\Model\StoreManagerInterface $storeManager */
 		$storeManager = $om->get('Magento\Store\Model\StoreManagerInterface');
-		/** @var \Magento\Store\Api\Data\StoreInterface|\Magento\Store\Model\Store $currentStore */
 		$currentStore = $storeManager->getStore();
 		return $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA). $url;
 	}
 
 	function formatDateNews($date) {
 		$timestamp = strtotime($date);
-
 		$day = date('d F Y', $timestamp);
 
 		return $day;
