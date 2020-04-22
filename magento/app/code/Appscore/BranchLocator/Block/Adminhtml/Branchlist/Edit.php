@@ -68,10 +68,10 @@ class Edit extends Container
      */
     public function getHeaderText()
     {
-        $newsRegistry = $this->_coreRegistry->registry('branchlocator_branchlist');
-        if ($newsRegistry->getId()) {
-            $newsTitle = $this->escapeHtml($newsRegistry->getTitle());
-            return __("Edit Branch '%1'", $newsTitle);
+        $branchRegistry = $this->_coreRegistry->registry('branchlocator_branchlist');
+        if ($branchRegistry->getId()) {
+            $branchTitle = $this->escapeHtml($branchRegistry->getTitle());
+            return __("Edit Branch '%1'", $branchTitle);
         } else {
             return __('Add Branch');
         }
