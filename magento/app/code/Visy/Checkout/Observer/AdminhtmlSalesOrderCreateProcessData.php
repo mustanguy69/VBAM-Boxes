@@ -46,10 +46,11 @@ class AdminhtmlSalesOrderCreateProcessData implements ObserverInterface
             $quote->setCustomerCode($customerCode);
         }
         $deliveryDate = isset($requestData['delivery_date']) ? $requestData['delivery_date'] : null;
-        //$deliveryComment = isset($requestData['delivery_comment']) ? $requestData['delivery_comment'] : null;
-
+        $deliveryComment = isset($requestData['delivery_comment']) ? $requestData['delivery_comment'] : null;
+        $clickAndColectId = isset($requestData['click_and_collect_id']) ? $requestData['click_and_collect_id'] : null;
         $quote->setDeliveryDate($deliveryDate);
-        //$quote->setDeliveryComment($deliveryComment);
+        $quote->setDeliveryComment($deliveryComment);
+        $quote->setDeliveryComment($clickAndColectId);
 
         return $this;
     }

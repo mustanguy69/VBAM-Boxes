@@ -1,0 +1,26 @@
+<!--Use 'stepCode' as id attribute-->
+
+<li id="delivery-date" data-bind="fadeVisible: isVisible">
+    <div class="step-title" data-bind="i18n: stepTitle" data-role="title"></div>
+    <div id="checkout-step-delivery-date" class="step-content"
+         data-role="content">
+
+        <h4>Delivery Date</h4>
+        <div class="fieldset">
+            <input type="text" class="input-text hasDatepicker" id="datepicker" name="delivery_date" placeholder="DD/MM/YY">
+            <span id="btn-calendar"></span>
+        </div>
+        <br>
+        <h4>EXP</h4>
+        <textarea rows="7" name="delivery_comment" placeholder="Additional Comments" autocomplete="off"></textarea>
+    </div>
+    <form data-bind="submit: saveDeliveryDate">
+        <div class="actions-toolbar" id="shipping-method-buttons-container">
+            <div class="primary">
+                <button data-role="opc-continue" type="submit" class="button action continue primary green-button-empty">
+                    <span><!-- ko i18n: 'Next'--><!-- /ko --></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</li>

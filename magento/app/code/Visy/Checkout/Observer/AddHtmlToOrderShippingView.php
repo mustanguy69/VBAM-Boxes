@@ -81,7 +81,7 @@ class AddHtmlToOrderShippingView implements ObserverInterface
             $deliveryDateBlock->setCustomerCode($customerCode);
             $deliveryDateBlock->setSapSentStatus($sapSentStatus);
             $deliveryDateBlock->setSapSentDate($formattedSapDate);
-            //$deliveryDateBlock->setDeliveryComment($order->getDeliveryComment());
+            $deliveryDateBlock->setDeliveryComment($order->getDeliveryComment());
             $deliveryDateBlock->setTemplate('Visy_Checkout::order_info_shipping_info.phtml');
             $html = $observer->getTransport()->getOutput() . $deliveryDateBlock->toHtml();
             $observer->getTransport()->setOutput($html);

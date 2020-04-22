@@ -7,7 +7,6 @@
         padding-right: 0;
         /*width: 100%;*/
         #login-form, #guest-form {
-            display: none;
             margin-top: 20px;
         }
         
@@ -44,8 +43,33 @@
             }
     
             .fieldset {
-                .note {
-                    color: @gray;
+                .field {
+                    font-size: 13px;
+                    color: @black;
+
+                    .label {
+                        span {
+                            &:extend(.black);
+                            font-size: 16px;
+                            color: @black-blue;
+                        }
+                    }
+
+                    .control {
+                        width: 100%;
+
+                        input,
+                        select {
+                            &:extend(.black);
+                            font-size: 18px;
+                            padding-left: 15px;
+                            padding-right: 15px;
+                        }
+                    }
+                }
+
+                &:after {
+                    display: none;
                 }
             }
         }
@@ -157,6 +181,11 @@
                 border-top: 0;
                 .sub, .shipping {
                     color: @gray;
+                }
+                .shipping {
+                    .value {
+                        display: none;
+                    }
                 }
                 .grand.totals {
                     .mark, .amount {
@@ -312,6 +341,16 @@
         #shipping-method-buttons-container {
             width: 100%;
         }
+
+        #checkout-shipping-method-load {
+            padding-top: 15px;
+            line-height: 20pt;
+
+            strong {
+                font-weight: 900;
+                font-size: 19px;
+            }
+        }
     }
 
     .checkout-agreements-block {
@@ -323,9 +362,117 @@
     .checkout.green-button-full {
         float: left;
     }
+
+    #delivery-date {
+        margin-top: 100px;
+        h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .fieldset {
+            position: relative;
+            margin-bottom: 0px;
+        }
+    
+        input {
+            margin-bottom: 20px;
+        }
+
+        #btn-calendar {
+            background: url(../images/calendar-add.svg) no-repeat;
+            width: 25px;
+            position: absolute;
+            height: 25px;
+            right: 12px;
+            top: 9px;
+            z-index: 999;
+            cursor: pointer;
+        }
+    
+        textarea {
+            border:none;
+        }
+
+        #checkout-step-delivery-date {
+            margin: 0 0 40px;
+        }
+    }
     
 }
 
+#ui-datepicker-div {
+    top: 324px !important;
+    left: inherit !important;
+    right: 500px !important;
+
+    border-top: 5px solid @green;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    background-color: white;
+
+    &:before {
+        border: 6px solid;
+        border-color: transparent transparent @green transparent;
+        z-index: 99;
+        content: '';
+        display: block;
+        height: 0;
+        position: absolute;
+        width: 0;
+        top: -16px;
+        right: 24px;
+    }
+
+    .ui-icon-circle-triangle-w, .ui-icon-circle-triangle-e {
+        display: none;
+    }
+
+    .ui-datepicker-title {
+        margin: 0px 0px 45px 0px;
+
+        select {
+            width: 43%;
+            background-color: @white-gray;
+            font-weight: 900;
+        }
+
+        .ui-datepicker-month {
+            float: left;
+        }
+
+        .ui-datepicker-year {
+            float: right;
+        }
+    }
+
+    .ui-datepicker-calendar {
+        border: none;
+        th {
+            background-color: white;
+            border:none;
+            padding: 3px
+        }
+
+        td {
+            border:none;
+            padding: 3px;
+
+            a {
+                text-align: center;
+            }
+        }
+
+        .ui-state-active, .ui-state-hover {
+            background-color: @green;
+        }
+
+        .ui-datepicker-today {
+            background-color: white;
+        }
+    }
+}
 
 // checkout success page design 
 .checkout-success {
@@ -528,6 +675,8 @@
         display: block;
     }
 }
+
+
 
 //Design checkout mobile
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {

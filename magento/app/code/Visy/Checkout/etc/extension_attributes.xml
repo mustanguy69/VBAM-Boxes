@@ -13,7 +13,8 @@
     <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
         <attribute code="delivery_date" type="string"/>
         <attribute code="customer_code" type="string"/>
-        <!--<attribute code="delivery_comment" type="string"/>-->
+        <attribute code="delivery_comment" type="string"/>
+        <attribute code="click_and_collect_id" type="string"/>
     </extension_attributes>
     <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
         <attribute code="delivery_date" type="string" />

@@ -125,7 +125,7 @@ class Info extends Generic implements TabInterface
                 'required'     => true,
                 'value' => 'AUS',
                 "values"    =>      [
-                    ["value" => "AUS","label" => __("Australia")],
+                    ["value" => "AU","label" => __("Australia")],
                     ["value" => "NZ","label" => __("New Zealand")],
                 ]
             ]
